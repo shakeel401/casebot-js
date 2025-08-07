@@ -67,6 +67,9 @@ exports.handler = async function (event) {
     const query = body.get("query");
     let thread_id = body.get("thread_id");
 
+    console.log("🔥 Received query:", query);
+    console.log("✅ isQuestionValid:", isQuestionValid(query));
+
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
