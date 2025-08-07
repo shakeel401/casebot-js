@@ -10,16 +10,18 @@ const ASSISTANT_ID = process.env.ASSISTANT_ID;
 
 // ✅ Custom content filter (mocked — replace with real logic)
 const isQuestionValid = (query) => {
-  const bannedWords = [
-        "joke", "funny", "lol", "haha", "laugh",
-        "crush", "kiss", "hug", "flirt",
-        "dating", "sex",
-        "boyfriend", "girlfriend",
-        "do you love me", "tell me a joke", "marry me", "i love you",
-        "chat with me", "best friend", "are you single", "romantic", "cute"
-    ];
-  return !bannedWords.some(word => query.toLowerCase().includes(word));
+  const bannedPatterns = [
+    /\bjoke\b/i,
+    /\bfunny\b/i,
+    /\blove\b/i,
+    /marry me/i,
+    /do you love me/i,
+    /are you single/i,
+    /sex/i
+  ];
+  return !bannedPatterns.some(pattern => pattern.test(query));
 };
+
 
 // ✅ Tavily Search tool
 async function tavilySearch(query) {
