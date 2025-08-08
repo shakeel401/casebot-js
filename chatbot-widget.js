@@ -1,16 +1,34 @@
 (function() {
-  // CSS styles as a string
+  // CSS styles as a string, including styles for the chat icon and hidden chat container
   const styles = `
-    #chat-container {
+    #chat-toggle-btn {
       position: fixed;
       bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background: #003366;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
+      user-select: none;
+    }
+    #chat-container {
+      position: fixed;
+      bottom: 80px; /* leave space above toggle button */
       right: 20px;
       width: 320px;
       max-height: 500px;
       background: #ffffff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      display: flex;
+      display: none; /* initially hidden */
       flex-direction: column;
       font-family: Arial, sans-serif;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -87,7 +105,7 @@
       #chat-container {
         width: 95%;
         right: 2.5%;
-        bottom: 10px;
+        bottom: 80px;
       }
       #chat-header {
         font-size: 15px;
@@ -103,18 +121,41 @@
   styleTag.textContent = styles;
   document.head.appendChild(styleTag);
 
-  // Inject chatbot HTML container into body
+  // Create chat toggle button (chat icon)
+  const toggleBtn = document.createElement('div');
+  toggleBtn.id = 'chat-toggle-btn';
+  toggleBtn.title = 'Open chat';
+  toggleBtn.innerHTML = '💬';  // You can replace with any emoji or icon
+  document.body.appendChild(toggleBtn);
+
+  // Inject chatbot HTML container into body (initially hidden)
   const chatHTML = `
-    <div id="chat-container">
+    <div id="chat-container" role="region" aria-label="Chatbot window" aria-hidden="true">
       <div id="chat-header">🧑‍⚖️ CaseBot</div>
-      <div id="chat-messages"></div>
+      <div id="chat-messages" aria-live="polite"></div>
       <div id="chat-input">
-        <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" />
-        <button id="send-btn">Send</button>
+        <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" aria-label="Chat input" />
+        <button id="send-btn" aria-label="Send message">Send</button>
       </div>
     </div>
   `;
   document.body.insertAdjacentHTML('beforeend', chatHTML);
+
+  // Grab references
+  const chatContainer = document.getElementById('chat-container');
+
+  // Toggle chat visibility on button click
+  toggleBtn.addEventListener('click', () => {
+    if (chatContainer.style.display === 'flex') {
+      chatContainer.style.display = 'none';
+      chatContainer.setAttribute('aria-hidden', 'true');
+      toggleBtn.title = 'Open chat';
+    } else {
+      chatContainer.style.display = 'flex';
+      chatContainer.setAttribute('aria-hidden', 'false');
+      toggleBtn.title = 'Close chat';
+    }
+  });
 
   // Load marked library dynamically
   function loadScript(src) {
@@ -127,7 +168,6 @@
     });
   }
 
-  // Your chatbot logic here
   async function initChatbot() {
     await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
 
@@ -224,7 +264,6 @@
     });
   }
 
-  // Initialize chatbot when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initChatbot);
   } else {
