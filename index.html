@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CaseBot - Legal Assistant</title>
   <style>
+    /* Your existing styles kept intact */
     #chat-container {
       position: fixed;
       bottom: 20px;
@@ -162,14 +163,16 @@
       showSpinner();
 
       try {
-        const params = new URLSearchParams();
-        params.append("query", query);
-        if (thread_id) params.append("thread_id", thread_id);
+        // Send JSON to match backend's application/json parser
+        const payload = {
+          query,
+          thread_id: thread_id ? String(thread_id).trim() : null
+        };
 
         const response = await fetch("/.netlify/functions/chatbot", {
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: params
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
         });
 
         const result = await response.json();
