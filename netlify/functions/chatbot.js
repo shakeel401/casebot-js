@@ -111,32 +111,36 @@ export async function handler(event, context) {
     // Handle tool calls if needed
     if (run.required_action?.type === "submit_tool_outputs") {
       console.log("[Handler] Run requires tool outputs submission");
-      const tool_outputs = [];
 
-      for (const action of run.required_action.submit_tool_outputs.tool_calls) {
-        const functionName = action.function.name;
-        const args = JSON.parse(action.function.arguments);
-        console.log("[Handler] Tool call function:", functionName, "args:", args);
+      const tool_outputs = await Promise.all(
+        run.required_action.submit_tool_outputs.tool_calls.map(async (action) => {
+          const functionName = action.function.name;
+          const args = JSON.parse(action.function.arguments);
+          console.log("[Handler] Tool call function:", functionName, "args:", args);
 
-        let result;
-        if (functionName === "tavily_search") {
-          result = await tavilySearch(args.query || "");
-        } else {
-          result = "Unknown tool requested.";
-        }
+          let result;
+          if (functionName === "tavily_search") {
+            result = await tavilySearch(args.query || "");
+          } else {
+            result = "Unknown tool requested.";
+          }
 
-        tool_outputs.push({
-          tool_call_id: action.id,
-          output: result,
-        });
-      }
+          return {
+            tool_call_id: action.id,
+            output: result,
+          };
+        })
+      );
 
       console.log("[Handler] Submitting tool outputs:", tool_outputs);
-      run = await client.beta.threads.runs.submit_tool_outputsAndPoll({
+
+      // **Important: Correct method and argument order here**
+      run = await client.beta.threads.runs.submitToolOutputsAndPoll(
         thread_id,
-        run_id: run.id,
-        tool_outputs,
-      });
+        run.id,
+        { tool_outputs }
+      );
+
       console.log("[Handler] Run after submitting tool outputs:", run);
     }
 
