@@ -165,48 +165,52 @@
     }
 
     async function sendMessage() {
-      const query = inputEl.value.trim();
-      if (!query) return;
+  const query = inputEl.value.trim();
+  if (!query) return;
 
-      appendMessage(query, "user");
-      inputEl.value = "";
-      sendBtn.disabled = true;
-      showSpinner();
+  appendMessage(query, "user");
+  inputEl.value = "";
+  sendBtn.disabled = true;
+  showSpinner();
 
-      try {
-        const params = new URLSearchParams();
-        params.append("query", query);
-        if (thread_id) params.append("thread_id", thread_id);
+  try {
+    const params = new URLSearchParams();
+    params.append("query", query);
+    if (thread_id) params.append("thread_id", String(thread_id)); // ✅ Always send as string
 
-        const response = await fetch("/.netlify/functions/chatbot", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: params
-        });
+    const response = await fetch("/.netlify/functions/chatbot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: params
+    });
 
-        const result = await response.json();
-        hideSpinner();
+    const result = await response.json();
+    hideSpinner();
 
-        if (result.response) {
-          appendMessage(result.response, "bot", true);
-        } else if (result.error) {
-          appendMessage("⚠️ " + result.error, "bot");
-        }
-
-        if (result.thread_id) {
-          thread_id = result.thread_id;
-        }
-
-      } catch (err) {
-        hideSpinner();
-        appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
-      } finally {
-        sendBtn.disabled = false;
-      }
+    if (result.response) {
+      appendMessage(result.response, "bot", true);
+    } else if (result.error) {
+      appendMessage("⚠️ " + result.error, "bot");
     }
 
+    if (result.thread_id) {
+      if (typeof result.thread_id === "object" && result.thread_id.id) {
+        thread_id = String(result.thread_id.id);
+      } else {
+        thread_id = String(result.thread_id);
+      }
+      console.log("✅ Stored thread_id:", thread_id);
+    }
+
+  } catch (err) {
+    hideSpinner();
+    appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
+  } finally {
+    sendBtn.disabled = false;
+  }
+    }
     sendBtn.addEventListener("click", sendMessage);
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
@@ -214,3 +218,4 @@
   </script>
 </body>
 </html>
+
