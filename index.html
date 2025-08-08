@@ -173,14 +173,17 @@
       sendBtn.disabled = true;
       showSpinner();
 
-      const formData = new FormData();
-      formData.append("query", query);
-      if (thread_id) formData.append("thread_id", thread_id);
-
       try {
+        const params = new URLSearchParams();
+        params.append("query", query);
+        if (thread_id) params.append("thread_id", thread_id);
+
         const response = await fetch("/.netlify/functions/chatbot", {
           method: "POST",
-          body: formData
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: params
         });
 
         const result = await response.json();
