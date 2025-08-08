@@ -81,8 +81,18 @@ export async function handler(event) {
     const query = (bodyData.query || "").trim();
     let thread_id = normalizeThreadId(bodyData.thread_id);
 
+    // 🔒 Hard safety: ensure thread_id is string or null
+    if (thread_id && typeof thread_id !== "string") {
+      try {
+        thread_id = String(thread_id.id || thread_id).trim();
+      } catch {
+        thread_id = null;
+      }
+    }
+    thread_id = thread_id ? String(thread_id).trim() : null;
+
     console.log("🔥 Query:", query);
-    console.log("🧵 thread_id after normalize:", thread_id, "type:", typeof thread_id);
+    console.log("🧵 thread_id after normalize & safety:", thread_id, "type:", typeof thread_id);
 
     // ❌ Validation
     if (!query || !isQuestionValid(query)) {
