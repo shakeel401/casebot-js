@@ -2,32 +2,9 @@ import { OpenAI } from "openai";
 import { tavily } from "@tavily/core";
 import isQuestionValid from "./filter.js";
 
-function extractThreadId(threadIdCandidate) {
-  // Defensive check: if it's an object, try to find string inside it
-  if (typeof threadIdCandidate === "string") return threadIdCandidate;
-
-  if (typeof threadIdCandidate === "object" && threadIdCandidate !== null) {
-    // If it has an 'id' property which is string, return that
-    if (typeof threadIdCandidate.id === "string") return threadIdCandidate.id;
-
-    // Or if it's nested
-    if (
-      threadIdCandidate.data &&
-      typeof threadIdCandidate.data.id === "string"
-    )
-      return threadIdCandidate.data.id;
-
-    // If it looks like a nested object but no id, stringify as last resort (not recommended)
-    return JSON.stringify(threadIdCandidate);
-  }
-
-  // Otherwise return as is (could be null or undefined)
-  return threadIdCandidate;
-}
+const FIXED_THREAD_ID = "thread_81nIg7Kt2kgrkK1jwV6glOWr";
 
 export async function handler(event, context) {
-  console.log("Handler invoked");
-
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -39,23 +16,13 @@ export async function handler(event, context) {
   try {
     const body = JSON.parse(event.body || "{}");
     const query = (body.query || "").trim();
-    let thread_id = body.thread_id;
-
-    console.log("Received query:", query);
-    console.log("Received thread_id (raw):", thread_id, typeof thread_id);
-
-    // Normalize thread_id to string if possible
-    thread_id = extractThreadId(thread_id);
-
-    console.log("Normalized thread_id:", thread_id, typeof thread_id);
 
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          thread_id,
-          response:
-            "This question is not appropriate or relevant. Please ask something based on your role or documents.",
+          thread_id: FIXED_THREAD_ID,
+          response: "Invalid or inappropriate question.",
         }),
         headers: { "Content-Type": "application/json" },
       };
@@ -63,10 +30,9 @@ export async function handler(event, context) {
 
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
-    const VECTOR_STORE_ID = process.env.VECTOR_STORE_ID;
     const ASSISTANT_ID = process.env.ASSISTANT_ID;
 
-    if (!OPENAI_API_KEY || !TAVILY_API_KEY || !VECTOR_STORE_ID || !ASSISTANT_ID) {
+    if (!OPENAI_API_KEY || !TAVILY_API_KEY || !ASSISTANT_ID) {
       return {
         statusCode: 500,
         body: JSON.stringify({ error: "Missing required environment variables" }),
@@ -91,24 +57,17 @@ export async function handler(event, context) {
       }
     }
 
-    if (!thread_id) {
-      console.log("Creating new thread");
-      const threadResponse = await client.beta.threads.create();
-      console.log("New thread response:", JSON.stringify(threadResponse, null, 2));
-      thread_id = extractThreadId(threadResponse);
-      console.log("Extracted thread_id:", thread_id);
-    }
+    // Use the fixed thread id always
+    const thread_id = FIXED_THREAD_ID;
 
-    if (typeof thread_id !== "string") {
-      throw new Error("thread_id is not a string after extraction");
-    }
-
+    // Add user message
     await client.beta.threads.messages.create({
       thread_id,
       role: "user",
       content: query,
     });
 
+    // Create and poll run
     let run = await client.beta.threads.runs.create_and_poll({
       thread_id,
       assistant_id: ASSISTANT_ID,
@@ -116,20 +75,24 @@ export async function handler(event, context) {
 
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
+
       for (const action of run.required_action.submit_tool_outputs.tool_calls) {
         const functionName = action.function.name;
         const args = JSON.parse(action.function.arguments);
+
         let result;
         if (functionName === "tavily_search") {
           result = await tavilySearch(args.query || "");
         } else {
           result = "Unknown tool requested.";
         }
+
         tool_outputs.push({
           tool_call_id: action.id,
           output: result,
         });
       }
+
       run = await client.beta.threads.runs.submit_tool_outputs_and_poll({
         thread_id,
         run_id: run.id,
@@ -137,14 +100,21 @@ export async function handler(event, context) {
       });
     }
 
+    // Fetch messages
     const messagesResponse = await client.beta.threads.messages.list({
       thread_id,
     });
 
-    const assistantMessages = messagesResponse.data.filter((m) => m.role === "assistant");
+    const assistantMessages = messagesResponse.data.filter(
+      (m) => m.role === "assistant"
+    );
 
     if (assistantMessages.length === 0) {
-      throw new Error("No response from assistant");
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "No response from assistant" }),
+        headers: { "Content-Type": "application/json" },
+      };
     }
 
     const assistantResponse = assistantMessages[0].content[0].text.value;
@@ -155,7 +125,6 @@ export async function handler(event, context) {
       headers: { "Content-Type": "application/json" },
     };
   } catch (error) {
-    console.error("Unhandled error:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: error.message }),
