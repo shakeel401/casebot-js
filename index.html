@@ -21,7 +21,6 @@
       overflow: hidden;
       z-index: 9999;
     }
-
     #chat-header {
       background: #003366;
       color: white;
@@ -30,14 +29,12 @@
       font-weight: bold;
       text-align: center;
     }
-
     #chat-messages {
       flex: 1;
       padding: 10px;
       overflow-y: auto;
       font-size: 14px;
     }
-
     .message {
       margin: 6px 0;
       padding: 8px 12px;
@@ -46,24 +43,20 @@
       clear: both;
       word-wrap: break-word;
     }
-
     .user {
       background: #e1f5fe;
       align-self: flex-end;
       margin-left: auto;
     }
-
     .bot {
       background: #f1f1f1;
       align-self: flex-start;
       margin-right: auto;
     }
-
     #chat-input {
       display: flex;
       border-top: 1px solid #ccc;
     }
-
     #query-input {
       flex: 1;
       padding: 10px;
@@ -71,7 +64,6 @@
       outline: none;
       font-size: 14px;
     }
-
     #send-btn {
       background: #003366;
       color: white;
@@ -79,11 +71,9 @@
       border: none;
       cursor: pointer;
     }
-
     #send-btn:hover {
       background: #0055aa;
     }
-
     .spinner {
       margin: 10px;
       align-self: center;
@@ -94,23 +84,18 @@
       height: 24px;
       animation: spin 1s linear infinite;
     }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-
-    /* Responsive */
     @media screen and (max-width: 480px) {
       #chat-container {
         width: 95%;
         right: 2.5%;
         bottom: 10px;
       }
-
       #chat-header {
         font-size: 15px;
       }
-
       #query-input {
         font-size: 13px;
       }
@@ -127,7 +112,6 @@
     </div>
   </div>
 
-  <!-- marked.js for markdown rendering -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <script>
@@ -140,11 +124,7 @@
     function appendMessage(text, className, isMarkdown = false) {
       const msg = document.createElement("div");
       msg.className = `message ${className}`;
-      if (isMarkdown) {
-        msg.innerHTML = marked.parse(text);
-      } else {
-        msg.textContent = text;
-      }
+      msg.innerHTML = isMarkdown ? marked.parse(text) : text;
       messagesEl.appendChild(msg);
       messagesEl.scrollTop = messagesEl.scrollHeight;
     }
@@ -159,58 +139,62 @@
 
     function hideSpinner() {
       const spinner = document.getElementById("loading-spinner");
-      if (spinner) {
-        spinner.remove();
+      if (spinner) spinner.remove();
+    }
+
+    function extractThreadId(raw) {
+      if (!raw) return null;
+      if (typeof raw === "string" && raw.startsWith("thread_")) return raw.trim();
+      if (typeof raw === "object") {
+        if (raw.id && typeof raw.id === "string") return raw.id.trim();
+        if (raw.thread_id && typeof raw.thread_id === "string") return raw.thread_id.trim();
       }
+      return null;
     }
 
     async function sendMessage() {
-  const query = inputEl.value.trim();
-  if (!query) return;
+      const query = inputEl.value.trim();
+      if (!query) return;
 
-  appendMessage(query, "user");
-  inputEl.value = "";
-  sendBtn.disabled = true;
-  showSpinner();
+      appendMessage(query, "user");
+      inputEl.value = "";
+      sendBtn.disabled = true;
+      showSpinner();
 
-  try {
-    const params = new URLSearchParams();
-    params.append("query", query);
-    if (thread_id) params.append("thread_id", String(thread_id)); // ✅ Always send as string
+      try {
+        const params = new URLSearchParams();
+        params.append("query", query);
+        if (thread_id) params.append("thread_id", thread_id);
 
-    const response = await fetch("/.netlify/functions/chatbot", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: params
-    });
+        const response = await fetch("/.netlify/functions/chatbot", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: params
+        });
 
-    const result = await response.json();
-    hideSpinner();
+        const result = await response.json();
+        hideSpinner();
 
-    if (result.response) {
-      appendMessage(result.response, "bot", true);
-    } else if (result.error) {
-      appendMessage("⚠️ " + result.error, "bot");
-    }
+        if (result.response) {
+          appendMessage(result.response, "bot", true);
+        } else if (result.error) {
+          appendMessage("⚠️ " + result.error, "bot");
+        }
 
-    if (result.thread_id) {
-      if (typeof result.thread_id === "object" && result.thread_id.id) {
-        thread_id = String(result.thread_id.id);
-      } else {
-        thread_id = String(result.thread_id);
+        const newId = extractThreadId(result.thread_id);
+        if (newId) {
+          thread_id = newId;
+          console.log("✅ Stored thread_id:", thread_id);
+        }
+
+      } catch (err) {
+        hideSpinner();
+        appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
+      } finally {
+        sendBtn.disabled = false;
       }
-      console.log("✅ Stored thread_id:", thread_id);
     }
 
-  } catch (err) {
-    hideSpinner();
-    appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
-  } finally {
-    sendBtn.disabled = false;
-  }
-    }
     sendBtn.addEventListener("click", sendMessage);
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
@@ -218,4 +202,3 @@
   </script>
 </body>
 </html>
-
