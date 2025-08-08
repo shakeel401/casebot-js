@@ -38,7 +38,7 @@ async function tavilySearch(query) {
 }
 
 export async function handler(event) {
-  console.log("📩 Function triggered:", event.httpMethod, event.body);
+  console.log("📩 Function triggered:", event.httpMethod);
 
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
@@ -57,22 +57,22 @@ export async function handler(event) {
 
     const query = bodyData.query?.trim();
 
-    // 🧵 Normalize thread_id to always be a string
-    let thread_id = bodyData.thread_id || null;
+    // 🧵 Normalize thread_id to always be a clean string or null
+    let thread_id = bodyData.thread_id;
     if (typeof thread_id === "object" && thread_id !== null) {
       thread_id = thread_id.id || "";
     }
-    thread_id = String(thread_id || "").trim() || null;
+    thread_id = thread_id ? String(thread_id).trim() : null;
 
     console.log("🔥 Received query:", query);
-    console.log("🧵 Normalized thread_id:", thread_id);
+    console.log("🧵 Normalized thread_id before use:", thread_id, typeof thread_id);
 
     // ❌ Block bad queries
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          thread_id,
+          thread_id: thread_id ? String(thread_id) : null,
           response: "This question is not appropriate or relevant. Please ask something based on your role or documents."
         })
       };
@@ -86,11 +86,12 @@ export async function handler(event) {
     // ➕ Create thread if missing
     if (!thread_id) {
       const thread = await openai.beta.threads.create();
-      thread_id = thread.id;
+      thread_id = String(thread.id).trim();
       console.log("✨ Created new thread:", thread_id);
     }
 
     // 💬 Send user message
+    console.log("📌 Sending to OpenAI thread_id =", thread_id, typeof thread_id);
     await openai.beta.threads.messages.create({
       thread_id,
       role: "user",
@@ -139,7 +140,7 @@ export async function handler(event) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        thread_id,
+        thread_id: String(thread_id), // ✅ Always return string
         response: finalResponse || "⚠️ Assistant did not return a message."
       })
     };
@@ -148,4 +149,4 @@ export async function handler(event) {
     console.error("💥 Error in chatbot function:", error);
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
-          }
+        }
