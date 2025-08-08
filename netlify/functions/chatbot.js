@@ -7,11 +7,13 @@ const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const ASSISTANT_ID = process.env.ASSISTANT_ID;
 const VECTOR_STORE_ID = process.env.VECTOR_STORE_ID;
 
+// ❌ Block invalid questions
 function isQuestionValid(query) {
   const blockedWords = ["hack", "illegal", "kill"];
   return !blockedWords.some(word => query.toLowerCase().includes(word));
 }
 
+// 🔍 Tavily Search
 async function tavilySearch(query) {
   try {
     const response = await fetch("https://api.tavily.com/search", {
@@ -43,6 +45,7 @@ export async function handler(event) {
   }
 
   try {
+    // 📦 Parse request body
     let bodyData;
     const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
     if (contentType.includes("application/json")) {
@@ -53,11 +56,18 @@ export async function handler(event) {
     }
 
     const query = bodyData.query?.trim();
-    let thread_id = bodyData.thread_id?.trim() || null;
+
+    // 🧵 Normalize thread_id to always be a string
+    let thread_id = bodyData.thread_id || null;
+    if (typeof thread_id === "object" && thread_id !== null) {
+      thread_id = thread_id.id || "";
+    }
+    thread_id = String(thread_id || "").trim() || null;
 
     console.log("🔥 Received query:", query);
-    console.log("🧵 Received thread_id:", thread_id);
+    console.log("🧵 Normalized thread_id:", thread_id);
 
+    // ❌ Block bad queries
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
@@ -68,36 +78,43 @@ export async function handler(event) {
       };
     }
 
+    // 🛑 Required vars check
     if (!ASSISTANT_ID || !VECTOR_STORE_ID) {
       return { statusCode: 500, body: JSON.stringify({ error: "Missing VECTOR_STORE_ID or ASSISTANT_ID" }) };
     }
 
+    // ➕ Create thread if missing
     if (!thread_id) {
       const thread = await openai.beta.threads.create();
       thread_id = thread.id;
       console.log("✨ Created new thread:", thread_id);
     }
 
+    // 💬 Send user message
     await openai.beta.threads.messages.create({
       thread_id,
       role: "user",
       content: query
     });
 
+    // 🚀 Run assistant
     let run = await openai.beta.threads.runs.createAndPoll({
       thread_id,
       assistant_id: ASSISTANT_ID
     });
 
+    // 🛠 Handle tool calls
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
       for (const action of run.required_action.submit_tool_outputs.tool_calls) {
         const { name: function_name, arguments: argsStr } = action.function;
         const args = JSON.parse(argsStr);
         let output = "Unknown tool";
+
         if (function_name === "tavily_search") {
           output = await tavilySearch(args.query || "");
         }
+
         tool_outputs.push({ tool_call_id: action.id, output });
       }
       run = await openai.beta.threads.runs.submitToolOutputsAndPoll({
@@ -107,6 +124,7 @@ export async function handler(event) {
       });
     }
 
+    // 📩 Get assistant response
     const messages = await openai.beta.threads.messages.list({ thread_id });
     const assistantMessages = messages.data.filter(m => m.role === "assistant");
 
@@ -130,4 +148,4 @@ export async function handler(event) {
     console.error("💥 Error in chatbot function:", error);
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
-}
+          }
