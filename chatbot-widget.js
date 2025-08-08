@@ -57,6 +57,7 @@
       flex-direction: column;
       gap: 6px;
       min-height: 100px;
+      height: 100%; /* Ensure it fills space */
     }
     .message {
       padding: 8px 12px;
@@ -265,6 +266,9 @@
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
     });
+
+    // Append welcome message here once at init, hidden container doesn't matter
+    appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
   }
 
   let welcomed = false;
@@ -274,15 +278,13 @@
       chatContainer.style.display = 'none';
       chatContainer.setAttribute('aria-hidden', 'true');
       toggleBtn.title = 'Open chat';
+      console.log("Chat closed");
     } else {
       chatContainer.style.display = 'flex';
       chatContainer.setAttribute('aria-hidden', 'false');
       toggleBtn.title = 'Close chat';
       inputEl.focus();
-      if (!welcomed) {
-        appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
-        welcomed = true;
-      }
+      console.log("Chat opened");
     }
   });
 
