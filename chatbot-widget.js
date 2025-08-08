@@ -21,15 +21,14 @@
     }
     #chat-container {
       position: fixed;
-      bottom: 80px;
+      bottom: 90px; /* leave space above toggle button */
       right: 20px;
       width: 320px;
-      max-height: 500px;
-      min-height: 400px; /* added */
+      height: 480px; /* fixed height to avoid collapse */
       background: #ffffff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      display: none;
+      display: none; /* initially hidden */
       flex-direction: column;
       font-family: Arial, sans-serif;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -43,15 +42,15 @@
       font-size: 16px;
       font-weight: bold;
       text-align: center;
+      flex-shrink: 0;
     }
     #chat-messages {
-      flex: 1 1 auto; /* changed */
+      flex: 1 1 auto;
       padding: 10px;
       overflow-y: auto;
       font-size: 14px;
-      min-height: 150px; /* optional */
+      background: #fafafa;
     }
-
     .message {
       margin: 6px 0;
       padding: 8px 12px;
@@ -73,8 +72,9 @@
     #chat-input {
       display: flex;
       border-top: 1px solid #ccc;
-      padding: 8px; /* added */
-      flex-shrink: 0; /* added */
+      padding: 8px;
+      flex-shrink: 0;
+      background: white;
     }
     #query-input {
       flex: 1;
@@ -82,6 +82,8 @@
       border: none;
       outline: none;
       font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
     #send-btn {
       background: #003366;
@@ -89,13 +91,16 @@
       padding: 10px 15px;
       border: none;
       cursor: pointer;
+      margin-left: 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background 0.3s ease;
     }
     #send-btn:hover {
       background: #0055aa;
     }
     .spinner {
-      margin: 10px;
-      align-self: center;
+      margin: 10px auto;
       border: 4px solid #ccc;
       border-top: 4px solid #003366;
       border-radius: 50%;
@@ -110,7 +115,8 @@
       #chat-container {
         width: 95%;
         right: 2.5%;
-        bottom: 80px;
+        bottom: 90px;
+        height: 400px;
       }
       #chat-header {
         font-size: 15px;
