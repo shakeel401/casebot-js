@@ -52,12 +52,31 @@ export async function handler(event, context) {
     });
     console.log("[Handler] User message response:", JSON.stringify(userMessageResponse));
 
-    console.log("[Handler] Creating and polling run");
-    const run = await client.beta.threads.runs.create_and_poll({
+    console.log("[Handler] Creating run");
+    // Create a run (no create_and_poll)
+    const run = await client.beta.threads.runs.create({
       thread_id: FIXED_THREAD_ID,
       assistant_id: ASSISTANT_ID,
     });
-    console.log("[Handler] Run result:", JSON.stringify(run));
+    console.log("[Handler] Run created:", JSON.stringify(run));
+
+    // Poll the run for completion manually:
+    let runStatus = run;
+    const runId = run.id;
+    while (
+      runStatus.status !== "succeeded" &&
+      runStatus.status !== "failed" &&
+      runStatus.status !== "cancelled"
+    ) {
+      console.log(`[Handler] Polling run status: ${runStatus.status}...`);
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // wait 1 second
+      runStatus = await client.beta.threads.runs.retrieve(runId);
+    }
+    console.log("[Handler] Run final status:", runStatus.status);
+
+    if (runStatus.status !== "succeeded") {
+      throw new Error(`Run ended with status: ${runStatus.status}`);
+    }
 
     console.log("[Handler] Fetching messages from thread");
     const messagesResponse = await client.beta.threads.messages.list(FIXED_THREAD_ID);
