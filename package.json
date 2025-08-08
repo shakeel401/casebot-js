@@ -30,6 +30,9 @@
   "dependencies": {
     "http-proxy-middleware": "^3.0.5",
     "jsdom": "^26.1.0",
-    "openai": "^5.10.2"
+    "openai": "^4.27.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "tavily": "^0.5.10"
   }
 }
