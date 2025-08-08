@@ -51,6 +51,30 @@ function normalizeThreadId(raw) {
   return String(raw).trim();
 }
 
+// ===== THREAD ID EXTRACTOR =====
+function extractThreadId(value) {
+  if (!value) return null;
+
+  if (typeof value === "string") {
+    return value.trim();
+  }
+
+  if (typeof value === "object") {
+    if ("id" in value) {
+      return extractThreadId(value.id);
+    }
+
+    for (const v of Object.values(value)) {
+      const extracted = extractThreadId(v);
+      if (extracted) return extracted;
+    }
+  }
+
+  const str = String(value).trim();
+  if (str === "[object Object]") return null;
+  return str;
+}
+
 // ===== MAIN HANDLER =====
 export async function handler(event) {
   console.log("📩 Function triggered:", event.httpMethod);
@@ -60,7 +84,7 @@ export async function handler(event) {
   }
 
   try {
-    // 📦 Parse incoming request
+    // Parse incoming request
     let bodyData = {};
     const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
 
@@ -77,24 +101,17 @@ export async function handler(event) {
 
     console.log("📥 Raw body:", bodyData);
 
-    // Extract and sanitize
+    // Extract and sanitize inputs
     const query = (bodyData.query || "").trim();
     let thread_id = normalizeThreadId(bodyData.thread_id);
 
-    // 🔒 Hard safety: ensure thread_id is string or null
-    if (thread_id && typeof thread_id !== "string") {
-      try {
-        thread_id = String(thread_id.id || thread_id).trim();
-      } catch {
-        thread_id = null;
-      }
-    }
-    thread_id = thread_id ? String(thread_id).trim() : null;
+    // Use robust extraction
+    thread_id = extractThreadId(thread_id);
 
     console.log("🔥 Query:", query);
-    console.log("🧵 thread_id after normalize & safety:", thread_id, "type:", typeof thread_id);
+    console.log("🧵 thread_id after extraction:", thread_id, "type:", typeof thread_id);
 
-    // ❌ Validation
+    // Validation
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
@@ -105,25 +122,25 @@ export async function handler(event) {
       };
     }
 
-    // 🛑 Env checks
+    // Env checks
     if (!ASSISTANT_ID || !VECTOR_STORE_ID) {
       return { statusCode: 500, body: JSON.stringify({ error: "Missing VECTOR_STORE_ID or ASSISTANT_ID" }) };
     }
 
-    // ➕ Create thread if missing
+    // Create thread if missing
     if (!thread_id) {
       const thread = await openai.beta.threads.create();
       thread_id = String(thread.id).trim();
       console.log("✨ New thread created:", thread_id);
     }
 
-    // ✅ Final thread_id safety check
+    // Final thread_id safety check
     if (typeof thread_id !== "string") {
       console.error("🚨 thread_id is NOT a string before sending to OpenAI:", thread_id);
       throw new Error("thread_id must be a string before calling OpenAI API");
     }
 
-    // 💬 Send user message
+    // Send user message
     console.log("📌 Sending to OpenAI with thread_id =", thread_id);
     await openai.beta.threads.messages.create({
       thread_id,
@@ -131,13 +148,13 @@ export async function handler(event) {
       content: query
     });
 
-    // 🚀 Run assistant
+    // Run assistant
     let run = await openai.beta.threads.runs.createAndPoll({
       thread_id,
       assistant_id: ASSISTANT_ID
     });
 
-    // 🛠 Tool calls
+    // Tool calls
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
 
@@ -160,7 +177,7 @@ export async function handler(event) {
       });
     }
 
-    // 📩 Get reply
+    // Get reply
     const messages = await openai.beta.threads.messages.list({ thread_id });
     const assistantMessages = messages.data.filter(m => m.role === "assistant");
 
@@ -170,7 +187,7 @@ export async function handler(event) {
       .join("\n")
       .trim();
 
-    // ✅ Always return string thread_id
+    // Return response
     return {
       statusCode: 200,
       body: JSON.stringify({
