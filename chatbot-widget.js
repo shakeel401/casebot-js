@@ -154,18 +154,20 @@
 
   // Grab references
   const chatContainer = document.getElementById('chat-container');
-  const messagesEl = document.getElementById("chat-messages");
-  const inputEl = document.getElementById("query-input");
-  const sendBtn = document.getElementById("send-btn");
 
-  // Function to append messages
-  function appendMessage(text, className, isMarkdown = false) {
-    const msg = document.createElement("div");
-    msg.className = `message ${className}`;
-    msg.innerHTML = isMarkdown ? marked.parse(text) : text;
-    messagesEl.appendChild(msg);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
+  // Toggle chat visibility on button click
+  toggleBtn.addEventListener('click', () => {
+    const isVisible = getComputedStyle(chatContainer).display !== 'none';
+    if (isVisible) {
+      chatContainer.style.display = 'none';
+      chatContainer.setAttribute('aria-hidden', 'true');
+      toggleBtn.title = 'Open chat';
+    } else {
+      chatContainer.style.display = 'flex';
+      chatContainer.setAttribute('aria-hidden', 'false');
+      toggleBtn.title = 'Close chat';
+    }
+  });
 
   // Load marked library dynamically
   function loadScript(src) {
@@ -181,7 +183,19 @@
   async function initChatbot() {
     await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
 
+    const messagesEl = document.getElementById("chat-messages");
+    const inputEl = document.getElementById("query-input");
+    const sendBtn = document.getElementById("send-btn");
+
     let thread_id = null;
+
+    function appendMessage(text, className, isMarkdown = false) {
+      const msg = document.createElement("div");
+      msg.className = `message ${className}`;
+      msg.innerHTML = isMarkdown ? marked.parse(text) : text;
+      messagesEl.appendChild(msg);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
 
     function showSpinner() {
       const spinner = document.createElement("div");
@@ -256,32 +270,12 @@
       }
     }
 
-    // Add event listeners
     sendBtn.addEventListener("click", sendMessage);
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
     });
-
-    // Show a welcome message once on first init
-    appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
   }
 
-  // Toggle chat visibility on button click and focus input if opened
-  toggleBtn.addEventListener('click', () => {
-    const isVisible = getComputedStyle(chatContainer).display !== 'none';
-    if (isVisible) {
-      chatContainer.style.display = 'none';
-      chatContainer.setAttribute('aria-hidden', 'true');
-      toggleBtn.title = 'Open chat';
-    } else {
-      chatContainer.style.display = 'flex';
-      chatContainer.setAttribute('aria-hidden', 'false');
-      toggleBtn.title = 'Close chat';
-      inputEl.focus();
-    }
-  });
-
-  // Initialize chatbot
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initChatbot);
   } else {
