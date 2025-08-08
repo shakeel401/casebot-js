@@ -2,150 +2,211 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chatbot Testing UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CaseBot - Legal Assistant</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #f7f7f7;
-      border-radius: 8px;
-    }
-    h1 {
-      text-align: center;
-      color: #003366;
-    }
-    #chat {
+    /* Your existing styles kept intact */
+    #chat-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      max-height: 500px;
+      background: #ffffff;
       border: 1px solid #ccc;
-      background: white;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      overflow: hidden;
+      z-index: 9999;
+    }
+    #chat-header {
+      background: #003366;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #chat-messages {
+      flex: 1;
       padding: 10px;
-      height: 400px;
       overflow-y: auto;
-      border-radius: 5px;
-      margin-bottom: 10px;
+      font-size: 14px;
     }
     .message {
-      margin: 8px 0;
+      margin: 6px 0;
       padding: 8px 12px;
-      border-radius: 15px;
-      max-width: 75%;
+      border-radius: 16px;
+      max-width: 80%;
+      clear: both;
       word-wrap: break-word;
     }
     .user {
-      background-color: #d0eaff;
+      background: #e1f5fe;
+      align-self: flex-end;
       margin-left: auto;
-      text-align: right;
     }
     .bot {
-      background-color: #eee;
+      background: #f1f1f1;
+      align-self: flex-start;
       margin-right: auto;
-      text-align: left;
     }
-    #input-area {
+    #chat-input {
       display: flex;
-      gap: 10px;
+      border-top: 1px solid #ccc;
     }
-    #query {
-      flex-grow: 1;
+    #query-input {
+      flex: 1;
       padding: 10px;
-      font-size: 16px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      border: none;
+      outline: none;
+      font-size: 14px;
     }
     #send-btn {
-      background-color: #003366;
+      background: #003366;
       color: white;
+      padding: 10px 15px;
       border: none;
-      padding: 0 20px;
-      font-size: 16px;
       cursor: pointer;
-      border-radius: 5px;
     }
-    #send-btn:disabled {
-      background-color: #999;
-      cursor: not-allowed;
+    #send-btn:hover {
+      background: #0055aa;
     }
-    #error {
-      color: red;
-      margin-top: 10px;
-      min-height: 18px;
+    .spinner {
+      margin: 10px;
+      align-self: center;
+      border: 4px solid #ccc;
+      border-top: 4px solid #003366;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @media screen and (max-width: 480px) {
+      #chat-container {
+        width: 95%;
+        right: 2.5%;
+        bottom: 10px;
+      }
+      #chat-header {
+        font-size: 15px;
+      }
+      #query-input {
+        font-size: 13px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Chatbot Testing UI</h1>
-  <div id="chat"></div>
-  <div id="input-area">
-    <input type="text" id="query" placeholder="Type your question here" autocomplete="off" />
-    <button id="send-btn">Send</button>
+  <div id="chat-container">
+    <div id="chat-header">🧑‍⚖️ CaseBot</div>
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" />
+      <button id="send-btn">Send</button>
+    </div>
   </div>
-  <div id="error"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <script>
-    const chatEl = document.getElementById('chat');
-    const queryEl = document.getElementById('query');
-    const sendBtn = document.getElementById('send-btn');
-    const errorEl = document.getElementById('error');
-
-    // Replace this with your deployed Netlify function URL if testing locally or on another domain:
-    const API_URL = "/.netlify/functions/chatbot";
+    const messagesEl = document.getElementById("chat-messages");
+    const inputEl = document.getElementById("query-input");
+    const sendBtn = document.getElementById("send-btn");
 
     let thread_id = null;
 
-    function appendMessage(text, sender) {
-      const msg = document.createElement('div');
-      msg.className = 'message ' + sender;
-      msg.textContent = text;
-      chatEl.appendChild(msg);
-      chatEl.scrollTop = chatEl.scrollHeight;
+    function appendMessage(text, className, isMarkdown = false) {
+      const msg = document.createElement("div");
+      msg.className = `message ${className}`;
+      msg.innerHTML = isMarkdown ? marked.parse(text) : text;
+      messagesEl.appendChild(msg);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function showSpinner() {
+      const spinner = document.createElement("div");
+      spinner.className = "spinner";
+      spinner.id = "loading-spinner";
+      messagesEl.appendChild(spinner);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function hideSpinner() {
+      const spinner = document.getElementById("loading-spinner");
+      if (spinner) spinner.remove();
+    }
+
+    // Normalize thread_id coming from backend
+    function extractThreadId(raw) {
+      if (!raw) return null;
+      if (typeof raw === "string" && raw.startsWith("thread_")) return raw.trim();
+      if (typeof raw === "object") {
+        if (raw.id && typeof raw.id === "string" && raw.id.startsWith("thread_")) return raw.id.trim();
+        if (raw.thread_id && typeof raw.thread_id === "string" && raw.thread_id.startsWith("thread_")) return raw.thread_id.trim();
+      }
+      return null;
     }
 
     async function sendMessage() {
-      const query = queryEl.value.trim();
+      const query = inputEl.value.trim();
       if (!query) return;
 
-      appendMessage(query, 'user');
-      queryEl.value = '';
+      appendMessage(query, "user");
+      inputEl.value = "";
       sendBtn.disabled = true;
-      errorEl.textContent = '';
+      showSpinner();
 
       try {
-        const response = await fetch(API_URL, {
+        const payload = {
+          query,
+          thread_id: thread_id ? String(thread_id).trim() : null
+        };
+
+        const response = await fetch("/.netlify/functions/chatbot", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query, thread_id }),
+          body: JSON.stringify(payload)
         });
 
         if (!response.ok) {
-          throw new Error(`Server error: ${response.status}`);
+          throw new Error(`Server responded with ${response.status}`);
         }
 
-        const data = await response.json();
+        const result = await response.json();
+        hideSpinner();
 
-        if (data.error) {
-          errorEl.textContent = data.error;
-          appendMessage("⚠️ " + data.error, 'bot');
-        } else {
-          appendMessage(data.response || "(No response)", 'bot');
-          if (data.thread_id) {
-            thread_id = data.thread_id;
-            console.log("Stored thread_id:", thread_id);
-          }
+        if (result.response) {
+          appendMessage(result.response, "bot", true);
+        } else if (result.error) {
+          appendMessage("⚠️ " + result.error, "bot");
+          console.error("Backend error:", result.error);
         }
+
+        const newId = extractThreadId(result.thread_id);
+        if (newId) {
+          thread_id = newId;
+          console.log("✅ Stored thread_id:", thread_id);
+        }
+
       } catch (err) {
-        errorEl.textContent = err.message;
-        appendMessage("⚠️ Failed to connect to chatbot server.", 'bot');
+        hideSpinner();
+        appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
+        console.error("Fetch error:", err);
       } finally {
         sendBtn.disabled = false;
-        queryEl.focus();
       }
     }
 
-    sendBtn.addEventListener('click', sendMessage);
-    queryEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendMessage();
+    sendBtn.addEventListener("click", sendMessage);
+    inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") sendMessage();
     });
   </script>
 </body>
