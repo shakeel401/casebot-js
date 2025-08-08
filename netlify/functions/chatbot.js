@@ -2,18 +2,19 @@
 import OpenAI from "openai";
 import fetch from "node-fetch";
 
+// ===== CONFIG =====
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const ASSISTANT_ID = process.env.ASSISTANT_ID;
 const VECTOR_STORE_ID = process.env.VECTOR_STORE_ID;
 
-// ❌ Block invalid questions
+// ===== BLOCK INVALID QUESTIONS =====
 function isQuestionValid(query) {
   const blockedWords = ["hack", "illegal", "kill"];
   return !blockedWords.some(word => query.toLowerCase().includes(word));
 }
 
-// 🔍 Tavily Search
+// ===== TAVILY SEARCH TOOL =====
 async function tavilySearch(query) {
   try {
     const response = await fetch("https://api.tavily.com/search", {
@@ -29,6 +30,7 @@ async function tavilySearch(query) {
         include_raw_content: false
       })
     });
+
     const data = await response.json();
     return data?.answer || "No relevant results found.";
   } catch (error) {
@@ -37,7 +39,7 @@ async function tavilySearch(query) {
   }
 }
 
-// 🛠 Normalize thread_id so it's always a string
+// ===== THREAD ID NORMALIZER =====
 function normalizeThreadId(raw) {
   if (!raw) return null;
   if (typeof raw === "string") return raw.trim();
@@ -49,6 +51,7 @@ function normalizeThreadId(raw) {
   return String(raw).trim();
 }
 
+// ===== MAIN HANDLER =====
 export async function handler(event) {
   console.log("📩 Function triggered:", event.httpMethod);
 
@@ -57,30 +60,36 @@ export async function handler(event) {
   }
 
   try {
-    // 📦 Parse request
-    let bodyData;
+    // 📦 Parse incoming request safely
+    let bodyData = {};
     const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
+
     if (contentType.includes("application/json")) {
-      bodyData = JSON.parse(event.body);
+      try {
+        bodyData = JSON.parse(event.body || "{}");
+      } catch (err) {
+        return { statusCode: 400, body: JSON.stringify({ error: "Invalid JSON body" }) };
+      }
     } else {
-      const params = new URLSearchParams(event.body);
+      const params = new URLSearchParams(event.body || "");
       bodyData = Object.fromEntries(params);
     }
 
     console.log("📥 Raw body:", bodyData);
 
+    // Extract and sanitize inputs
     const query = (bodyData.query || "").trim();
     let thread_id = normalizeThreadId(bodyData.thread_id);
 
     console.log("🔥 Query:", query);
     console.log("🧵 thread_id after normalize:", thread_id, "type:", typeof thread_id);
 
-    // ❌ Block invalid
+    // ❌ Validate question
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          thread_id,
+          thread_id: thread_id ? String(thread_id).trim() : null,
           response: "This question is not appropriate or relevant. Please ask something based on your role or documents."
         })
       };
@@ -112,9 +121,10 @@ export async function handler(event) {
       assistant_id: ASSISTANT_ID
     });
 
-    // 🛠 Handle tools
+    // 🛠 Handle tool calls
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
+
       for (const action of run.required_action.submit_tool_outputs.tool_calls) {
         const { name: fnName, arguments: argsStr } = action.function;
         const args = JSON.parse(argsStr);
@@ -144,10 +154,11 @@ export async function handler(event) {
       .join("\n")
       .trim();
 
+    // ✅ Final safety: make sure thread_id is always string before returning
     return {
       statusCode: 200,
       body: JSON.stringify({
-        thread_id,
+        thread_id: String(thread_id).trim(),
         response: finalResponse || "⚠️ Assistant did not return a message."
       })
     };
