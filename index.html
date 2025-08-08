@@ -2,75 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CaseBot Test UI</title>
+  <title>Chatbot Function Test</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    #messages { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
-    .msg { padding: 5px; margin: 5px 0; border-radius: 6px; }
-    .user { background: #e1f5fe; }
-    .bot { background: #f1f1f1; }
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+    label, button { display: block; margin-top: 10px; }
+    textarea { width: 100%; height: 80px; }
+    pre { background: #f0f0f0; padding: 10px; white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <h1>CaseBot Test UI</h1>
-  <div id="messages"></div>
-  <input type="text" id="query" placeholder="Ask something..." style="width: 70%;" />
-  <button id="send">Send</button>
+  <h1>Test Chatbot Netlify Function</h1>
+
+  <label for="query">Enter your question:</label>
+  <textarea id="query" placeholder="Ask something...">What is AI?</textarea>
+
+  <button id="sendBtn">Send</button>
+
+  <h2>Response:</h2>
+  <pre id="responseArea">Waiting for your query...</pre>
 
   <script>
-    const messagesEl = document.getElementById("messages");
-    const queryEl = document.getElementById("query");
-    const sendBtn = document.getElementById("send");
+    const sendBtn = document.getElementById("sendBtn");
+    const responseArea = document.getElementById("responseArea");
+    const queryInput = document.getElementById("query");
 
-    let thread_id = null; // will always store a string
+    sendBtn.onclick = async () => {
+      const query = queryInput.value.trim();
+      if (!query) {
+        alert("Please enter a question.");
+        return;
+      }
 
-    function appendMessage(text, className) {
-      const div = document.createElement("div");
-      div.className = `msg ${className}`;
-      div.textContent = text;
-      messagesEl.appendChild(div);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
-
-    async function sendMessage() {
-      const query = queryEl.value.trim();
-      if (!query) return;
-
-      appendMessage(query, "user");
-      queryEl.value = "";
-      sendBtn.disabled = true;
+      responseArea.textContent = "Loading...";
 
       try {
-        const payload = { query };
-        if (thread_id) payload.thread_id = thread_id; // always plain string
-
-        const response = await fetch("/.netlify/functions/chatbot", {
+        const res = await fetch("https://verdant-empanada-699694.netlify.app/.netlify/functions/chatbot", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ query })
         });
 
-        const data = await response.json();
-        console.log("🔍 Raw response:", data);
-
-        if (data.response) appendMessage(data.response, "bot");
-        if (data.thread_id) {
-          thread_id = String(data.thread_id).trim();
-          console.log("✅ Updated thread_id:", thread_id);
+        if (!res.ok) {
+          responseArea.textContent = `Error: ${res.status} ${res.statusText}`;
+          return;
         }
 
-      } catch (err) {
-        appendMessage("⚠️ Error: " + err.message, "bot");
-      } finally {
-        sendBtn.disabled = false;
+        const data = await res.json();
+        responseArea.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        responseArea.textContent = "Fetch error: " + error.message;
       }
-    }
-
-    sendBtn.addEventListener("click", sendMessage);
-    queryEl.addEventListener("keydown", e => {
-      if (e.key === "Enter") sendMessage();
-    });
+    };
   </script>
 </body>
 </html>
