@@ -24,14 +24,14 @@
     }
     #chat-container {
       position: fixed;
-      bottom: 90px; /* leave space above toggle button */
+      bottom: 90px;
       right: 20px;
       width: 320px;
-      height: 480px; /* fixed height to avoid collapse */
+      height: 480px;
       background: #ffffff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      display: none; /* initially hidden */
+      display: none;
       flex-direction: column;
       font-family: Arial, sans-serif;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -130,12 +130,11 @@
     }
   `;
 
-  // Append styles to document head
   const styleTag = document.createElement('style');
   styleTag.textContent = styles;
   document.head.appendChild(styleTag);
 
-  // Inject HTML elements for chatbot toggle button and container
+  // Inject HTML
   const chatbotHTML = `
     <button id="chat-toggle-btn" aria-label="Open chat">💬</button>
     <div id="chat-container" aria-hidden="true" role="region" aria-label="Chatbot window">
@@ -147,18 +146,14 @@
       </div>
     </div>
   `;
-
-  // Append chatbot HTML to body
   document.body.insertAdjacentHTML('beforeend', chatbotHTML);
 
-  // Now grab references to the injected elements
   const toggleBtn = document.getElementById('chat-toggle-btn');
   const chatContainer = document.getElementById('chat-container');
   const messagesEl = document.getElementById("chat-messages");
   const inputEl = document.getElementById("query-input");
   const sendBtn = document.getElementById("send-btn");
 
-  // Function to append messages (with markdown support fallback)
   function appendMessage(text, className, isMarkdown = false) {
     const msg = document.createElement("div");
     msg.className = `message ${className}`;
@@ -169,26 +164,18 @@
         msg.textContent = text;
       }
     } catch (err) {
-      console.error("Error rendering markdown:", err);
       msg.textContent = text;
     }
     messagesEl.appendChild(msg);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  // Load marked library dynamically
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = src;
-      script.onload = () => {
-        console.log("Marked.js loaded");
-        resolve();
-      };
-      script.onerror = () => {
-        console.error(`Failed to load script: ${src}`);
-        reject(new Error(`Failed to load script: ${src}`));
-      };
+      script.onload = resolve;
+      script.onerror = reject;
       document.head.appendChild(script);
     });
   }
@@ -196,8 +183,8 @@
   async function initChatbot() {
     try {
       await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
-    } catch(e) {
-      console.warn("Marked.js not loaded, fallback to plain text messages.");
+    } catch {
+      console.warn("Marked.js not loaded; using plain text.");
     }
 
     let thread_id = null;
@@ -219,8 +206,8 @@
       if (!raw) return null;
       if (typeof raw === "string" && raw.startsWith("thread_")) return raw.trim();
       if (typeof raw === "object") {
-        if (raw.id && typeof raw.id === "string" && raw.id.startsWith("thread_")) return raw.id.trim();
-        if (raw.thread_id && typeof raw.thread_id === "string" && raw.thread_id.startsWith("thread_")) return raw.thread_id.trim();
+        if (raw.id?.startsWith("thread_")) return raw.id.trim();
+        if (raw.thread_id?.startsWith("thread_")) return raw.thread_id.trim();
       }
       return null;
     }
@@ -246,49 +233,36 @@
           body: JSON.stringify(payload)
         });
 
-        if (!response.ok) {
-          throw new Error(`Server responded with ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Server responded with ${response.status}`);
 
         const result = await response.json();
         hideSpinner();
 
         if (result.response) {
           appendMessage(result.response, "bot", true);
-          console.log("Bot response appended");
         } else if (result.error) {
           appendMessage("⚠️ " + result.error, "bot");
-          console.error("Backend error:", result.error);
         }
 
         const newId = extractThreadId(result.thread_id);
-        if (newId) {
-          thread_id = newId;
-          console.log("✅ Stored thread_id:", thread_id);
-        }
+        if (newId) thread_id = newId;
 
       } catch (err) {
         hideSpinner();
         appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
-        console.error("Fetch error:", err);
+        console.error(err);
       } finally {
         sendBtn.disabled = false;
       }
     }
 
-    // Add event listeners
     sendBtn.addEventListener("click", sendMessage);
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
     });
-
-    // Show a welcome message once on first init
-    appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
-
-    console.log("Chatbot initialized with welcome message");
   }
 
-  // Toggle chat visibility on button click and focus input if opened
+  let welcomed = false;
   toggleBtn.addEventListener('click', () => {
     const isVisible = getComputedStyle(chatContainer).display !== 'none';
     if (isVisible) {
@@ -300,10 +274,13 @@
       chatContainer.setAttribute('aria-hidden', 'false');
       toggleBtn.title = 'Close chat';
       inputEl.focus();
+      if (!welcomed) {
+        appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
+        welcomed = true;
+      }
     }
   });
 
-  // Initialize chatbot on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initChatbot);
   } else {
