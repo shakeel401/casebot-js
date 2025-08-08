@@ -81,9 +81,11 @@ export async function handler(event, context) {
 
     if (!thread_id) {
       console.log("Creating new thread");
-      const thread = await client.beta.threads.create();
-      thread_id = thread.id;
-      console.log("New thread created with id:", thread_id);
+      const threadResponse = await client.beta.threads.create();
+      console.log("New thread response:", threadResponse);
+      // Try extracting id safely:
+      thread_id = threadResponse.data?.id || threadResponse.id;
+      console.log("Extracted thread_id:", thread_id);
     }
 
     console.log("Adding user message to thread");
