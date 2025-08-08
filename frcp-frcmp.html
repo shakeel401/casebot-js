@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="src/config.js"></script>
+    <script>
+        if (config.isShutdown && window.location.pathname !== config.shutdownPage) {
+            window.location.href = config.shutdownPage;
+        }
+    </script>
+    <title>nUSA Legal - FRCP/FRCMP</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="styles.css">
+    <meta property="og:title" content="nUSA Legal">
+    <meta property="og:description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:url" content="https://nusalegal.com">
+    <meta property="og:image" content="https://nusalegal.com/thumbnail.jpg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#e0f7fa" media="(prefers-color-scheme: light)">
+    <meta name="keywords" content="legal, nUSA, federal rules, civil procedure, criminal procedure">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>
+        ['error', 'warn'].forEach(method => {
+            const original = console[method];
+            console[method] = function() {
+                const args = Array.from(arguments);
+                const msg = args.map(arg => String(arg || '')).join(' ');
+                if (msg.includes('net::ERR_FAILED') || 
+                    msg.includes('CORS policy') || 
+                    msg.includes('file:///api/search') || 
+                    msg.includes('file:///F:/src/knowledge-base.json') ||
+                    msg.includes('Missing required elements:') ||
+                    msg.includes('Failed to load knowledge base:')) {
+                    return;
+                }
+                return original.apply(console, args);
+            };
+        });
+
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options) {
+            if (url.includes('/api/search') || url.includes('/src/knowledge-base.json')) {
+                return Promise.reject(new Error('Suppressed'));
+            }
+            return originalFetch.apply(this, arguments);
+        };
+
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event.reason?.message?.includes('net::ERR_FAILED') || 
+                event.reason?.message?.includes('CORS policy') ||
+                event.reason?.message === 'Suppressed') {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1><a href="https://nusalegal.com">nUSA Legal</a></h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="courts.html">Courts</a></li>
+                    <li><a href="congress.html">Congress</a></li>
+                    <li><a href="frcp-frcmp.html">FRCP/FRCMP</a></li>
+                    <li><a href="laws.html">Laws</a></li>
+                    <li><a href="constitution.html">Constitution</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="frcp-frcmp-container">
+            <div class="frcp-frcmp-left button-container">
+                <button id="frcp-btn" style="--i: 0">FRCP</button>
+                <button id="frcmp-btn" style="--i: 1">FRCMP</button>
+            </div>
+            <div class="frcp-frcmp-right grid">
+                <h2 id="section-title" class="centered-title">FRCP</h2>
+                <div id="frcp-content" class="f-column" style="display: flex;">
+                    <section class="title-section">
+                        <h3>TITLE I. SCOPE OF RULES; FORM OF ACTION</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 1" data-subtitle="Scope and Purpose" data-content="These rules govern the procedure in all civil actions and proceedings in the United States district courts, except as stated in Rule 81. They should be construed, administered, and employed by the court and the parties to secure the just, speedy, and inexpensive determination of every action and proceeding.<br><br>This means that these rules set the standards for how civil cases are handled in federal district courts. The rules should be interpreted and used in a way that ensures cases are resolved fairly, quickly, and without unnecessary expense.">
+                            <h3>FRCP Rule 1</h3>
+                            <p>Scope and Purpose: These rules govern the procedure in all civil actions and proceedings in the United States district courts, except as stated in Rule 81. They should be construed, administered, and employed by the court and the parties to secure the just, speedy, and inexpensive determination of every action and proceeding.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 2" data-subtitle="One Form of Action" data-content="There is one form of action—the civil action.<br><br>This rule abolished the historical distinction between actions at law and suits in equity. Now, there is only one type of civil case in federal courts, simplifying the legal process.">
+                            <h3>FRCP Rule 2</h3>
+                            <p>One Form of Action: There is one form of action—the civil action.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE II. COMMENCING AN ACTION; SERVICE OF PROCESS, PLEADINGS, MOTIONS, AND ORDERS</h3>
+                    </section>
+                    <div class="section-container">    
+                        <section class="rule-card" data-rule="FRCP Rule 3" data-subtitle="Commencing an Action" data-content="A civil action is commenced by filing a complaint with the court.<br><br>This means that a lawsuit officially begins when the plaintiff files their complaint document with the appropriate court. The complaint must outline the basic facts of the case and what legal remedies the plaintiff is seeking.">
+                            <h3>FRCP Rule 3</h3>
+                            <p>Commencing an Action: A civil action is commenced by filing a complaint with the court.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 4" data-subtitle="Summons" data-content="Detailed guidelines on the issuance, content, amendment, and service of summons.<br><br>This rule explains how to properly notify defendants about a lawsuit. It covers who can serve the summons, what information must be included, and how to handle service both domestically and internationally.">
+                            <h3>FRCP Rule 4</h3>
+                            <p>Summons: Detailed guidelines on the issuance, content, amendment, and service of summons.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 5" data-subtitle="Serving and Filing Pleadings and Other Papers" data-content="Guidelines on serving and filing pleadings and other papers.<br><br>This rule sets out the requirements for how legal documents must be delivered to other parties in the case and filed with the court. It includes provisions for electronic filing and service.">
+                            <h3>FRCP Rule 5</h3>
+                            <p>Serving and Filing Pleadings and Other Papers: Guidelines on serving and filing pleadings and other papers.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 6" data-subtitle="Computing and Extending Time" data-content="Instructions on computing and extending time periods and deadlines.<br><br>This rule explains how to calculate deadlines in federal court, including how to count days, handle weekends and holidays, and request extensions of time.">
+                            <h3>FRCP Rule 6</h3>
+                            <p>Computing and Extending Time; Time for Motion Papers: Instructions on computing and extending time periods and deadlines.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE III. PLEADINGS AND MOTIONS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 7" data-subtitle="Pleadings Allowed; Form of Motions" data-content="Guidelines on the pleadings allowed and the form of motions and other papers.<br><br>This rule specifies which types of pleadings are allowed in federal court, including complaints, answers, and replies. It also sets requirements for the format of motions and other court papers.">
+                            <h3>FRCP Rule 7</h3>
+                            <p>Pleadings Allowed; Form of Motions and Other Papers: Guidelines on the pleadings allowed and the form of motions and other papers.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 8" data-subtitle="General Rules of Pleading" data-content="Requirements for a pleading to state a claim for relief.<br><br>This rule establishes the basic requirements for pleadings in federal court. It requires a 'short and plain statement' showing the pleader is entitled to relief, and explains how defenses should be presented.">
+                            <h3>FRCP Rule 8</h3>
+                            <p>General Rules of Pleading: Requirements for a pleading to state a claim for relief.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 9" data-subtitle="Pleading Special Matters" data-content="Special pleading requirements for certain matters.<br><br>This rule sets out special requirements for pleading specific types of claims, such as fraud, mistake, or conditions of mind. It requires certain matters to be pleaded with greater specificity than usual.">
+                            <h3>FRCP Rule 9</h3>
+                            <p>Pleading Special Matters: Special pleading requirements for certain matters.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 10" data-subtitle="Form of Pleadings" data-content="Requirements for the form of pleadings.<br><br>This rule specifies how pleadings should be formatted, including requirements for captions, numbering paragraphs, and how to handle exhibits. It ensures consistency in court documents.">
+                            <h3>FRCP Rule 10</h3>
+                            <p>Form of Pleadings: Requirements for the form of pleadings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 11" data-subtitle="Signing Pleadings and Motions" data-content="Requirements for signing pleadings, motions, and other papers, and representations to the court.<br><br>This rule establishes that by signing a document filed with the court, an attorney or party certifies that it is not frivolous and has a reasonable basis in fact and law. Violations can result in sanctions.">
+                            <h3>FRCP Rule 11</h3>
+                            <p>Signing Pleadings, Motions, and Other Papers; Representations to the Court; Sanctions: Requirements for signing pleadings, motions, and other papers, and representations to the court.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 12" data-subtitle="Defenses and Objections" data-content="When and how presented; Motion for Judgment on the Pleadings; Consolidating Motions; Waiving Defenses; Pretrial Hearing.<br><br>This rule outlines how and when to present defenses and objections in a civil case. It includes provisions for motions to dismiss, motions for more definite statements, and motions to strike.">
+                            <h3>FRCP Rule 12</h3>
+                            <p>Defenses and Objections: When and how presented; Motion for Judgment on the Pleadings; Consolidating Motions; Waiving Defenses; Pretrial Hearing.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 13" data-subtitle="Counterclaim and Crossclaim" data-content="Guidelines on asserting counterclaims and crossclaims.<br><br>This rule explains when and how a party can make claims against an opposing party (counterclaims) or a co-party (crossclaims). It distinguishes between compulsory and permissive counterclaims.">
+                            <h3>FRCP Rule 13</h3>
+                            <p>Counterclaim and Crossclaim: Guidelines on asserting counterclaims and crossclaims.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 14" data-subtitle="Third-Party Practice" data-content="Guidelines on third-party practice.<br><br>This rule covers when and how a defending party can bring a third party into the lawsuit. It allows a defendant to sue someone who might be liable for all or part of the plaintiff's claim against the defendant.">
+                            <h3>FRCP Rule 14</h3>
+                            <p>Third-Party Practice: Guidelines on third-party practice.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 15" data-subtitle="Amended and Supplemental Pleadings" data-content="Guidelines on amending and supplementing pleadings.<br><br>This rule sets out when and how parties can modify their pleadings, either by amendment or supplementation. It includes provisions for amendments before and during trial, and relation back of amendments.">
+                            <h3>FRCP Rule 15</h3>
+                            <p>Amended and Supplemental Pleadings: Guidelines on amending and supplementing pleadings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 16" data-subtitle="Pretrial Conferences and Management" data-content="Guidelines on pretrial conferences, scheduling, and management.<br><br>This rule governs how courts manage cases before trial. It covers scheduling conferences, deadlines, and other case management tools to help ensure efficient resolution of cases.">
+                            <h3>FRCP Rule 16</h3>
+                            <p>Pretrial Conferences; Scheduling; Management: Guidelines on pretrial conferences, scheduling, and management.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE IV. PARTIES</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 17" data-subtitle="Capacity to Sue or Be Sued" data-content="Guidelines on the capacity of parties to sue or be sued.<br><br>This rule determines who can be a party to a lawsuit. It addresses issues like the capacity of minors, corporations, and public officers to participate in litigation.">
+                            <h3>FRCP Rule 17</h3>
+                            <p>Plaintiff and Defendant; Capacity; Public Officers: Guidelines on the capacity of parties to sue or be sued.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 18" data-subtitle="Joinder of Claims" data-content="Guidelines on the joinder of claims.<br><br>This rule allows a party to join multiple claims against an opposing party in one lawsuit, even if the claims are unrelated. This promotes judicial efficiency by resolving all disputes between parties at once.">
+                            <h3>FRCP Rule 18</h3>
+                            <p>Joinder of Claims: Guidelines on the joinder of claims.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 19" data-subtitle="Required Joinder of Parties" data-content="Guidelines on required joinder of parties.<br><br>This rule identifies when additional parties must be added to a lawsuit for it to proceed fairly. It helps ensure that the court can provide complete relief and protect the interests of absent parties.">
+                            <h3>FRCP Rule 19</h3>
+                            <p>Required Joinder of Parties: Guidelines on required joinder of parties.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 20" data-subtitle="Permissive Joinder of Parties" data-content="Guidelines on permissive joinder of parties.<br><br>This rule allows multiple plaintiffs or defendants to join in one lawsuit when their claims arise from the same transaction or occurrence and share common questions of law or fact.">
+                            <h3>FRCP Rule 20</h3>
+                            <p>Permissive Joinder of Parties: Guidelines on permissive joinder of parties.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 21" data-subtitle="Misjoinder and Nonjoinder" data-content="Guidelines on misjoinder and nonjoinder of parties.<br><br>This rule provides remedies when parties are improperly joined or left out of a lawsuit. It allows the court to add or drop parties at any stage of the action.">
+                            <h3>FRCP Rule 21</h3>
+                            <p>Misjoinder and Nonjoinder of Parties: Guidelines on misjoinder and nonjoinder of parties.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 22" data-subtitle="Interpleader" data-content="Guidelines on interpleader.<br><br>This rule allows a party holding property to force multiple parties claiming that property to resolve their competing claims in a single action, protecting the holder from multiple liability.">
+                            <h3>FRCP Rule 22</h3>
+                            <p>Interpleader: Guidelines on interpleader.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 23" data-subtitle="Class Actions" data-content="Guidelines on class actions.<br><br>This rule governs when and how a lawsuit can be brought by a representative on behalf of a large group (class) of people with similar claims. It sets requirements for class certification, notice, and settlement.">
+                            <h3>FRCP Rule 23</h3>
+                            <p>Class Actions: Guidelines on class actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 23.1" data-subtitle="Derivative Actions" data-content="Guidelines on derivative actions.<br><br>This rule sets procedures for shareholders to sue on behalf of a corporation when the corporation's management fails to protect corporate interests. It requires shareholders to first demand action from the board.">
+                            <h3>FRCP Rule 23.1</h3>
+                            <p>Derivative Actions: Guidelines on derivative actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 23.2" data-subtitle="Unincorporated Associations" data-content="Guidelines on actions relating to unincorporated associations.<br><br>This rule allows members of an unincorporated association to sue or be sued as representatives of all members in certain circumstances, similar to class actions.">
+                            <h3>FRCP Rule 23.2</h3>
+                            <p>Actions Relating to Unincorporated Associations: Guidelines on actions relating to unincorporated associations.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 24" data-subtitle="Intervention" data-content="Guidelines on intervention.<br><br>This rule allows non-parties to join an ongoing lawsuit if they have a legal interest that could be affected by the case's outcome. It covers both intervention as of right and permissive intervention.">
+                            <h3>FRCP Rule 24</h3>
+                            <p>Intervention: Guidelines on intervention.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 25" data-subtitle="Substitution of Parties" data-content="Guidelines on substitution of parties.<br><br>This rule addresses what happens when a party dies, becomes incompetent, or transfers their interest in the case. It provides procedures for substituting appropriate parties to continue the litigation.">
+                            <h3>FRCP Rule 25</h3>
+                            <p>Substitution of Parties: Guidelines on substitution of parties.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE V. DISCLOSURES AND DISCOVERY</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 26" data-subtitle="Duty to Disclose and Discovery" data-content="Duty to Disclose; General Provisions Governing Discovery: Guidelines on duty to disclose and discovery.<br><br>This rule sets the framework for the discovery process, including initial disclosures, scope of discovery, timing, and protective orders.">
+                            <h3>FRCP Rule 26</h3>
+                            <p>Duty to Disclose; General Provisions Governing Discovery: Guidelines on duty to disclose and discovery.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 27" data-subtitle="Depositions to Perpetuate Testimony" data-content="Depositions to Perpetuate Testimony: Guidelines on depositions to perpetuate testimony.<br><br>This rule allows parties to preserve testimony before a lawsuit is filed or while an appeal is pending.">
+                            <h3>FRCP Rule 27</h3>
+                            <p>Depositions to Perpetuate Testimony: Guidelines on depositions to perpetuate testimony.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 28" data-subtitle="Persons Before Whom Depositions May Be Taken" data-content="Persons Before Whom Depositions May Be Taken: Guidelines on persons before whom depositions may be taken.<br><br>This rule specifies who is qualified to administer oaths and take depositions, both within and outside the United States.">
+                            <h3>FRCP Rule 28</h3>
+                            <p>Persons Before Whom Depositions May Be Taken: Guidelines on persons before whom depositions may be taken.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 29" data-subtitle="Stipulations About Discovery" data-content="Stipulations About Discovery Procedure: Guidelines on stipulations about discovery procedure.<br><br>This rule allows parties to modify discovery procedures by written agreement, giving them flexibility to conduct discovery in a mutually agreeable way.">
+                            <h3>FRCP Rule 29</h3>
+                            <p>Stipulations About Discovery Procedure: Guidelines on stipulations about discovery procedure.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 30" data-subtitle="Oral Depositions" data-content="Depositions by Oral Examination: Guidelines on depositions by oral examination.<br><br>This rule sets out procedures for taking oral depositions, including notice requirements, conduct of the deposition, and objections.">
+                            <h3>FRCP Rule 30</h3>
+                            <p>Depositions by Oral Examination: Guidelines on depositions by oral examination.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 31" data-subtitle="Written Depositions" data-content="Depositions by Written Questions: Guidelines on depositions by written questions.<br><br>This rule provides procedures for taking depositions through written questions instead of oral examination.">
+                            <h3>FRCP Rule 31</h3>
+                            <p>Depositions by Written Questions: Guidelines on depositions by written questions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 32" data-subtitle="Using Depositions in Court" data-content="Using Depositions in Court Proceedings: Guidelines on using depositions in court proceedings.<br><br>This rule governs when and how deposition testimony can be used at trial or in other court proceedings.">
+                            <h3>FRCP Rule 32</h3>
+                            <p>Using Depositions in Court Proceedings: Guidelines on using depositions in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 33" data-subtitle="Interrogatories" data-content="Interrogatories to Parties: Guidelines on interrogatories to parties.<br><br>This rule covers written questions that one party can ask another party to answer under oath during discovery.">
+                            <h3>FRCP Rule 33</h3>
+                            <p>Interrogatories to Parties: Guidelines on interrogatories to parties.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 34" data-subtitle="Producing Documents and Electronically Stored Information" data-content="Producing Documents, Electronically Stored Information, and Tangible Things, or Entering onto Land, for Inspection and Other Purposes: Guidelines on producing documents and other evidence.<br><br>This rule governs requests for production of documents, electronically stored information, and tangible items, as well as requests to inspect land or property.">
+                            <h3>FRCP Rule 34</h3>
+                            <p>Producing Documents, Electronically Stored Information, and Tangible Things, or Entering onto Land, for Inspection and Other Purposes: Guidelines on producing documents and other evidence.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 35" data-subtitle="Physical and Mental Examinations" data-content="Physical and Mental Examinations: Guidelines on physical and mental examinations.<br><br>This rule sets conditions under which a court can order a party to submit to physical or mental examination when their condition is in controversy.">
+                            <h3>FRCP Rule 35</h3>
+                            <p>Physical and Mental Examinations: Guidelines on physical and mental examinations.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 36" data-subtitle="Requests for Admission" data-content="Requests for Admission: Guidelines on requests for admission.<br><br>This rule allows a party to ask another party to admit the truth of statements or the authenticity of documents, helping narrow the issues for trial.">
+                            <h3>FRCP Rule 36</h3>
+                            <p>Requests for Admission: Guidelines on requests for admission.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 37" data-subtitle="Discovery Sanctions" data-content="Failure to Make Disclosures or to Cooperate in Discovery; Sanctions: Guidelines on failure to make disclosures or cooperate in discovery.<br><br>This rule provides remedies when parties fail to comply with discovery obligations, including various sanctions the court may impose.">
+                            <h3>FRCP Rule 37</h3>
+                            <p>Failure to Make Disclosures or to Cooperate in Discovery; Sanctions: Guidelines on failure to make disclosures or cooperate in discovery.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE VI. TRIALS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 38" data-subtitle="Right to Jury Trial" data-content="Right to a Jury Trial; Demand: Guidelines on right to a jury trial and demand.<br><br>This rule preserves the right to jury trial and specifies how and when a party must demand a jury trial.">
+                            <h3>FRCP Rule 38</h3>
+                            <p>Right to a Jury Trial; Demand: Guidelines on right to a jury trial and demand.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 39" data-subtitle="Trial by Jury or Court" data-content="Trial by Jury or by the Court: Guidelines on conducting trials by jury or by the court.<br><br>This rule specifies procedures for jury and non-jury trials, including when issues can be tried by the court instead of a jury.">
+                            <h3>FRCP Rule 39</h3>
+                            <p>Trial by Jury or by the Court: Guidelines on conducting trials by jury or by the court.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 40" data-subtitle="Scheduling Cases" data-content="Scheduling Cases for Trial: Guidelines on scheduling cases for trial.<br><br>This rule gives courts authority to set their own scheduling practices and establish trial calendars.">
+                            <h3>FRCP Rule 40</h3>
+                            <p>Scheduling Cases for Trial: Guidelines on scheduling cases for trial.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 41" data-subtitle="Dismissal of Actions" data-content="Dismissal of Actions: Guidelines on dismissal of actions.<br><br>This rule covers voluntary and involuntary dismissal of lawsuits, including the effect of dismissals on future claims.">
+                            <h3>FRCP Rule 41</h3>
+                            <p>Dismissal of Actions: Guidelines on dismissal of actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 42" data-subtitle="Consolidation and Separation" data-content="Consolidation; Separate Trials: Guidelines on consolidation and separate trials.<br><br>This rule allows courts to combine similar cases or separate different claims for trial to promote efficiency and avoid prejudice.">
+                            <h3>FRCP Rule 42</h3>
+                            <p>Consolidation; Separate Trials: Guidelines on consolidation and separate trials.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 43" data-subtitle="Taking Testimony" data-content="Taking Testimony: Guidelines on taking testimony.<br><br>This rule governs how witness testimony is taken in open court and when testimony may be presented by other means.">
+                            <h3>FRCP Rule 43</h3>
+                            <p>Taking Testimony: Guidelines on taking testimony.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 44" data-subtitle="Proving an Official Record" data-content="Proving an Official Record: Guidelines on proving official records in court.<br><br>This rule explains how to authenticate and prove the admissibility of official records in court proceedings.">
+                            <h3>FRCP Rule 44</h3>
+                            <p>Proving an Official Record: Guidelines on proving official records in court.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 45" data-subtitle="Subpoena" data-content="Subpoena: Guidelines on issuing and managing subpoenas.<br><br>This rule governs the issuance, service, and enforcement of subpoenas to obtain testimony or documents from non-parties.">
+                            <h3>FRCP Rule 45</h3>
+                            <p>Subpoena: Guidelines on issuing and managing subpoenas.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 46" data-subtitle="Objecting to Rulings" data-content="Objecting to a Ruling or Order: Guidelines on objecting to court rulings or orders.<br><br>This rule explains how to preserve objections to court rulings for potential appeal.">
+                            <h3>FRCP Rule 46</h3>
+                            <p>Objecting to a Ruling or Order: Guidelines on objecting to court rulings or orders.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 47" data-subtitle="Selecting Jurors" data-content="Selecting Jurors: Guidelines on selecting jurors for trials.<br><br>This rule covers procedures for examining, selecting, and replacing jurors, including peremptory challenges.">
+                            <h3>FRCP Rule 47</h3>
+                            <p>Selecting Jurors: Guidelines on selecting jurors for trials.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 48" data-subtitle="Jury Size and Verdict" data-content="Number of Jurors; Verdict; Polling: Guidelines on the number of jurors, delivering verdicts, and polling the jury.<br><br>This rule specifies requirements for jury size, unanimity of verdicts, and the process of polling jurors.">
+                            <h3>FRCP Rule 48</h3>
+                            <p>Number of Jurors; Verdict; Polling: Guidelines on the number of jurors, delivering verdicts, and polling the jury.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 49" data-subtitle="Special and General Verdicts" data-content="Special Verdict; General Verdict and Questions: Guidelines on special and general verdicts.<br><br>This rule describes different types of jury verdicts and when they may be used, including special verdicts and general verdicts with interrogatories.">
+                            <h3>FRCP Rule 49</h3>
+                            <p>Special Verdict; General Verdict and Questions: Guidelines on special and general verdicts.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 50" data-subtitle="Judgment as a Matter of Law" data-content="Judgment as a Matter of Law in a Jury Trial; Related Motion for a New Trial; Conditional Ruling: Guidelines on judgment as a matter of law in jury trials and related motions.<br><br>This rule allows judges to enter judgment contrary to a jury verdict when the evidence is legally insufficient.">
+                            <h3>FRCP Rule 50</h3>
+                            <p>Judgment as a Matter of Law in a Jury Trial; Related Motion for a New Trial; Conditional Ruling: Guidelines on judgment as a matter of law in jury trials and related motions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 51" data-subtitle="Jury Instructions" data-content="Instructions to the Jury; Objections; Preserving a Claim of Error: Guidelines on instructing the jury, making objections, and preserving claims of error.<br><br>This rule covers how jury instructions are given and how parties must object to preserve issues for appeal.">
+                            <h3>FRCP Rule 51</h3>
+                            <p>Instructions to the Jury; Objections; Preserving a Claim of Error: Guidelines on instructing the jury, making objections, and preserving claims of error.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 52" data-subtitle="Court Findings" data-content="Findings and Conclusions by the Court; Judgment on Partial Findings: Guidelines on court findings, conclusions, and judgments on partial findings.<br><br>This rule requires judges to state their findings of fact and conclusions of law in bench trials.">
+                            <h3>FRCP Rule 52</h3>
+                            <p>Findings and Conclusions by the Court; Judgment on Partial Findings: Guidelines on court findings, conclusions, and judgments on partial findings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 53" data-subtitle="Masters" data-content="Masters: Guidelines on the use of masters in court proceedings.<br><br>This rule governs when and how courts can appoint special masters to assist with complex or specialized matters.">
+                            <h3>FRCP Rule 53</h3>
+                            <p>Masters: Guidelines on the use of masters in court proceedings.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE VII. JUDGMENT</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 54" data-subtitle="Judgment and Costs" data-content="Judgment; Costs: Guidelines on judgments and costs in court proceedings.<br><br>This rule defines what constitutes a judgment and how courts handle costs and attorney's fees.">
+                            <h3>FRCP Rule 54</h3>
+                            <p>Judgment; Costs: Guidelines on judgments and costs in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 55" data-subtitle="Default Judgment" data-content="Default; Default Judgment: Guidelines on defaults and default judgments.<br><br>This rule sets procedures for obtaining a judgment when a party fails to defend against a lawsuit.">
+                            <h3>FRCP Rule 55</h3>
+                            <p>Default; Default Judgment: Guidelines on defaults and default judgments.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 56" data-subtitle="Summary Judgment" data-content="Summary Judgment: Guidelines on summary judgments in court proceedings.<br><br>This rule allows parties to obtain judgment without trial when there are no genuine disputes of material fact.">
+                            <h3>FRCP Rule 56</h3>
+                            <p>Summary Judgment: Guidelines on summary judgments in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 57" data-subtitle="Declaratory Judgment" data-content="Declaratory Judgment: Guidelines on declaratory judgments in court proceedings.<br><br>This rule allows courts to declare rights and legal relations even before a claim for damages or other relief arises.">
+                            <h3>FRCP Rule 57</h3>
+                            <p>Declaratory Judgment: Guidelines on declaratory judgments in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 58" data-subtitle="Entering Judgment" data-content="Entering Judgment: Guidelines on entering judgments in court proceedings.<br><br>This rule specifies when and how judgments are entered and become effective.">
+                            <h3>FRCP Rule 58</h3>
+                            <p>Entering Judgment: Guidelines on entering judgments in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 59" data-subtitle="New Trial or Amendment" data-content="New Trial; Altering or Amending a Judgment: Guidelines on new trials and altering or amending judgments.<br><br>This rule provides grounds and procedures for requesting a new trial or asking the court to alter its judgment.">
+                            <h3>FRCP Rule 59</h3>
+                            <p>New Trial; Altering or Amending a Judgment: Guidelines on new trials and altering or amending judgments.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 60" data-subtitle="Relief from Judgment" data-content="Relief from a Judgment or Order: Guidelines on obtaining relief from judgments or orders.<br><br>This rule provides grounds for seeking relief from a final judgment, such as mistake, newly discovered evidence, or fraud.">
+                            <h3>FRCP Rule 60</h3>
+                            <p>Relief from a Judgment or Order: Guidelines on obtaining relief from judgments or orders.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 61" data-subtitle="Harmless Error" data-content="Harmless Error: Guidelines on addressing harmless errors in court proceedings.<br><br>This rule instructs courts to disregard errors that do not affect any party's substantial rights.">
+                            <h3>FRCP Rule 61</h3>
+                            <p>Harmless Error: Guidelines on addressing harmless errors in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 62" data-subtitle="Stay of Proceedings" data-content="Stay of Proceedings to Enforce a Judgment: Guidelines on staying proceedings to enforce judgments.<br><br>This rule governs when execution of judgments can be stayed and what security is required.">
+                            <h3>FRCP Rule 62</h3>
+                            <p>Stay of Proceedings to Enforce a Judgment: Guidelines on staying proceedings to enforce judgments.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 63" data-subtitle="Judge's Inability" data-content="Judge's Inability to Proceed: Guidelines on handling cases when a judge is unable to proceed.<br><br>This rule provides for substitution of judges when the assigned judge cannot continue due to death, disability, or other reasons.">
+                            <h3>FRCP Rule 63</h3>
+                            <p>Judge's Inability to Proceed: Guidelines on handling cases when a judge is unable to proceed.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE VIII. PROVISIONAL AND FINAL REMEDIES</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 64" data-subtitle="Seizing Person or Property" data-content="Seizing a Person or Property: Guidelines on seizing persons or property in court proceedings.<br><br>This rule allows federal courts to use state law procedures for seizing property to secure satisfaction of potential judgments.">
+                            <h3>FRCP Rule 64</h3>
+                            <p>Seizing a Person or Property: Guidelines on seizing persons or property in court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 65" data-subtitle="Injunctions and Restraining Orders" data-content="Injunctions and Restraining Orders: Guidelines on issuing injunctions and restraining orders.<br><br>This rule sets forth procedures for obtaining temporary restraining orders and preliminary or permanent injunctions.">
+                            <h3>FRCP Rule 65</h3>
+                            <p>Injunctions and Restraining Orders: Guidelines on issuing injunctions and restraining orders.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 65.1" data-subtitle="Proceedings Against Surety" data-content="Proceedings Against a Surety: Guidelines on proceedings against sureties in court cases.<br><br>This rule establishes procedures for enforcing a surety's liability on a bond or undertaking.">
+                            <h3>FRCP Rule 65.1</h3>
+                            <p>Proceedings Against a Surety: Guidelines on proceedings against sureties in court cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 66" data-subtitle="Receivers" data-content="Receivers: Guidelines on the appointment and management of receivers in court cases.<br><br>This rule governs the appointment and administration of receivers who manage property under court supervision.">
+                            <h3>FRCP Rule 66</h3>
+                            <p>Receivers: Guidelines on the appointment and management of receivers in court cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 67" data-subtitle="Deposit into Court" data-content="Deposit into Court: Guidelines on depositing funds into court during legal proceedings.<br><br>This rule provides procedures for depositing money or property with the court for safekeeping.">
+                            <h3>FRCP Rule 67</h3>
+                            <p>Deposit into Court: Guidelines on depositing funds into court during legal proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 68" data-subtitle="Offer of Judgment" data-content="Offer of Judgment: Guidelines on making an offer of judgment during court proceedings.<br><br>This rule encourages settlement by imposing cost consequences if a party rejects a settlement offer and then obtains a less favorable judgment.">
+                            <h3>FRCP Rule 68</h3>
+                            <p>Offer of Judgment: Guidelines on making an offer of judgment during court proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 69" data-subtitle="Execution" data-content="Execution: Guidelines on the execution of judgments.<br><br>This rule governs procedures for enforcing money judgments through writs of execution and other means.">
+                            <h3>FRCP Rule 69</h3>
+                            <p>Execution: Guidelines on the execution of judgments.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 70" data-subtitle="Enforcing Specific Acts" data-content="Enforcing a Judgment for a Specific Act: Guidelines on enforcing judgments that require a specific act to be performed.<br><br>This rule provides methods for enforcing judgments requiring a party to perform specific acts.">
+                            <h3>FRCP Rule 70</h3>
+                            <p>Enforcing a Judgment for a Specific Act: Guidelines on enforcing judgments that require a specific act to be performed.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 71" data-subtitle="Nonparty Relief" data-content="Enforcing Relief For or Against a Nonparty: Guidelines on enforcing relief for or against individuals who are not parties to the action.<br><br>This rule extends the court's power to enforce orders for or against persons who are not parties to the lawsuit.">
+                            <h3>FRCP Rule 71</h3>
+                            <p>Enforcing Relief For or Against a Nonparty: Guidelines on enforcing relief for or against individuals who are not parties to the action.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE IX. SPECIAL PROCEEDINGS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 71.1" data-subtitle="Condemning Property" data-content="Condemning Real or Personal Property: Guidelines on condemning real or personal property.<br><br>This rule sets forth procedures for actions to condemn real and personal property by eminent domain.">
+                            <h3>FRCP Rule 71.1</h3>
+                            <p>Condemning Real or Personal Property: Guidelines on condemning real or personal property.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 72" data-subtitle="Magistrate Pretrial Orders" data-content="Magistrate Judges: Pretrial Order: Guidelines on pretrial orders by magistrate judges.<br><br>This rule governs review of magistrate judges' orders on pretrial matters.">
+                            <h3>FRCP Rule 72</h3>
+                            <p>Magistrate Judges: Pretrial Order: Guidelines on pretrial orders by magistrate judges.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 73" data-subtitle="Magistrate Trial by Consent" data-content="Magistrate Judges: Trial by Consent; Appeal: Guidelines on trials by consent before magistrate judges and appeals.<br><br>This rule allows magistrate judges to conduct civil trials when all parties consent.">
+                            <h3>FRCP Rule 73</h3>
+                            <p>Magistrate Judges: Trial by Consent; Appeal: Guidelines on trials by consent before magistrate judges and appeals.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 74" data-subtitle="[Abrogated]" data-content="[Abrogated] Placeholder for rules that have been abrogated.<br><br>This rule has been abrogated and is no longer in effect.">
+                            <h3>FRCP Rule 74</h3>
+                            <p>[Abrogated] Placeholder for rules that have been abrogated.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 75" data-subtitle="[Abrogated]" data-content="[Abrogated] Placeholder for rules that have been abrogated.<br><br>This rule has been abrogated and is no longer in effect.">
+                            <h3>FRCP Rule 75</h3>
+                            <p>[Abrogated] Placeholder for rules that have been abrogated.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 76" data-subtitle="[Abrogated]" data-content="[Abrogated] Placeholder for rules that have been abrogated.<br><br>This rule has been abrogated and is no longer in effect.">
+                            <h3>FRCP Rule 76</h3>
+                            <p>[Abrogated] Placeholder for rules that have been abrogated.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE X. DISTRICT COURTS AND CLERKS: CONDUCTING BUSINESS; ISSUING ORDERS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 77" data-subtitle="Court Business and Clerk Authority" data-content="Conducting Business; Clerk's Authority; Notice of an Order or Judgment: Guidelines on the conduct of court business, the authority of clerks, and notice of orders or judgments.<br><br>This rule governs how courts conduct business, when clerks may act, and how parties receive notice of orders and judgments.">
+                            <h3>FRCP Rule 77</h3>
+                            <p>Conducting Business; Clerk's Authority; Notice of an Order or Judgment: Guidelines on the conduct of court business, the authority of clerks, and notice of orders or judgments.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 78" data-subtitle="Motion Hearings" data-content="Hearing Motions; Submission on Briefs: Guidelines on hearing motions and submitting briefs.<br><br>This rule allows courts to establish procedures for deciding motions without oral hearings.">
+                            <h3>FRCP Rule 78</h3>
+                            <p>Hearing Motions; Submission on Briefs: Guidelines on hearing motions and submitting briefs.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 79" data-subtitle="Court Records" data-content="Records Kept by the Clerk: Guidelines on records kept by the clerk of the court.<br><br>This rule specifies what records clerks must keep and how they must be maintained.">
+                            <h3>FRCP Rule 79</h3>
+                            <p>Records Kept by the Clerk: Guidelines on records kept by the clerk of the court.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 80" data-subtitle="Stenographic Transcripts" data-content="Stenographic Transcript as Evidence: Guidelines on the use of stenographic transcripts as evidence in court proceedings.<br><br>This rule governs the use of stenographic transcripts and reporter's notes as evidence.">
+                            <h3>FRCP Rule 80</h3>
+                            <p>Stenographic Transcript as Evidence: Guidelines on the use of stenographic transcripts as evidence in court proceedings.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE XI. GENERAL PROVISIONS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCP Rule 81" data-subtitle="Rules Applicability" data-content="Applicability of the Rules in General; Removed Actions: Guidelines on the general applicability of the rules and removed actions.<br><br>This rule specifies when and how the Federal Rules apply to different types of proceedings.">
+                            <h3>FRCP Rule 81</h3>
+                            <p>Applicability of the Rules in General; Removed Actions: Guidelines on the general applicability of the rules and removed actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 82" data-subtitle="Jurisdiction and Venue" data-content="Jurisdiction and Venue Unaffected: Guidelines on jurisdiction and venue.<br><br>This rule clarifies that the Federal Rules do not extend or limit jurisdiction or venue.">
+                            <h3>FRCP Rule 82</h3>
+                            <p>Jurisdiction and Venue Unaffected: Guidelines on jurisdiction and venue.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 83" data-subtitle="Local Court Rules" data-content="Rules by District Courts; Judge's Directives: Guidelines on district court rules and judge's directives.<br><br>This rule authorizes district courts to adopt local rules and individual judges to issue standing orders.">
+                            <h3>FRCP Rule 83</h3>
+                            <p>Rules by District Courts; Judge's Directives: Guidelines on district court rules and judge's directives.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 84" data-subtitle="[Abrogated]" data-content="[Abrogated] Placeholder for rules that have been abrogated.<br><br>This rule has been abrogated and is no longer in effect.">
+                            <h3>FRCP Rule 84</h3>
+                            <p>[Abrogated] Placeholder for rules that have been abrogated.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 85" data-subtitle="Rules Title" data-content="Title: Guidelines on the title of the rules.<br><br>This rule establishes the official title of these rules as the Federal Rules of Civil Procedure.">
+                            <h3>FRCP Rule 85</h3>
+                            <p>Title: Guidelines on the title of the rules.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCP Rule 86" data-subtitle="Effective Dates" data-content="Effective Dates: Guidelines on the effective dates of the rules and amendments.<br><br>This rule specifies when the Federal Rules and their amendments take effect.">
+                            <h3>FRCP Rule 86</h3>
+                            <p>Effective Dates: Guidelines on the effective dates of the rules and amendments.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>XIII. SUPPLEMENTAL RULES FOR ADMIRALTY OR MARITIME CLAIMS AND ASSET FORFEITURE ACTIONS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="Rule A" data-subtitle="Scope of Rules" data-content="Guidelines on the application of these supplemental rules.<br><br>This rule defines when and how the Supplemental Rules for Admiralty or Maritime Claims apply.">
+                            <h3>Rule A: Scope of Rules</h3>
+                            <p>Guidelines on the application of these supplemental rules.</p>
+                        </section>
+                        <section class="rule-card" data-rule="Rule B" data-subtitle="In Personam Actions" data-content="In Personam Actions - Attachment and Garnishment: Guidelines on the attachment and garnishment in personam actions.<br><br>This rule governs maritime attachment and garnishment procedures in admiralty cases.">
+                            <h3>Rule B: In Personam Actions - Attachment and Garnishment</h3>
+                            <p>Guidelines on the attachment and garnishment in personam actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="Rule C" data-subtitle="In Rem Actions" data-content="In Rem Actions - Special Provisions: Guidelines on the procedures and requirements for in rem actions.<br><br>This rule sets forth special provisions for maritime actions against vessels or other property.">
+                            <h3>Rule C: In Rem Actions - Special Provisions</h3>
+                            <p>Guidelines on the procedures and requirements for in rem actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="Rule D" data-subtitle="Possessory Actions" data-content="Possessory, Petitory, and Partition Actions: Guidelines on possessory, petitory, and partition actions under admiralty practice.<br><br>This rule governs actions for possession, ownership, and division of maritime property.">
+                            <h3>Rule D: Possessory, Petitory, and Partition Actions</h3>
+                            <p>Guidelines on possessory, petitory, and partition actions under admiralty practice.</p>
+                        </section>
+                        <section class="rule-card" data-rule="Rule E" data-subtitle="General In Rem Provisions" data-content="Actions in Rem and Quasi in Rem - General Provisions: General provisions for actions in rem and quasi in rem.<br><br>This rule provides general procedures for maritime actions against property.">
+                            <h3>Rule E: Actions in Rem and Quasi in Rem - General Provisions</h3>
+                            <p>General provisions for actions in rem and quasi in rem.</p>
+                        </section>
+                        <section class="rule-card" data-rule="Rule F" data-subtitle="Liability Limitation" data-content="Limitation of Liability: Guidelines on the limitation of liability for vessel owners.<br><br>This rule establishes procedures for vessel owners to limit their liability in maritime cases.">
+                            <h3>Rule F: Limitation of Liability</h3>
+                            <p>Guidelines on the limitation of liability for vessel owners.</p>
+                        </section>
+                        <section class="rule-card" data-rule="Rule G" data-subtitle="Forfeiture Actions" data-content="Forfeiture Actions in Rem: Guidelines on the procedures and requirements for forfeiture actions in rem.<br><br>This rule governs civil forfeiture actions in rem under federal statutes.">
+                            <h3>Rule G: Forfeiture Actions in Rem</h3>
+                            <p>Guidelines on the procedures and requirements for forfeiture actions in rem.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>XIV SUPPLEMENTAL RULES FOR SOCIAL SECURITY ACTIONS UNDER 42 U.S.C. § 405(g)</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="SS Rule 1" data-subtitle="Scope of Rules" data-content="Guidelines on the application of these supplemental rules to Social Security actions.<br><br>This rule defines when and how these supplemental rules apply to actions under 42 U.S.C. § 405(g).">
+                            <h3>Rule 1: Scope of Rules</h3>
+                            <p>Guidelines on the application of these supplemental rules to Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 2" data-subtitle="Complaint" data-content="Guidelines on the content and requirements for complaints in Social Security actions.<br><br>This rule specifies what must be included in complaints challenging Social Security Administration decisions.">
+                            <h3>Rule 2: Complaint</h3>
+                            <p>Guidelines on the content and requirements for complaints in Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 3" data-subtitle="Service" data-content="Guidelines on the service of the complaint and summons in Social Security actions.<br><br>This rule establishes procedures for serving complaints on the Commissioner of Social Security.">
+                            <h3>Rule 3: Service</h3>
+                            <p>Guidelines on the service of the complaint and summons in Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 4" data-subtitle="Answer and Motions" data-content="Guidelines on the filing of answers and motions in Social Security actions.<br><br>This rule governs how and when the Commissioner must respond to complaints and file motions.">
+                            <h3>Rule 4: Answer; Motions</h3>
+                            <p>Guidelines on the filing of answers and motions in Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 5" data-subtitle="Briefing" data-content="Guidelines on the briefing schedule and requirements for Social Security actions.<br><br>This rule sets forth the schedule and requirements for filing briefs in Social Security appeals.">
+                            <h3>Rule 5: Briefing</h3>
+                            <p>Guidelines on the briefing schedule and requirements for Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 6" data-subtitle="Record Review" data-content="Guidelines on the review process based on the administrative record in Social Security actions.<br><br>This rule establishes how courts review Social Security decisions based on the administrative record.">
+                            <h3>Rule 6: Review on the Record of an Agency Proceeding</h3>
+                            <p>Guidelines on the review process based on the administrative record in Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 7" data-subtitle="Administrative Record" data-content="Guidelines on the filing of the administrative record in Social Security actions.<br><br>This rule specifies when and how the Commissioner must file the administrative record.">
+                            <h3>Rule 7: Filing of the Administrative Record</h3>
+                            <p>Guidelines on the filing of the administrative record in Social Security actions.</p>
+                        </section>
+                        <section class="rule-card" data-rule="SS Rule 8" data-subtitle="Remand" data-content="Guidelines on the remand of Social Security actions to the Commissioner of Social Security.<br><br>This rule governs when and how cases are sent back to the Social Security Administration for further proceedings.">
+                            <h3>Rule 8: Remand</h3>
+                            <p>Guidelines on the remand of Social Security actions to the Commissioner of Social Security.</p>
+                        </section>
+                    </div>
+                </div>
+                <div id="frcmp-content" class="f-column" style="display: none;">
+                    <section class="title-section">
+                        <h3>TITLE I. APPLICABILITY</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 1" data-subtitle="Scope and Definitions" data-content="Guidelines on the scope and definitions of the rules.<br><br>This rule defines the scope of the Federal Rules of Criminal and Municipal Procedure and provides key definitions used throughout the rules.">
+                            <h3>Rule 1: Scope; Definitions</h3>
+                            <p>Guidelines on the scope and definitions of the rules.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 2" data-subtitle="Purpose and Construction" data-content="Guidelines on the purpose and construction of the rules to ensure simplicity, fairness, and the elimination of unjustifiable expense and delay.<br><br>This rule establishes that the rules should be interpreted to ensure just determination, simplicity in procedure, and elimination of unnecessary delay and expense.">
+                            <h3>Rule 2: Purpose and Construction</h3>
+                            <p>Guidelines on the purpose and construction of the rules to ensure simplicity, fairness, and the elimination of unjustifiable expense and delay.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE II. PRELIMINARY PROCEEDINGS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 3" data-subtitle="The Complaint" data-content="Guidelines on the complaint process in criminal cases.<br><br>This rule specifies the requirements for filing a criminal complaint, which must be made under oath before a magistrate judge or other authorized officer.">
+                            <h3>Rule 3: The Complaint</h3>
+                            <p>Guidelines on the complaint process in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 4" data-subtitle="Arrest Warrant or Summons" data-content="Guidelines on the issuance of an arrest warrant or summons based on a complaint.<br><br>This rule establishes when and how arrest warrants and summons are issued, including requirements for probable cause and content of the warrant or summons.">
+                            <h3>Rule 4: Arrest Warrant or Summons on a Complaint</h3>
+                            <p>Guidelines on the issuance of an arrest warrant or summons based on a complaint.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 5" data-subtitle="Initial Appearance" data-content="Guidelines on the initial appearance of the defendant before the court.<br><br>This rule covers procedures for a defendant's first court appearance, including advice of rights, appointment of counsel, and preliminary matters.">
+                            <h3>Rule 5: Initial Appearance</h3>
+                            <p>Guidelines on the initial appearance of the defendant before the court.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 5.1" data-subtitle="Preliminary Hearing" data-content="Guidelines on the procedures for a preliminary hearing in criminal cases.<br><br>This rule details the timing, procedures, and evidentiary standards for preliminary hearings to determine probable cause.">
+                            <h3>Rule 5.1: Preliminary Hearing</h3>
+                            <p>Guidelines on the procedures for a preliminary hearing in criminal cases.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE III. THE GRAND JURY, THE INDICTMENT, AND THE INFORMATION</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 6" data-subtitle="The Grand Jury" data-content="Guidelines on the grand jury process and its proceedings.<br><br>This rule governs grand jury procedures, including summoning, composition, secrecy requirements, and proceedings.">
+                            <h3>Rule 6: The Grand Jury</h3>
+                            <p>Guidelines on the grand jury process and its proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 7" data-subtitle="Indictment and Information" data-content="Guidelines on the requirements for the indictment and information in criminal cases.<br><br>This rule sets forth requirements for both indictments and informations, including their use, content, and amendment procedures.">
+                            <h3>Rule 7: The Indictment and the Information</h3>
+                            <p>Guidelines on the requirements for the indictment and information in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 8" data-subtitle="Joinder" data-content="Guidelines on the joinder of offenses or defendants in criminal cases.<br><br>This rule specifies when multiple offenses or defendants can be charged in a single indictment or tried together.">
+                            <h3>Rule 8: Joinder of Offenses or Defendants</h3>
+                            <p>Guidelines on the joinder of offenses or defendants in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 9" data-subtitle="Warrant or Summons" data-content="Guidelines on the issuance of an arrest warrant or summons based on an indictment or information.<br><br>This rule establishes procedures for issuing and executing arrest warrants or summons after an indictment or information is filed.">
+                            <h3>Rule 9: Arrest Warrant or Summons on an Indictment or Information</h3>
+                            <p>Guidelines on the issuance of an arrest warrant or summons based on an indictment or information.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE IV. ARRAIGNMENT AND PREPARATION FOR TRIAL</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 10" data-subtitle="Arraignment" data-content="Guidelines on the arraignment process for defendants.<br><br>This rule outlines the procedures for conducting arraignments, where defendants are formally called to answer criminal charges.">
+                            <h3>Rule 10: Arraignment</h3>
+                            <p>Guidelines on the arraignment process for defendants.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 11" data-subtitle="Pleas" data-content="Guidelines on the various types of pleas a defendant may enter in a criminal case.<br><br>This rule covers types of pleas (guilty, not guilty, nolo contendere), plea agreements, and required court procedures for accepting pleas.">
+                            <h3>Rule 11: Pleas</h3>
+                            <p>Guidelines on the various types of pleas a defendant may enter in a criminal case.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 12" data-subtitle="Pleadings and Pretrial Motions" data-content="Guidelines on the pleadings and pretrial motions process in criminal cases.<br><br>This rule establishes procedures and timing for pretrial motions, including motions to suppress evidence and defenses.">
+                            <h3>Rule 12: Pleadings and Pretrial Motions</h3>
+                            <p>Guidelines on the pleadings and pretrial motions process in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 12.1" data-subtitle="Alibi Defense Notice" data-content="Guidelines on the notice required for an alibi defense.<br><br>This rule requires defendants to provide advance notice if they intend to present an alibi defense, including details about location and witnesses.">
+                            <h3>Rule 12.1: Notice of an Alibi Defense</h3>
+                            <p>Guidelines on the notice required for an alibi defense.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 12.2" data-subtitle="Insanity Defense Notice" data-content="Guidelines on the notice required for an insanity defense and the procedures for a mental examination.<br><br>This rule requires notice of intent to assert an insanity defense and establishes procedures for mental examinations.">
+                            <h3>Rule 12.2: Notice of an Insanity Defense; Mental Examination</h3>
+                            <p>Guidelines on the notice required for an insanity defense and the procedures for a mental examination.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 12.3" data-subtitle="Public-Authority Defense" data-content="Guidelines on the notice required for a public-authority defense.<br><br>This rule requires defendants to notify the government if they intend to claim they acted under public authority.">
+                            <h3>Rule 12.3: Notice of a Public-Authority Defense</h3>
+                            <p>Guidelines on the notice required for a public-authority defense.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 13" data-subtitle="Joint Trial" data-content="Guidelines on the joint trial of separate cases in criminal proceedings.<br><br>This rule allows the court to order a joint trial of separate cases when the offenses could have been joined in a single indictment.">
+                            <h3>Rule 13: Joint Trial of Separate Cases</h3>
+                            <p>Guidelines on the joint trial of separate cases in criminal proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 14" data-subtitle="Prejudicial Joinder" data-content="Guidelines on relief from prejudicial joinder in criminal cases.<br><br>This rule allows the court to order separate trials of counts or sever defendants' cases if joinder appears prejudicial.">
+                            <h3>Rule 14: Relief from Prejudicial Joinder</h3>
+                            <p>Guidelines on relief from prejudicial joinder in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 15" data-subtitle="Depositions" data-content="Guidelines on the use of depositions in criminal cases.<br><br>This rule establishes when and how depositions may be taken and used in criminal cases.">
+                            <h3>Rule 15: Depositions</h3>
+                            <p>Guidelines on the use of depositions in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 16" data-subtitle="Discovery and Inspection" data-content="Guidelines on discovery and inspection procedures in criminal cases.<br><br>This rule governs disclosure obligations of both prosecutors and defendants, including evidence, documents, and expert witnesses.">
+                            <h3>Rule 16: Discovery and Inspection</h3>
+                            <p>Guidelines on discovery and inspection procedures in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 17" data-subtitle="Subpoena" data-content="Guidelines on the issuance and use of subpoenas in criminal cases.<br><br>This rule covers procedures for issuing subpoenas to compel witness testimony and document production.">
+                            <h3>Rule 17: Subpoena</h3>
+                            <p>Guidelines on the issuance and use of subpoenas in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 17.1" data-subtitle="Pretrial Conference" data-content="Guidelines on pretrial conferences in criminal cases.<br><br>This rule allows courts to hold conferences to promote fair and efficient trials.">
+                            <h3>Rule 17.1: Pretrial Conference</h3>
+                            <p>Guidelines on pretrial conferences in criminal cases.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE V. VENUE</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 18" data-subtitle="Place of Trial" data-content="Guidelines on the place of prosecution and trial in criminal cases.<br><br>This rule determines where criminal trials must be held, generally in the district where the offense was committed.">
+                            <h3>Rule 18: Place of Prosecution and Trial</h3>
+                            <p>Guidelines on the place of prosecution and trial in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 19" data-subtitle="Relief from Prosecution" data-content="Guidelines on obtaining relief from prosecution in certain circumstances.<br><br>This rule outlines when and how defendants can seek relief from prosecution.">
+                            <h3>Rule 19: Relief from Prosecution</h3>
+                            <p>Guidelines on obtaining relief from prosecution in certain circumstances.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 20" data-subtitle="Transfer for Plea" data-content="Guidelines on the transfer of cases for plea and sentencing purposes.<br><br>This rule allows defendants to plead guilty or nolo contendere and be sentenced in the district where they are arrested.">
+                            <h3>Rule 20: Transfer for Plea and Sentence</h3>
+                            <p>Guidelines on the transfer of cases for plea and sentencing purposes.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 21" data-subtitle="Transfer for Trial" data-content="Guidelines on the transfer of cases for trial purposes.<br><br>This rule allows transfer to another district for trial when necessary for fair and impartial proceedings.">
+                            <h3>Rule 21: Transfer for Trial</h3>
+                            <p>Guidelines on the transfer of cases for trial purposes.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 22" data-subtitle="Motion Timing" data-content="Guidelines on the timing of motions in criminal cases.<br><br>This rule establishes when motions must be filed in relation to venue changes and other procedural matters.">
+                            <h3>Rule 22: Timing of Motions</h3>
+                            <p>Guidelines on the timing of motions in criminal cases.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE VI. TRIAL</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 23" data-subtitle="Jury or Nonjury Trial" data-content="Guidelines on the choice between a jury trial and a nonjury trial.<br><br>This rule covers when cases can be tried by jury or by the court alone, including requirements for jury waivers.">
+                            <h3>Rule 23: Jury or Nonjury Trial</h3>
+                            <p>Guidelines on the choice between a jury trial and a nonjury trial.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 24" data-subtitle="Trial Jurors" data-content="Guidelines on the selection and management of trial jurors.<br><br>This rule governs jury selection, including voir dire, peremptory challenges, and alternate jurors.">
+                            <h3>Rule 24: Trial Jurors</h3>
+                            <p>Guidelines on the selection and management of trial jurors.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 25" data-subtitle="Judge's Disability" data-content="Guidelines on procedures when a judge becomes disabled during a trial.<br><br>This rule provides for replacement of judges who become unable to continue presiding over a trial.">
+                            <h3>Rule 25: Judge's Disability</h3>
+                            <p>Guidelines on procedures when a judge becomes disabled during a trial.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 26" data-subtitle="Taking Testimony" data-content="Guidelines on taking testimony in criminal trials.<br><br>This rule requires testimony to be taken in open court and establishes procedures for witness examination.">
+                            <h3>Rule 26: Taking Testimony</h3>
+                            <p>Guidelines on the procedures for taking testimony in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 26.1" data-subtitle="Foreign Law" data-content="Guidelines on the determination of foreign law in criminal cases.<br><br>This rule establishes procedures for determining and applying foreign law in criminal proceedings.">
+                            <h3>Rule 26.1: Foreign Law Determination</h3>
+                            <p>Guidelines on the determination of foreign law in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 27" data-subtitle="Official Records" data-content="Guidelines on the procedures for proving an official record in criminal cases.<br><br>This rule sets forth methods for proving official records and documents in criminal proceedings.">
+                            <h3>Rule 27: Proving an Official Record</h3>
+                            <p>Guidelines on the procedures for proving an official record in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 28" data-subtitle="Interpreters" data-content="Guidelines on the use of interpreters in criminal cases.<br><br>This rule governs the appointment and use of interpreters to assist non-English speakers and hearing-impaired persons.">
+                            <h3>Rule 28: Interpreters</h3>
+                            <p>Guidelines on the use of interpreters in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 29" data-subtitle="Acquittal Motion" data-content="Guidelines on the procedures for a motion for a judgment of acquittal in criminal cases.<br><br>This rule specifies when and how defendants can move for acquittal based on insufficient evidence.">
+                            <h3>Rule 29: Motion for a Judgment of Acquittal</h3>
+                            <p>Guidelines on the procedures for a motion for a judgment of acquittal in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 29.1" data-subtitle="Closing Argument" data-content="Guidelines on the procedures for closing arguments in criminal trials.<br><br>This rule establishes the order of closing arguments and rebuttal in criminal trials.">
+                            <h3>Rule 29.1: Closing Argument</h3>
+                            <p>Guidelines on the procedures for closing arguments in criminal trials.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 30" data-subtitle="Jury Instructions" data-content="Guidelines on the procedures for giving jury instructions in criminal cases.<br><br>This rule governs how and when jury instructions are requested, given, and objected to during trial.">
+                            <h3>Rule 30: Jury Instructions</h3>
+                            <p>Guidelines on the procedures for giving jury instructions in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 31" data-subtitle="Jury Verdict" data-content="Guidelines on the procedures for receiving and recording the jury's verdict in criminal cases.<br><br>This rule covers verdict requirements, polling the jury, and handling multiple defendants or counts.">
+                            <h3>Rule 31: Jury Verdict</h3>
+                            <p>Guidelines on the procedures for receiving and recording the jury's verdict in criminal cases.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE VII. POST-CONVICTION PROCEDURES</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 32" data-subtitle="Sentencing and Judgment" data-content="Guidelines on the procedures for sentencing and judgment in criminal cases.<br><br>This rule details presentence procedures, sentencing hearings, and judgment requirements.">
+                            <h3>Rule 32: Sentencing and Judgment</h3>
+                            <p>Guidelines on the procedures for sentencing and judgment in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 32.1" data-subtitle="Probation/Release Modification" data-content="Guidelines on the procedures for revoking or modifying probation or supervised release.<br><br>This rule establishes procedures for modifying, revoking, or terminating probation or supervised release.">
+                            <h3>Rule 32.1: Revoking or Modifying Probation or Supervised Release</h3>
+                            <p>Guidelines on the procedures for revoking or modifying probation or supervised release.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 32.2" data-subtitle="Criminal Forfeiture" data-content="Guidelines on the procedures for criminal forfeiture in criminal cases.<br><br>This rule governs procedures for forfeiture of assets connected to criminal activity.">
+                            <h3>Rule 32.2: Criminal Forfeiture</h3>
+                            <p>Guidelines on the procedures for criminal forfeiture in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 33" data-subtitle="New Trial" data-content="Guidelines on the procedures for granting a new trial in criminal cases.<br><br>This rule specifies grounds and timing for motions for new trials based on newly discovered evidence or other reasons.">
+                            <h3>Rule 33: New Trial</h3>
+                            <p>Guidelines on the procedures for granting a new trial in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 34" data-subtitle="Arresting Judgment" data-content="Guidelines on the procedures for arresting judgment in criminal cases.<br><br>This rule allows defendants to challenge the court's jurisdiction or the sufficiency of the indictment after conviction.">
+                            <h3>Rule 34: Arresting Judgment</h3>
+                            <p>Guidelines on the procedures for arresting judgment in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 35" data-subtitle="Sentence Correction" data-content="Guidelines on correcting or reducing a sentence in criminal cases.<br><br>This rule allows courts to correct clear errors in sentencing or reduce sentences for substantial assistance.">
+                            <h3>Rule 35: Correcting or Reducing a Sentence</h3>
+                            <p>Guidelines on the procedures for correcting or reducing a sentence in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 36" data-subtitle="Clerical Error" data-content="Guidelines on the procedures for correcting clerical errors in criminal cases.<br><br>This rule allows courts to correct clerical errors in the record at any time.">
+                            <h3>Rule 36: Clerical Error</h3>
+                            <p>Guidelines on the procedures for correcting clerical errors in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 37" data-subtitle="Indicative Ruling" data-content="Guidelines on the procedures for making indicative rulings on motions for relief barred by pending appeals.<br><br>This rule allows district courts to indicate how they would rule on motions while cases are on appeal.">
+                            <h3>Rule 37: Indicative Ruling on a Motion for Relief That is Barred by a Pending Appeal</h3>
+                            <p>Guidelines on the procedures for making indicative rulings on motions for relief barred by pending appeals.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 38" data-subtitle="Stay of Sentence" data-content="Guidelines on the procedures for staying a sentence or a disability in criminal cases.<br><br>This rule governs when sentences can be stayed pending appeal and procedures for different types of sentences.">
+                            <h3>Rule 38: Staying a Sentence or a Disability</h3>
+                            <p>Guidelines on the procedures for staying a sentence or a disability in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 39" data-subtitle="Release Pending Review" data-content="Guidelines on the procedures for releasing a defendant pending review in criminal cases.<br><br>This rule establishes standards and procedures for release while a case is under review.">
+                            <h3>Rule 39: Release Pending Review</h3>
+                            <p>Guidelines on the procedures for releasing a defendant pending review in criminal cases.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE VIII. SUPPLEMENTARY AND SPECIAL PROCEEDINGS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 40" data-subtitle="Cross-District Arrest" data-content="Guidelines on the procedures for arresting a defendant who fails to appear or violates conditions of release set in another district.<br><br>This rule governs arrests and proceedings when defendants violate conditions in districts other than where they were set.">
+                            <h3>Rule 40: Arrest for Failing to Appear in Another District or for Violating Conditions of Release Set in Another District</h3>
+                            <p>Guidelines on the procedures for arresting a defendant who fails to appear or violates conditions of release set in another district.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 41" data-subtitle="Search and Seizure" data-content="Guidelines on the procedures for search and seizure in criminal cases.<br><br>This rule establishes procedures for obtaining and executing search warrants and handling seized property.">
+                            <h3>Rule 41: Search and Seizure</h3>
+                            <p>Guidelines on the procedures for search and seizure in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 42" data-subtitle="Criminal Contempt" data-content="Guidelines on the procedures for handling criminal contempt cases.<br><br>This rule governs prosecution of criminal contempt, including notice requirements and appointment of prosecutors.">
+                            <h3>Rule 42: Criminal Contempt</h3>
+                            <p>Guidelines on the procedures for handling criminal contempt cases.</p>
+                        </section>
+                    </div>
+                    <section class="title-section">
+                        <h3>TITLE IX. GENERAL PROVISIONS</h3>
+                    </section>
+                    <div class="section-container">
+                        <section class="rule-card" data-rule="FRCMP Rule 43" data-subtitle="Defendant's Presence" data-content="Guidelines on when the defendant must be present during criminal proceedings.<br><br>This rule specifies when defendants must be present at criminal proceedings and when their presence can be waived.">
+                            <h3>Rule 43: Defendant's Presence</h3>
+                            <p>Guidelines on when the defendant must be present during criminal proceedings.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 44" data-subtitle="Right to Counsel" data-content="Guidelines on the defendant's right to and appointment of counsel in criminal cases.<br><br>This rule ensures defendants' right to counsel and establishes procedures for appointing counsel for indigent defendants.">
+                            <h3>Rule 44: Right to and Appointment of Counsel</h3>
+                            <p>Guidelines on the defendant's right to and appointment of counsel in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 45" data-subtitle="Time Computation" data-content="Guidelines on computing and extending time periods in criminal cases.<br><br>This rule establishes how to calculate deadlines and when courts can extend time periods.">
+                            <h3>Rule 45: Computing and Extending Time</h3>
+                            <p>Guidelines on computing and extending time periods in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 46" data-subtitle="Release and Detention" data-content="Guidelines on release from custody and supervising detention in criminal cases.<br><br>This rule governs conditions of release, bail, and supervision of detained defendants.">
+                            <h3>Rule 46: Release from Custody; Supervising Detention</h3>
+                            <p>Guidelines on release from custody and supervising detention in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 47" data-subtitle="Motions and Affidavits" data-content="Guidelines on motions and supporting affidavits in criminal cases.<br><br>This rule establishes requirements for filing and supporting motions in criminal proceedings.">
+                            <h3>Rule 47: Motions and Supporting Affidavits</h3>
+                            <p>Guidelines on motions and supporting affidavits in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 48" data-subtitle="Dismissal" data-content="Guidelines on the procedures for dismissal of charges in criminal cases.<br><br>This rule governs when and how criminal charges can be dismissed by prosecutors or the court.">
+                            <h3>Rule 48: Dismissal</h3>
+                            <p>Guidelines on the procedures for dismissal of charges in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 49" data-subtitle="Service and Filing" data-content="Guidelines on serving and filing papers in criminal cases.<br><br>This rule establishes procedures for serving and filing documents in criminal proceedings.">
+                            <h3>Rule 49: Serving and Filing Papers</h3>
+                            <p>Guidelines on serving and filing papers in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 49.1" data-subtitle="Privacy Protection" data-content="Guidelines on protecting privacy for filings made with the court in criminal cases.<br><br>This rule requires redaction of certain personal information in court filings to protect privacy.">
+                            <h3>Rule 49.1: Privacy Protection For Filings Made with the Court</h3>
+                            <p>Guidelines on protecting privacy for filings made with the court in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 50" data-subtitle="Prompt Disposition" data-content="Guidelines on the prompt disposition of criminal cases.<br><br>This rule promotes speedy resolution of criminal cases and establishes scheduling preferences.">
+                            <h3>Rule 50: Prompt Disposition</h3>
+                            <p>Guidelines on the prompt disposition of criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 51" data-subtitle="Preserving Error" data-content="Guidelines on preserving claimed errors in criminal cases.<br><br>This rule explains how to properly object and preserve issues for appeal in criminal proceedings.">
+                            <h3>Rule 51: Preserving Claimed Error</h3>
+                            <p>Guidelines on preserving claimed errors in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 52" data-subtitle="Error Types" data-content="Guidelines on harmless and plain errors in criminal cases.<br><br>This rule defines different types of errors and their effect on criminal proceedings.">
+                            <h3>Rule 52: Harmless and Plain Error</h3>
+                            <p>Guidelines on harmless and plain errors in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 53" data-subtitle="Broadcasting" data-content="Guidelines on broadcasting and recording court proceedings in criminal cases.<br><br>This rule governs when and how court proceedings may be broadcast or recorded.">
+                            <h3>Rule 53: Broadcasting and Recording Court Proceedings</h3>
+                            <p>Guidelines on broadcasting and recording court proceedings in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 54" data-subtitle="Rule Application" data-content="Guidelines on the application of these rules and exceptions in criminal cases.<br><br>This rule specifies when and how the Federal Rules of Criminal Procedure apply.">
+                            <h3>Rule 54: Application and Exception</h3>
+                            <p>Guidelines on the application of these rules and exceptions in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 55" data-subtitle="Records" data-content="Guidelines on the maintenance and management of records in criminal cases.<br><br>This rule establishes requirements for maintaining court records in criminal proceedings.">
+                            <h3>Rule 55: Records</h3>
+                            <p>Guidelines on the maintenance and management of records in criminal cases.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 56" data-subtitle="Summary Judgment" data-content="Parties can request a summary judgment when there's no dispute about the important facts, and they're entitled to a judgment as a matter of law.<br><br>This rule establishes procedures for seeking and opposing summary judgment motions.">
+                            <h3>Rule 56: Summary Judgment</h3>
+                            <p>Parties can request a summary judgment when there's no dispute about the important facts, and they're entitled to a judgment as a matter of law.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 57" data-subtitle="Declaratory Judgment" data-content="Provides the procedure for obtaining a declaratory judgment under 28 U.S.C. § 2201 and notes that having another adequate remedy doesn't prevent seeking a declaratory judgment.<br><br>This rule governs procedures for seeking declaratory relief in criminal proceedings.">
+                            <h3>Rule 57: Declaratory Judgment</h3>
+                            <p>Provides the procedure for obtaining a declaratory judgment under 28 U.S.C. § 2201 and notes that having another adequate remedy doesn't prevent seeking a declaratory judgment.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 58" data-subtitle="Judgment Entry" data-content="Judgments must be set out in a separate document and entered promptly by the court clerk under certain conditions, such as jury verdicts or court awards.<br><br>This rule specifies requirements for entering and recording judgments in criminal cases.">
+                            <h3>Rule 58: Entry of Judgment</h3>
+                            <p>Judgments must be set out in a separate document and entered promptly by the court clerk under certain conditions, such as jury verdicts or court awards.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 59" data-subtitle="New Trial/Amendment" data-content="Allows the court to grant a new trial or alter/amend a judgment for various reasons, including after jury or nonjury trials. A motion must be filed within 28 days of judgment.<br><br>This rule establishes grounds and procedures for seeking new trials or amendments to judgments.">
+                            <h3>Rule 59: New Trial; Altering or Amending a Judgment</h3>
+                            <p>Allows the court to grant a new trial or alter/amend a judgment for various reasons, including after jury or nonjury trials. A motion must be filed within 28 days of judgment.</p>
+                        </section>
+                        <section class="rule-card" data-rule="FRCMP Rule 60" data-subtitle="Judgment Relief" data-content="Guidelines for obtaining relief from a final judgment or order.<br><br>This rule specifies grounds and procedures for seeking relief from judgments or orders.">
+                            <h3>Rule 60: Relief from a Judgment or Order</h3>
+                            <p>The court may relieve a party from a final judgment, order, or proceeding for reasons such as mistake, newly discovered evidence, fraud, a void judgment, or other reasons justifying relief.</p>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ruleModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-modal">&times;</span>
+                <h2 id="modalTitle"></h2>
+                <h3 id="modalSubtitle"></h3>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </main>
+    <footer role="contentinfo">
+        <p>&copy; 2024 nUSA Legal</p>
+        <p>THIS IS NOT REAL LIFE!</p>
+    </footer>
+    <script type="module" src="./dist/chat.js"></script>
+</body>
+</html>

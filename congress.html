@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="src/config.js"></script>
+    <script>
+        if (config.isShutdown && window.location.pathname !== config.shutdownPage) {
+            window.location.href = config.shutdownPage;
+        }
+    </script>
+    <title>nUSA Legal - Congress</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:title" content="nUSA Legal - Congress">
+    <meta property="og:description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:url" content="https://nusalegal.com/congress">
+    <meta property="og:image" content="https://nusalegal.com/og-image.jpg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#e0f7fa" media="(prefers-color-scheme: light)">
+    <meta name="keywords" content="legal, nUSA, congress, bills, resolutions, legislation">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        .bill-pdf {
+            font-size: 0.85em;
+            margin-left: 10px;
+            color: #0066cc;
+            text-decoration: none;
+            padding: 2px 6px;
+            border: 1px solid #0066cc;
+            border-radius: 4px;
+        }
+        .bill-pdf:hover {
+            background: #0066cc;
+            color: white;
+        }
+    </style>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <a href="#main-content" class="visually-hidden">Skip to main content</a>
+    <header>
+        <div class="header-container">
+            <h1><a href="/" aria-label="nUSA Legal Home">nUSA Legal</a></h1>
+            <nav role="navigation" aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="courts.html">Courts</a></li>
+                    <li><a href="congress.html" aria-current="page">Congress</a></li>
+                    <li><a href="frcp-frcmp.html">FRCP/FRCMP</a></li>
+                    <li><a href="laws.html">Laws</a></li>
+                    <li><a href="constitution.html">Constitution</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main id="main-content">
+        <div class="content">
+            <h2 class="centered-title">Congress</h2>
+            <div class="search-container" role="search">
+                <input type="search" id="bill-search" 
+                       placeholder="Search bills..." 
+                       aria-label="Search bills">
+                <select id="bill-filter" aria-label="Filter bills by type">
+                    <option value="all">All Bills</option>
+                    <option value="hr">House Bills (H.R.)</option>
+                    <option value="s">Senate Bills (S.)</option>
+                    <option value="hjres">House Joint Resolutions (H.J.Res.)</option>
+                    <option value="sjres">Senate Joint Resolutions (S.J.Res.)</option>
+                    <option value="hconres">House Concurrent Resolutions (H.Con.Res.)</option>
+                    <option value="sconres">Senate Concurrent Resolutions (S.Con.Res.)</option>
+                    <option value="hres">House Resolutions (H.Res.)</option>
+                    <option value="sres">Senate Resolutions (S.Res.)</option>
+                </select>
+            </div>
+
+            <div id="loading-indicator" class="loading" style="display: none;">
+                Loading congressional data...
+            </div>
+
+            <div id="error-message" class="error-message" style="display: none;">
+                Failed to load congressional data. Please try again.
+            </div>
+
+            <div class="case-details" id="bills-container">
+                <div class="case">
+                    <h3>H.R. 1 <a href="bills/hr1.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes SWAT and SF under the federal government, able to carry out law enforcement duties.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 2 <a href="bills/s2.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes a legal standard for protective zones and provides regulations for the enforcement in, and control of, these areas and protection of federal protectees.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 5 <a href="bills/s5.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill lays out the structure, powers, purpose, and organization of the Defense Force Protection Agency; and for other purposes.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 2 <a href="bills/hr2.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes standardized procedures and qualifications for individuals authorized to administer oaths of office in the United States.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 4 <a href="bills/hr4.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes and regulates the United States Capitol Police.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 5 <a href="bills/hr5.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes the Presidential line of succession.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 20 <a href="bills/hr20.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill gives the former Yada's and Yada Clan (YC) a Month of Remembrance and History for all they have done to help NUSA grow.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 41 <a href="bills/hr41.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes the structure and functions of Washington, D.C.'s municipal government, defining roles for key officials and departments. It outlines election processes, government powers, and procedures for removing officials. It also emphasizes federal sovereignty, transparency, accountability, and citizens' rights.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 32 <a href="bills/hr32.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill holds judges accountable for ethical and criminal violations during their tenure in office.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 48 <a href="bills/hr48.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill allows municipal and federal employees to commit crime while on the "American Citizen" team without the risk of Termination from government or municipal agencies or departments.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 56 <a href="bills/hr56.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes the National Guard.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 47 <a href="bills/hr47.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill ensures government transparency and keep Congress informed through regular reports from executive branch department heads.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 50 <a href="bills/hr50.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill reforms the US judicial system, designates the Supreme Court for judicial discipline, and establishes Magistrate judges. It defines actionable torts, sets statutes of limitations and maximum sentences, and addresses procedural matters in District Courts.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 17 <a href="bills/s17.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill amends Title 18 of the U.S. Code to prohibit unauthorized private paramilitary activity and establish penalties and civil remedies.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 76 <a href="bills/hr76.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes consolidated appropriations for the fiscal months of April and May in the year 2024.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 60 <a href="bills/hr60.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill re-codifies an abuse of tools statute following the NUSA law reset.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 54 <a href="bills/hr54.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill sets rules allowing the President to appoint officials and limit the duration of acting positions.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 75 <a href="bills/hr75.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill reforms the military justice system by establishing a Chief Judge Advocate General and independent JAG Corps, defines key terms, outlines roles, and addresses legal confidentiality. It specifies court-martial types and the appeals process.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 70 <a href="bills/hr70.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill amends the U.S. Code with respect to the Secret Service, National Security Affairs, and to create regulations for the White House Complex and certain Reports to Congress.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 59 <a href="bills/hr59.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill strengthens the ability of the United States to prevent, protect against, respond to, and recover from national security threats.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 94 <a href="bills/hr94.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill provides the executive branch with a further discretionary budget fund to aid in day-to-day operations.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 69 <a href="bills/hr69.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill regulates and oversees the operations of international security companies to ensure compliance with United States laws and regulations.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 78 <a href="bills/hr78.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill codifies the recommendations of the United States Commission on the Revision of the United States Code.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 68 <a href="bills/hr68.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill enhances transparency between the United States Military and Congress.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 71 <a href="bills/hr71.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes higher paygrades for exceptional service in the United States Military.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 57 <a href="bills/hr57.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes a tribunal of equity to address employment and labor relations matters in the United States.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 79 <a href="bills/hr79.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill assists the operations of the Federal Protective Service by granting authority to close roads and sidewalks during emergencies and regulate access to federal property.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 62 <a href="bills/hr62.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill repeals the antitrust laws currently enforced by the Department of Justice in order to maintain a free labor market.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 51 <a href="bills/hr51.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill provides federal regulations for the protection of employed individuals in the United States.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 37 <a href="bills/s37.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill ensures that civil offices of the United States are defined in law in accordance with Article 11 of the U.S. Constitution.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 38 <a href="bills/s38.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes an apolitical federal civil service that ensures continuity of government and allows for individuals to build permanent expertise.</p>
+                </div>
+                <div class="case">
+                    <h3>S. Res. 10 <a href="bills/sres10.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill reaffirms its members' commitment to the United Nations Charter, aiming to safeguard democracy and security in the North Atlantic area through collective defense and cooperation.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 34 <a href="bills/s34.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill reinstates the previous time conversion in place before the Law Reset of 2023 and ensure better uniformity and applicability of the US Code to ROBLOX.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 33 <a href="bills/s33.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill ensures that criminal defendants are provided a proper and speedy trial in accordance with their Fifth and Sixth Amendment rights while simplifying the provisions of the 1974 Act.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 32 <a href="bills/s32.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill extends Secret Service protection for past Presidents and Vice Presidents indefinitely.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 35 <a href="bills/s35.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill reforms civil liability by abolishing Bivens claims, most qualified immunity, and the Federal Torts Claims Act. It establishes specific torts with damage caps, outlines claim procedures, and mandates mediation. The bill also alters sovereign immunity and includes both government and private actors.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 36 <a href="bills/s36.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill provides the Federal Protective Service with a legal mandate to protect members of Congress.</p>
+                </div>
+                <div class="case">
+                    <h3>S. 39 <a href="bills/s39.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill establishes a panel to provide speedy justice and resolve often simple legal errors, while establishing a clearer lower court record for high court appeals.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 116 <a href="bills/hr116.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill provides the executive branch with a further discretionary budget fund to aid in day-to-day operations.</p>
+                </div>
+                <div class="case">
+                    <h3>H.J.R. 1 <a href="bills/hjr1.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill authorizes the use of United States Armed Forces against those responsible for the recent attacks launched against officers of the United States and the State of Israel.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 2 <a href="bills/hr2.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill gives exclusive authority to the U.S. Attorney for the District of Columbia to prosecute criminal violations of D.C. law.</p>
+                </div>
+                <div class="case">
+                    <h3>H.R. 3 <a href="bills/hr3.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill honors Technozo's distinguished service to the U.S. and authorizes awarding him a Congressional Gold Medal.</p>
+                </div>
+                <div class="case">
+                    <h3>S.J.Res. 10 <a href="bills/sjres10.pdf" target="_blank" class="bill-pdf">[View Bill Text]</a></h3>
+                    <p><strong>Description:</strong> This bill authorizes Discord forum voting for Congressional business, ensuring a more efficient and transparent process.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer role="contentinfo">
+        <p>&copy; 2024 nUSA Legal</p>
+        <p>THIS IS NOT REAL LIFE!</p>
+    </footer>
+    <script type="module" src="./dist/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="src/config.js"></script>
+    <script>
+        if (config.isShutdown && window.location.pathname !== config.shutdownPage) {
+            window.location.href = config.shutdownPage;
+        }
+    </script>
+    <title>nUSA Legal - Constitution</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:title" content="nUSA Legal - Constitution">
+    <meta property="og:description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:url" content="https://nusalegal.com/constitution">
+    <meta property="og:image" content="https://nusalegal.com/og-image.jpg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#e0f7fa" media="(prefers-color-scheme: light)">
+    <meta name="keywords" content="legal, nUSA, constitution, amendments, fundamental rights">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1><a href="https://nusalegal.com">nUSA Legal</a></h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="courts.html">Courts</a></li>
+                    <li><a href="congress.html">Congress</a></li>
+                    <li><a href="frcp-frcmp.html">FRCP/FRCMP</a></li>
+                    <li><a href="laws.html">Laws</a></li>
+                    <li><a href="constitution.html">Constitution</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="constitution-container">
+            <div class="constitution-left button-container">
+                <button id="constitution-btn" style="--i: 0">Constitution</button>
+                <button id="amendments-btn" style="--i: 1">Constitutional Amendments</button>
+            </div>
+            <div class="constitution-right grid">
+                <h2 id="section-title" class="centered-title">Constitution</h2>
+                <div id="constitution-content" class="section-container" style="display: flex;">
+                <section class="article-card" data-article="article1">
+                    <h3>Article I</h3>
+                    <p><strong>Description:</strong> This article creates the legislative branch, dividing it into two chambers—the House of Representatives and the Senate—with frequent elections to ensure accountability and responsiveness. It lays out specific qualifications for office based on activity and citizenship in the roleplay group, while also detailing how bills become laws, the process for impeachment, and the powers vested in Congress. Municipalities are restricted from conducting foreign affairs, issuing currency, or maintaining military forces without federal oversight, reinforcing a strong centralized authority. The article also introduces procedural structures, quorum requirements, and committee formation to support legislative operations.</p>
+                    <button class="read-more">Read Article →</button>
+                </section>
+                <section class="article-card" data-article="article2">
+                    <h3>Article II</h3>
+                    <p><strong>Description:</strong> This article defines the executive branch, placing national leadership in the hands of a President elected for a six-month term, alongside a Vice President. It details the election process, eligibility requirements, succession protocols, and the President's powers—including military command, treaty negotiation, appointments, and law enforcement. The article ensures accountability by outlining impeachment procedures and emphasizes the importance of public service and constitutional loyalty through an oath of office.</p>
+                    <button class="read-more">Read Article →</button>
+                </section>
+                <section class="article-card" data-article="article3">
+                    <h3>Article III</h3>
+                    <p><strong>Description:</strong> This article establishes the judicial branch, granting its powers to a supreme Court and any lower courts Congress may create. It gives federal courts authority over a wide range of legal disputes, including constitutional issues, foreign affairs, and inter-municipal conflicts, while reserving original jurisdiction for the supreme Court in select cases. The article emphasizes fair trials, outlines the definition and punishment of treason, and grants the supreme Court power to review—and potentially overturn—actions of the executive and legislative branches. It also introduces rules for issuing arrest warrants and managing judicial procedures.</p>
+                    <button class="read-more">Read Article →</button>
+                </section>
+                <section class="article-card" data-article="article4">
+                    <h3>Article IV</h3>
+                    <p><strong>Description:</strong> This article sets the framework for the relationship between the federal government and municipalities. It guarantees mutual recognition of public records, rights, and protections across all municipalities, while empowering Congress to admit new ones under strict conditions. The article affirms that every municipality will have a republican form of government and ensures federal protection against invasion and domestic unrest. It reinforces national unity by establishing equal rights and responsibilities across the entire union.</p>
+                    <button class="read-more">Read Article →</button>
+                </section>
+                <section class="article-card" data-article="article5">
+                    <h3>Article V</h3>
+                    <p><strong>Description:</strong> This article outlines how constitutional amendments are proposed and adopted. It gives Congress the power to initiate changes with a two-thirds vote in both chambers, but requires review and approval by a majority of the Supreme Court within ten days. If the Court rejects an amendment, Congress may override that decision by securing two-thirds approval from both chambers again. This dual-step process balances democratic initiative with judicial oversight, ensuring thoughtful and lawful constitutional evolution.</p>
+                    <button class="read-more">Read Article →</button>
+                </section>
+            </div>
+            <div id="amendment-content" class="section-container" style="display: none;">
+                <section class="rule-card" data-rule="Amendment I" data-content="Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; of the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.">
+                    <h3>Amendment I</h3>
+                    <p><strong>Description:</strong> This amendment safeguards fundamental freedoms, prohibiting Congress from establishing a national religion or restricting free speech, the press, peaceful assembly, or petitions to the government.
+                </section>
+                <section class="rule-card" data-rule="Amendment II" data-content="A well-regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.">
+                    <h3>Amendment II</h3>
+                    <p><strong>Description:</strong> This amendment affirms the people’s right to bear arms, linking it to the importance of a well-regulated militia for state security.
+                </section>
+                <section class="rule-card" data-rule="Amendment III" data-content="No Soldier shall, in time of peace be quartered in any house, without the consent of the Owner, nor in time of war, but in a manner to be prescribed by law.">
+                    <h3>Amendment III</h3>
+                    <p><strong>Description:</strong> This amendment protects private property by preventing the forced housing of soldiers in homes during peacetime without the owner's consent.
+                </section>
+                <section class="rule-card" data-rule="Amendment IV" data-content="The right of the people to be secure in their persons, houses, papers, and effects, against unreasonable searches and seizures, shall not be violated, and no Warrants shall issue, but upon probable cause, supported by Oath or affirmation, and particularly describing the place to be searched, and the persons or things to be seized.">
+                    <h3>Amendment IV</h3>
+                    <p><strong>Description:</strong> This amendment guards against unreasonable searches and seizures, requiring warrants to be supported by probable cause and to specify exact details of the search.
+                </section>
+                <section class="rule-card" data-rule="Amendment V" data-content="No person shall be subject for the same offence twice; nor shall be compelled in any criminal case to be a witness against himself, nor be deprived of life, liberty, or property, without due process of law; nor shall private property be taken for public use, without just compensation.">
+                    <h3>Amendment V</h3>
+                    <p><strong>Description:</strong> This amendment ensures due process, prohibits double jeopardy and self-incrimination, and guarantees compensation when private property is taken for public use.
+                </section>
+                <section class="rule-card" data-rule="Amendment VI" data-content="In all criminal prosecutions, the accused shall enjoy the right to a speedy and public trial, by an impartial jury of the United States of America group, and to be informed of the nature and cause of the accusation; to be confronted with the witnesses against him; to have compulsory process for obtaining witnesses in his favor, and to have the Assistance of Counsel for his defense.">
+                    <h3>Amendment VI</h3>
+                    <p><strong>Description:</strong> This amendment upholds the rights of the accused, including a speedy and public trial by an impartial jury, the right to know the charges, confront witnesses, and access legal counsel.
+                </section>
+                <section class="rule-card" data-rule="Amendment VII" data-content="In Suits at common law, where the value in controversy shall exceed five thousand dollars of in-game currency, the right of trial by jury shall be preserved, and no fact tried by a jury, shall be otherwise re examined in any Court of the United States, than according to the rules of the common law.">
+                    <h3>Amendment VII</h3>
+                    <p><strong>Description:</strong> This amendment preserves the right to a jury trial in civil cases involving disputes exceeding a set amount and restricts judicial reexamination of facts found by a jury.
+                </section>
+                <section class="rule-card" data-rule="Amendment VIII" data-content="Excessive bail shall not be required, nor excessive fines imposed, nor cruel and unusual punishments inflicted.">
+                    <h3>Amendment VIII</h3>
+                    <p><strong>Description:</strong> This amendment prohibits excessive bail and fines, and bans cruel and unusual punishment, reinforcing humane treatment under the law.
+                </section>
+                <section class="rule-card" data-rule="Amendment IX" data-content="The enumeration in the Constitution, of certain rights, shall not be construed to deny or disparage others retained by the people.">
+                    <h3>Amendment IX</h3>
+                    <p><strong>Description:</strong> This amendment reminds that the Constitution’s listed rights aren’t exhaustive—citizens retain other fundamental rights that aren’t explicitly mentioned.
+                </section>
+                <section class="rule-card" data-rule="Amendment X" data-content="The powers not delegated to the United States by the Constitution, nor prohibited by it to the Municipalities, are reserved to the Municipalities respectively, or to the people.">
+                    <h3>Amendment X</h3>
+                    <p><strong>Description:</strong> This amendment reserves all powers not granted to the federal government or forbidden to the municipalities for the municipalities themselves or the people, emphasizing decentralized authority.
+                </section>
+                <section class="rule-card" data-rule="Amendment XI" data-content="SECTION 1. Holding more than one civil office is prohibited; acceptance of an office incompatible with held civil office held is a resignation from the office first held.<br><br>SECTION 2. Civil officer is defined as the President, Vice President, member of Congress, officers of the United States receiving the advice and consent of the Senate, and the heads, or the principal deputy of such, of any agency possessing the use of a team.<br><br>SECTION 3. Congress may expand on what further offices are civil under the United States but may not encroach upon the definition laid out in Clause One of this article.">
+                    <h3>Amendment XI</h3>
+                    <p><strong>Description:</strong> This amendment forbids individuals from holding more than one civil office at a time and defines which positions count as civil offices, while allowing Congress to expand on this definition without contradiction.
+                </section>
+                <section class="rule-card" data-rule="Amendment XII" data-content="In Elections for President of the United States, Candidates for President of the United States shall submit in writing to Congress a letter notifying them of who they shall have as their Candidate for Vice President of the United States by no later than one Week before the election date; electors shall submit a ballot with the name of the President of the United States candidate they prefer, which will automatically be supplemented with that Candidate’s choice for their Vice President of the United States.">
+                    <h3>Amendment XII</h3>
+                    <p><strong>Description:</strong> This amendment sets a clear procedure for vice presidential candidates to be declared before elections, automatically pairing them with presidential candidates on ballots.
+                </section>
+                <section class="rule-card" data-rule="Amendment XIII" data-content="SECTION 1. Neither slavery nor involuntary servitude, except as a punishment for crime whereof the party shall have been duly convicted, shall exist within the United States, or any place subject to their jurisdiction.<br><br>SECTION 2. Congress shall have the power to enforce this article by appropriate legislation.">
+                    <h3>Amendment XIII</h3>
+                    <p><strong>Description:</strong> This amendment abolishes slavery and involuntary servitude except as criminal punishment, and empowers Congress to enforce this ban.
+                </section>
+                <section class="rule-card" data-rule="Amendment XIV" data-content="SECTION 1. All persons born or naturalized in the United States, and subject to the jurisdiction thereof, are citizens of the United States and of the Municipalities. No Municipality shall make or enforce any law which shall abridge the privileges or immunities of citizens of the United States; nor shall any Municipality deprive any person of life, liberty, or property, without due process of law in a federal district Court; nor deny to any person within its jurisdiction the equal protection of the laws.<br><br>SECTION 2. No person shall be a Senator or Representative in Congress, or elector of President and Vice President, or hold any office, civil or military, under the United States, or under any Municipality, who, having previously taken an oath, as a member of Congress, or as an officer of the United States, or as a member of any Municipal council, or as an executive officer of any Municipality, to support the Constitution of the United States, shall have engaged in insurrection or rebellion against the same, or given aid or comfort to the enemies thereof. But Congress may by a vote of two-thirds of each House on public forum, remove such disability.<br><br>SECTION 3. The Congress shall have power to enforce, by appropriate legislation, the provisions of this article.">
+                    <h3>Amendment XIV</h3>
+                    <p><strong>Description:</strong> This amendment establishes birthright citizenship, guarantees equal protection and due process, and bars individuals who’ve engaged in insurrection from holding office—unless Congress lifts this restriction with a supermajority vote.
+                </section>
+                <section class="rule-card" data-rule="Amendment XV" data-content="SECTION 1. The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any Municipality on account of race, color, or previous condition of servitude.<br><br>SECTION 2. The Congress shall have the power to enforce this article by appropriate legislation.">
+                    <h3>Amendment XV</h3>
+                    <p><strong>Description:</strong> This amendment secures voting rights regardless of race, color, or past condition of servitude, solidifying the principle of universal suffrage
+                </section>
+                <section class="rule-card" data-rule="Amendment XVI" data-content="SECTION 1. The President of the United States, Vice President of the United States, and Speaker of the House in concurrence shall have the right to request from the people a referendum to veto a Law or an executive Order, and must receive sixty percent or more of the people’s consent for the referendum to pass.<br><br>SECTION 2. Ballots cast for the referendum, which shall last for forty eight hours and be shouted throughout, by the people shall be at an appropriate venue, and the yeas and nays in response to the referendum question shall be recorded in a publicly available database, managed by the Federal Elections Commission, reaching at minimum two hundred votes and sixty percent approval.<br><br>SECTION 3. If any of the three hosts of the referendum decide to, they may cancel it.<br><br>SECTION 4. Any referendum that does not reach at least two hundred ballots cast by the people shall not have effect.<br><br>SECTION 5. No more than one referendum may be proposed each Month.">
+                    <h3>Amendment XVI</h3>
+                    <p><strong>Description:</strong> This amendment allows the President, Vice President, and Speaker of the House to initiate referendums that can veto laws or executive orders if at least sixty percent of the people approve—providing a channel for direct public input into governance.
+                </section>
+                <section class="rule-card" data-rule="Amendment XVII" data-content="The supreme Court shall have the power to expel its members or members of the federal district Court provided two thirds of the Court vote in favor.">
+                    <h3>Amendment XVII</h3>
+                    <p><strong>Description:</strong> This amendment empowers the Supreme Court to expel its own members or those of the federal district Court by a two-thirds vote, reinforcing internal accountability within the judiciary.
+                </section>
+                <section class="rule-card" data-rule="Amendment XVIII" data-content="The supreme Court shall have eight judges (justices) and a Chief Justice, and the federal district Court shall have fifteen judges, whose count may be expanded by Congress but not lowered past fifteen, and judges appointed shall not be deprived of their sitting on the Bench due to congressional adjustment of the federal district Court’s size.">
+                    <h3>Amendment XVIII</h3>
+                    <p><strong>Description:</strong> This amendment establishes a fixed composition for the courts: the Supreme Court shall have eight judges and a Chief Justice, while the federal district Court maintains fifteen judges, a number that Congress may increase but not reduce below fifteen.
+                </section>
+                <section class="rule-card" data-rule="Amendment XIX" data-content="The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any Municipality on account of sex. Congress shall have power to enforce this article by appropriate legislation.">
+                    <h3>Amendment XIX</h3>
+                    <p><strong>Description:</strong> This amendment guarantees voting rights regardless of sex, entrenching gender equality in electoral participation.
+                </section>
+                <section class="rule-card" data-rule="Amendment XX" data-content="SECTION 1. The inaugurations of the President and Vice President shall occur on the 20th day of January and the 20th day of July following their respective presidential elections.<br><br>SECTION 2. If, at the time fixed for the beginning of the term of the President, the President elect shall have actually died or quit ROBLOX, the Vice President elect shall become President. If a President shall not have been chosen before the time fixed for the beginning of his term, or if the President elect shall have failed to qualify, then the Vice President elect shall act as President until a President shall have qualified; and the Congress may by law provide for the case wherein neither a President elect nor a Vice President elect shall have qualified, declaring who shall then act as President, or the manner in which one who is to act shall be selected, and such person shall act accordingly until a President or Vice President shall have qualified.<br><br>SECTION 3. The Congress may by law provide for the case of the actual death or quitting ROBLOX of any of the persons from whom the House of Representatives may choose a President whenever the right of choice shall have devolved upon them, and for the case of the actual death or quitting ROBLOX of any of the persons from whom the Senate may choose a Vice President whenever the right of choice shall have devolved upon them.<br><br>SECTION 4. Section 1 shall take effect on the 15th day of September following the ratification of this article.">
+                    <h3>Amendment XX</h3>
+                    <p><strong>Description:</strong> This amendment defines presidential inaugurations as occurring on January 20 and July 20, and clarifies succession rules if a President-elect dies or quits ROBLOX before assuming office.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXI" data-content="When a member of the supreme Court wishes, he may take upon the duties of a federal district Court judge in addition to his on the Court and cease such at his convenience.">
+                    <h3>Amendment XXI</h3>
+                    <p><strong>Description:</strong> This amendment allows Supreme Court judges to temporarily serve as federal district Court judges in addition to their primary role, offering judicial flexibility based on individual discretion.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXII" data-content="SECTION 1. No person shall be elected to the office of the President more than twice, and no person who has held the office of President, or acted as President, for more than three months of a term of which some other person was elected President shall be elected to the office of the President more than once. But this Article shall not prevent any person who may be holding the office of President, or acting as President, during the term within which this Article becomes operative from holding the office of President or acting as President during the remainder of such term.">
+                    <h3>Amendment XXII</h3>
+                    <p><strong>Description:</strong> This amendment imposes presidential term limits, barring anyone from being elected more than twice or more than once if they've already served over three months of another's term, while preserving eligibility for those currently serving during the article's ratification period.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXIII" data-content="Before a Senator or Representative is able to exercise his Office, he must take the following Oath or Affirmation in-game: “I do solemnly swear (or affirm) that I have never voluntarily borne arms against the United States since I have been a citizen thereof; that I have voluntarily given no aid, countenance, counsel, or encouragement to persons engaged in armed hostility thereto; that I have neither sought nor accepted nor attempted to exercise the functions of any office whatever, under any authority or pretended authority in hostility to the United States; that I have not yielded a voluntary support to any pretended government, authority, power or constitution within the United States, hostile or inimical thereto. And I do further swear (or affirm) that, to the best of my knowledge and ability, I will support and defend the Constitution of the United States, against all enemies, foreign and domestic; that I will bear true faith and allegiance to the same; that I take this obligation freely, without any mental reservation or purpose of evasion, and that I will well and faithfully discharge the duties of the office on which I am about to enter.”">
+                    <h3>Amendment XXIII</h3>
+                    <p><strong>Description:</strong> This amendment requires Senators and Representatives to take a comprehensive oath in-game before assuming office, pledging allegiance to the Constitution and affirming they've not supported hostile governments or actions against the United States.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXIV" data-content="SECTION 1. The right of citizens of the United States to vote in any primary or other election for President or Vice Presi- dent, for electors for President or Vice President, or for Sena- tor or Representative in Congress, shall not be denied or abridged by the United States or any Municipality by reason of failure to pay any debt.<br><br>SECTION 2. The Congress shall have power to enforce this article by appropriate legislation.">
+                    <h3>Amendment XXIV</h3>
+                    <p><strong>Description:</strong> This amendment prohibits withholding voting rights due to unpaid debts, ensuring financial hardship cannot block civic participation.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXV" data-content="SECTION 1. In case of the removal of the President from office or of his actual death, quitting ROBLOX, or resignation, the Vice President shall become President.<br><br>SECTION 2. Whenever there is a vacancy in the office of Vice President, the President shall nominate a Vice President who shall take office upon confirmation by a majority vote of both Houses of Congress on public forum.<br><br>SECTION 3. Whenever the President transmits to the President pro tempore of the Senate and the Speaker of the House of Representatives his written declaration that he is unable to discharge the powers and duties of his office, and until he transmits to them a written declaration to the contrary, such powers and duties shall be discharged by the Vice President as Acting President.<br><br>SECTION 4. Whenever the Vice President and a unanimous consent of the principal officers of the executive departments transmit to the President pro tempore of the Senate and the Speaker of the House of Representatives their written declaration that the President is unable to discharge the powers and duties of his office, the Vice President shall immediately assume the powers and duties of the office as Acting President. Thereafter, when the President transmits to the President pro tempore of the Senate and the Speaker of the House of Representatives his written declaration that no inability exists, he shall resume the powers and duties of his office unless the Vice President and a unanimous consent of the principal officers of the executive transmit within two days to the President pro tempore of the Senate and the Speaker of the House of Representatives their written declaration that the President is unable to discharge the powers and duties of his office. Thereupon if Congress shall determine by two-thirds vote of both Houses on public forum that the President is unable to discharge the powers and duties of his office, the Vice President shall continue to discharge the same as Acting President; otherwise, the President shall resume the powers and duties of his office.">
+                    <h3>Amendment XXV</h3>
+                    <p><strong>Description:</strong> This amendment codifies detailed presidential succession rules—including procedures for filling a Vice President vacancy and transferring power temporarily or permanently in cases of incapacity—with clear requirements for documentation and Congressional resolution.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXVI" data-content="SECTION 1. The right of citizens of the United States, who have attained an age of two months membership or more on ROBLOX, to vote shall not be denied or abridged by the United States or any Municipality on account of age.<br><br>SECTION 2. The Congress shall have power to enforce this article by appropriate legislation.">
+                    <h3>Amendment XXVI</h3>
+                    <p><strong>Description:</strong> This amendment protects voting rights based on age, granting suffrage to citizens with at least two months of membership on ROBLOX, and preventing municipalities from denying it due to youth.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXVII" data-content="No law, varying the benefits for the services of the Senators and Representatives, shall take effect in either respective House, until an election for that respective House shall have intervened.">
+                    <h3>Amendment XXVII</h3>
+                    <p><strong>Description:</strong> This amendment delays changes to congressional benefits until after an intervening election, promoting ethical governance and preventing self-serving pay increases.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXVIII" data-content="No person shall be arbitrarily deprived of their Vote in elections, and Congress shall enforce this article by appropriate legislation.">
+                    <h3>Amendment XXVIII</h3>
+                    <p><strong>Description:</strong> This amendment forbids the arbitrary denial of voting rights in elections, with Congress empowered to enforce protections and uphold electoral integrity.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXVIX(u did it wrong)" data-content="No laws of the United States in operation at the time of ratification of this new Constitution shall become inoperable unless they conflict with this Constitution, and officeholders of offices which are contained in both the prior and this Constitution shall remain in their offices for the same length of time as would occur under the prior Constitution.">
+                    <h3>Amendment XXIX</h3>
+                    <p><strong>Description:</strong> This amendment ensures that existing laws and officeholders from the prior constitution remain valid unless directly conflicting with the new constitution, preserving institutional stability during the transition.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXX" data-content="SECTION 1. Congress may, with two thirds of both Houses concurring, allow an alternative voting method to that of forums, which shall be used in cases of Impeachment, Expulsion, Conviction, or other situations that require a vote to be conducted outside of sessions.<br><br>SECTION 2. When approving such new method of voting, it shall state its purpose and any functions it may have towards the preferred way of voting adopted by either House. No new method of voting shall be operable unless such method allows for all members of individual Houses to be in attendance.">
+                    <h3>Amendment XXX</h3>
+                    <p><strong>Description:</strong> This amendment allows Congress, by two-thirds vote, to authorize alternative voting methods beyond forums for specific cases like impeachments or expulsions, provided all members can participate and the method is clearly defined.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXXI" data-content="SECTION 1. The executive Power shall be vested in a President of the United States of America. He shall hold his Office during the Term of four Months, and, together with the Vice President, chosen for the same Term, be elected, as follows in the U.S. Const., Art. II, § 1, cl. 2–6.<br><br>SECTION 2. The inaugurations of the President and Vice President shall occur on the 21st day of July, 21st day of November, and the 21st day of March following their respective presidential elections.<br><br>SECTION 3. No person shall be elected to the office of the President more than twice, and no person who had held the office of President, or acted as President, for more than two months of a term of which some other person was elected President shall be elected to the office of the President more than once. But this Article shall not prevent any person who may be holding the office of President, or acting as President, during the term within which this Article becomes operative, from holding the office of President or acting as President during the remainder of such term.<br><br>SECTION 4. The provisions of this article shall, after ratification by the Congress, enter into force beginning the 20th day of July, 2018 only upon a majority vote in the Supreme Court of the United States.">
+                    <h3>Amendment XXXI</h3>
+                    <p><strong>Description:</strong> This amendment revises presidential term lengths to four months and sets three inauguration dates annually. It also reiterates the two-term limit and clarifies that this rule doesn't affect those serving at the time of ratification.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXXII" data-content="SECTION 1. No person who, having been disqualified from holding and enjoying any Office of honor, Trust, or Profit under the United States in the course of an impeachment and conviction proceeding under the United States Congress, shall be a Senator or Representative in Congress, President or Vice President of the United States, elector of President and Vice President, or hold any office, civil or military, under the United States, or under any Municipality, including positions of Mayor, Deputy Mayor, or positions in municipal governments.<br><br>SECTION 2. The provisions of this article shall, in addition to affecting those in the future disqualified, affect those who previously have been disqualified under the provisions of section three, clause seven, of Article I of the Constitution of the United States.<br><br>SECTION 3. The provisions of this article shall, after ratification by the Congress, enter into force immediately, only upon a majority vote in the Supreme Court of the United States.">
+                    <h3>Amendment XXXII</h3>
+                    <p><strong>Description:</strong> This amendment permanently bars individuals who were impeached and convicted from holding federal or municipal office, even if previously disqualified under older provisions, reinforcing the seriousness of impeachment outcomes.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXXIII" data-content="SECTION 1. Any person who, having been disqualified from holding and enjoying any Office of honor, Trust, or Profit under the United States in the course of an impeachment and conviction proceeding under the United States Congress may move for a post-judgement hearing by the Senate if two-thirds of the Senate concur therein. The Senate may, following a post-judgement hearing, with three-fourths concurring therein, reverse the disqualification of any person who was disqualified as judgement in an impeachment trial and conviction. The Senate may, alternatively, commute in part the restrictions of any disqualification on holding office.<br><br>SECTION 2. The provisions of this article shall, after ratification by the Congress, enter into force immediately, only upon a majority vote in the Supreme Court of the United States.">
+                    <h3>Amendment XXXIII</h3>
+                    <p><strong>Description:</strong> This amendment creates a pathway for previously disqualified individuals to appeal to the Senate for reversal or commutation of their disqualification, requiring strong supermajority support to succeed.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXXIV" data-content="SECTION 1. The eighteenth article of amendment to the Constitution is hereby amended to: ‘The supreme Court shall have six judges (justices) and a Chief Justice, and the federal district Court shall have fifteen judges, whose count may be expanded by Congress but not lowered past fifteen, and judges appointed shall not be deprived of their sitting on the Bench due to congressional adjustment of the federal district Court’s size.’<br><br>SECTION 2. No judge or justice shall be deprived of sitting on the Bench due to the adoption of this amendment.">
+                    <h3>Amendment XXXIV</h3>
+                    <p><strong>Description:</strong> This amendment modifies the court composition, reducing the Supreme Court to six judges plus a Chief Justice, and reaffirms that judges cannot be removed from the bench due to changes in court size.
+                </section>
+                <section class="rule-card" data-rule="Amendment XXXV" data-content="SECTION 1. The Board of Governors shall be established as the principal body governing the United States Military. The President shall chair the Board, and its voting members shall be composed of the Secretary of Defense and the Chairman of the Joint Chiefs of Staff. In the event of an equal division between the voting members of the Board, the question shall be referred to the United States Senate, who shall vote on the question.<br><br>SECTION 2. The Chairman of the Joint Chiefs of Staff shall be appointed by the President, by and with the advice and consent of the Senate. They shall hold their office for a term of four months and may only be removed from office on impeachment for, and conviction of, Severe Inactivity, Treason, Bribery, or other high Crimes and Misdemeanors, or upon the completion of their four-month tenure.<br><br>SECTION 3. The President shall appoint, by and with the advice and consent of the Board of Governors, Service Chiefs and Vice Service Chiefs, and may, by written executive communication to the Board, propose their removal, which shall take effect upon the Board's consent.<br><br>SECTION 4. The Joint Chiefs of Staff may appoint, by and with the advice and consent of the Board of Governors, flag officers of their respective branches, and may further deliver a request to the Board of Governors for the removal of their flag officers, which shall take effect upon the Board’s consent.<br><br>SECTION 5. The Board of Governors may promulgate rules of practice and procedure for itself, not in conflict with laws governing such matters.">
+                    <h3>Amendment XXXV</h3>
+                    <p><strong>Description:</strong> This amendment establishes the Board of Governors as the central authority over military governance, chaired by the President. It defines appointment powers and procedures for removing key military officials, ensuring structured leadership and checks within the armed forces.
+                </section>
+            </div>
+        </div>
+        <div id="constitutionModal" class="modal constitution-nav-modal" style="display: none;">
+            <div class="modal-overlay">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div class="modal-nav">
+                        <button class="nav-arrow prev" disabled>←</button>
+                        <div class="modal-section-content">
+                            <h2 id="articleTitle"></h2>
+                            <div id="sectionContent"></div>
+                            <div id="sectionIndicator">Section 1 of 10</div>
+                        </div>
+                        <button class="nav-arrow next">→</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ruleModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2 id="modalTitle"></h2>
+                <h3 id="modalSubtitle"></h3>
+                <p id="modalContent"></p>
+            </div>
+        </div>
+    </main>
+    <footer role="contentinfo">
+        <p>&copy; 2024 nUSA Legal</p>
+        <p>THIS IS NOT REAL LIFE!</p>
+    </footer>
+    <script type="module" src="./dist/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="src/config.js"></script>
+    <script>
+        if (config.isShutdown && window.location.pathname !== config.shutdownPage) {
+            window.location.href = config.shutdownPage;
+        }
+    </script>
+    <title>nUSA Legal - Resources</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:title" content="nUSA Legal - Resources">
+    <meta property="og:description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
+    <meta property="og:url" content="https://nusalegal.com/resources">
+    <meta property="og:image" content="https://nusalegal.com/og-image.jpg">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#e0f7fa" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#2f343a" media="(prefers-color-scheme: dark)">
+    <meta name="keywords" content="legal, nUSA, resources, definitions, forms, legal guides">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1><a href="https://nusalegal.com">nUSA Legal</a></h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="courts">Courts</a></li>
+                    <li><a href="congress">Congress</a></li>
+                    <li><a href="frcp-frcmp">FRCP/FRCMP</a></li>
+                    <li><a href="laws">Laws</a></li>
+                    <li><a href="constitution">Constitution</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="resources-container">
+            <div class="resources-left button-container">
+                <button id="definitions-btn" style="--i: 0">Definitions</button>
+                <button id="files-btn" style="--i: 1">Files</button>
+                <button id="court-procedure-btn" style="--i: 2">Court Procedure</button>
+                <button id="opd-btn" style="--i: 3">Office of Public Defender</button>
+                <button id="people-btn" style="--i: 4">nUSA Legal VIPS</button>
+            </div>
+            <div class="resources-right">
+                <h2 id="section-title" class="centered-title">Definitions</h2>
+                <div id="definition-content" class="section-container" style="display: flex;">
+                    <div class="definitions-list">
+                        <section>
+                            <dl>
+                                <dt>Acquittal</dt>
+                                <dd>A verdict of "not guilty" by a judge or jury.</dd>
+                                <dt>Adjourn</dt>
+                                <dd>To postpone or suspend a court proceeding to a future time.</dd>
+                                <dt>Affidavit</dt>
+                                <dd>A written statement made under oath and witnessed by an authorized official.</dd>
+                                <dt>Alibi</dt>
+                                <dd>A defense claim that the accused was somewhere else when the crime occurred.</dd>
+                                <dt>Amend</dt>
+                                <dd>To formally alter or change a legal document.</dd>
+                                <dt>Amicus</dt>
+                                <dd>Short for "amicus curiae"; a friend of the court.</dd>
+                                <dt>Amicus Curiae</dt>
+                                <dd>Latin for "friend of the court"; someone who assists the court by offering information or expertise.</dd>
+                                <dt>Amnesty</dt>
+                                <dd>An official pardon granted to a group of people for political offenses.</dd>
+                                <dt>Appeal</dt>
+                                <dd>A request to a higher court to review a lower court's decision.</dd>
+                                <dt>Appearance</dt>
+                                <dd>The formal act of coming to court as a party to a case.</dd>
+                                <dt>Arraignment</dt>
+                                <dd>A court proceeding where the defendant is read their charges and enters a plea.</dd>
+                                <dt>Bad Faith</dt>
+                                <dd>Intent to deceive or act dishonestly in a transaction or agreement.</dd>
+                                <dt>Badgering</dt>
+                                <dd>Persistent questioning of a witness in an aggressive or intimidating manner.</dd>
+                                <dt>Bias</dt>
+                                <dd>Prejudice in favor of or against one thing, person, or group.</dd>
+                                <dt>Bona Fide</dt>
+                                <dd>Latin for "in good faith"; genuine or done with honest intention.</dd>
+                                <dt>Brady</dt>
+                                <dd>Refers to Brady material; evidence the prosecution must disclose to the defense.</dd>
+                                <dt>Brief</dt>
+                                <dd>A written legal document stating the facts and points of law of a case.</dd>
+                                <dt>Bright-line Rule</dt>
+                                <dd>A clear, simple standard that can be applied without balancing different factors.</dd>
+                                <dt>Burden</dt>
+                                <dd>A duty or obligation to prove something in court.</dd>
+                                <dt>Burden of proof</dt>
+                                <dd>The obligation to prove one's allegations in court.</dd>
+                                <dt>Calumny</dt>
+                                <dd>A false statement meant to injure a person's reputation.</dd>
+                                <dt>Capricious</dt>
+                                <dd>Unpredictable or arbitrary decision-making without proper reasoning.</dd>
+                                <dt>Caveat</dt>
+                                <dd>Latin for "let him beware"; a warning or proviso.</dd>
+                                <dt>Certiorari</dt>
+                                <dd>A writ from a higher court to review a lower court's decision.</dd>
+                                <dt>Clemency</dt>
+                                <dd>Mercy or leniency in punishing; often a governor's/president's pardon.</dd>
+                                <dt>Cognovit</dt>
+                                <dd>A written confession of judgment by a defendant.</dd>
+                                <dt>Collusion</dt>
+                                <dd>A secret agreement between parties to deceive or defraud others.</dd>
+                                <dt>Color of law</dt>
+                                <dd>The appearance or semblance of legal authority.</dd>
+                                <dt>Commutation</dt>
+                                <dd>Reduction of a criminal sentence to a less severe punishment.</dd>
+                                <dt>Competent</dt>
+                                <dd>Legally qualified or capable to perform an act.</dd>
+                                <dt>Compos Mentis</dt>
+                                <dd>Latin for "of sound mind"; mentally competent.</dd>
+                                <dt>Compromise</dt>
+                                <dd>An agreement reached by mutual concessions.</dd>
+                                <dt>Concealment</dt>
+                                <dd>The act of hiding or keeping information secret.</dd>
+                                <dt>Construe</dt>
+                                <dd>To interpret or explain the meaning of something.</dd>
+                                <dt>Contemnor</dt>
+                                <dd>A person who commits contempt of court.</dd>
+                                <dt>Contempt of Court</dt>
+                                <dd>Disobedience to or disrespect for the court.</dd>
+                                <dt>Contest</dt>
+                                <dd>To dispute or challenge something in court.</dd>
+                                <dt>Contra</dt>
+                                <dd>Against or in opposition to.</dd>
+                                <dt>Contumacy</dt>
+                                <dd>Willful disobedience to court orders.</dd>
+                                <dt>Corpus</dt>
+                                <dd>Latin for "body"; the main part or substance of something.</dd>
+                                <dt>Corpus Delicti</dt>
+                                <dd>The fact that a crime has been committed.</dd>
+                                <dt>Covenant</dt>
+                                <dd>A formal agreement or promise in a contract.</dd>
+                                <dt>Culpable</dt>
+                                <dd>Deserving blame or being responsible for wrongdoing.</dd>
+                                <dt>De Facto</dt>
+                                <dd>Latin for "in fact"; existing in actual fact though not by legal establishment.</dd>
+                                <dt>De Jure</dt>
+                                <dd>Latin for "by law"; according to law.</dd>
+                                <dt>De Minimis</dt>
+                                <dd>Latin for "of minimal things"; referring to matters too minor to consider.</dd>
+                                <dt>De Novo</dt>
+                                <dd>Latin for "anew"; starting over from the beginning.</dd>
+                                <dt>Decree</dt>
+                                <dd>A formal legal judgment or order.</dd>
+                                <dt>Defamation</dt>
+                                <dd>False statement that harms someone's reputation.</dd>
+                                <dt>Defraud</dt>
+                                <dd>To obtain something by deceit or trickery.</dd>
+                                <dt>Demur</dt>
+                                <dd>To object to the legal sufficiency of an opponent's claim.</dd>
+                                <dt>Deponent</dt>
+                                <dd>A person who testifies under oath.</dd>
+                                <dt>Derelict</dt>
+                                <dd>Negligent in duty; abandoned or deserted.</dd>
+                                <dt>Dictum</dt>
+                                <dd>A judge's expression of opinion not essential to the decision.</dd>
+                                <dt>Discovery</dt>
+                                <dd>The pre-trial process of obtaining evidence from the other party.</dd>
+                                <dt>Dissent</dt>
+                                <dd>To disagree with a court's decision.</dd>
+                                <dt>Dooced</dt>
+                                <dd>To be fired from a job because of one's online activities.</dd>
+                                <dt>Duress</dt>
+                                <dd>Unlawful pressure to perform an act.</dd>
+                                <dt>Earwitness</dt>
+                                <dd>A person who testifies to what they heard rather than saw.</dd>
+                                <dt>En Banc</dt>
+                                <dd>Latin for "on the bench"; refers to all judges of a court sitting together.</dd>
+                                <dt>Entrapment</dt>
+                                <dd>When law enforcement induces someone to commit a crime they wouldn't ordinarily commit.</dd>
+                                <dt>Erroneous</dt>
+                                <dd>Incorrect; containing error.</dd>
+                                <dt>Exculpatory</dt>
+                                <dd>Evidence favorable to the defendant.</dd>
+                                <dt>Exhibit</dt>
+                                <dd>A document or object presented as evidence in court.</dd>
+                                <dt>Expunge</dt>
+                                <dd>To erase or remove completely, typically referring to records.</dd>
+                                <dt>Extortion</dt>
+                                <dd>Obtaining something through force or threats.</dd>
+                                <dt>Eyewitness</dt>
+                                <dd>A person who personally saw an event and can testify about it.</dd>
+                                <dt>False Pretenses</dt>
+                                <dd>Intentional misrepresentation of facts to obtain something of value.</dd>
+                                <dt>Forgery</dt>
+                                <dd>The creation of a false document or alteration of a genuine one.</dd>
+                                <dt>Fraud</dt>
+                                <dd>Intentional deception to secure unfair or unlawful gain.</dd>
+                                <dt>Frivolous</dt>
+                                <dd>Lacking legal merit; not serious or reasonably purposeful.</dd>
+                                <dt>Gag Order</dt>
+                                <dd>A judge's order prohibiting public discussion of a case.</dd>
+                                <dt>Golden Rule Argument</dt>
+                                <dd>An argument asking jurors to put themselves in the position of a party.</dd>
+                                <dt>Grable test</dt>
+                                <dd>A test for federal jurisdiction over state law claims.</dd>
+                                <dt>Grand jury</dt>
+                                <dd>A group that decides whether there's probable cause for criminal charges.</dd>
+                                <dt>Gravamen</dt>
+                                <dd>The essential element or basis of a grievance or complaint.</dd>
+                                <dt>Habeas Corpus</dt>
+                                <dd>Latin for "you have the body"; a writ to challenge illegal detention.</dd>
+                                <dt>Habit Evidence</dt>
+                                <dd>Evidence of a person's regular practice of meeting a certain situation.</dd>
+                                <dt>Harassment</dt>
+                                <dd>Persistent unwanted behavior causing distress or intimidation.</dd>
+                                <dt>Harmless Error Rule</dt>
+                                <dd>An error that doesn't affect the case's outcome.</dd>
+                                <dt>Headnote</dt>
+                                <dd>A summary of a legal point in a published court decision.</dd>
+                                <dt>Hearing</dt>
+                                <dd>A legal proceeding before a judge without a jury.</dd>
+                                <dt>Hearsay Rule</dt>
+                                <dd>Rule against using second-hand testimony as evidence.</dd>
+                                <dt>Held</dt>
+                                <dd>The court's determination in a case.</dd>
+                                <dt>Hostile Witness</dt>
+                                <dd>A witness who is antagonistic to the examining party.</dd>
+                                <dt>Hung Jury</dt>
+                                <dd>A jury unable to reach a unanimous verdict.</dd>
+                                <dt>Illicit</dt>
+                                <dd>Not legally permitted; unlawful.</dd>
+                                <dt>Immaterial</dt>
+                                <dd>Not relevant or significant to a matter.</dd>
+                                <dt>Immunity</dt>
+                                <dd>Legal protection from prosecution or liability.</dd>
+                                <dt>Impeachment</dt>
+                                <dd>The process of challenging a witness's credibility.</dd>
+                                <dt>In Absentia</dt>
+                                <dd>Latin for "in absence"; proceeding without the person present.</dd>
+                                <dt>In Limine</dt>
+                                <dd>Motion made before trial to exclude evidence.</dd>
+                                <dt>Inadmissible</dt>
+                                <dd>Evidence that cannot be presented in court.</dd>
+                                <dt>Incentive</dt>
+                                <dd>Something that motivates or encourages action.</dd>
+                                <dt>Incite</dt>
+                                <dd>To urge or provoke unlawful behavior.</dd>
+                                <dt>Incriminate</dt>
+                                <dd>To show involvement in a crime or wrongdoing.</dd>
+                                <dt>Indictment</dt>
+                                <dd>A formal accusation of a crime by a grand jury.</dd>
+                                <dt>Injunction</dt>
+                                <dd>A court order requiring someone to do or not do something.</dd>
+                                <dt>Ipse Dixit</dt>
+                                <dd>Latin for "he himself said it"; an unsupported statement.</dd>
+                                <dt>Ipso Facto</dt>
+                                <dd>Latin for "by the fact itself"; automatically.</dd>
+                                <dt>Joinder</dt>
+                                <dd>Combining multiple parties or claims in one lawsuit.</dd>
+                                <dt>Kangaroo Court</dt>
+                                <dd>An unauthorized court that disregards legal rights and justice.</dd>
+                                <dt>Material</dt>
+                                <dd>Significant or essential to a matter at hand.</dd>
+                                <dt>Mediation</dt>
+                                <dd>A process where a neutral third party helps resolve disputes.</dd>
+                                <dt>Memorandum</dt>
+                                <dd>A written statement of facts and law for use in court.</dd>
+                                <dt>Mens Rea</dt>
+                                <dd>Latin for "guilty mind"; criminal intent.</dd>
+                                <dt>Misjoinder</dt>
+                                <dd>Improper joining of parties or claims in a lawsuit.</dd>
+                                <dt>Mistrial</dt>
+                                <dd>A trial terminated before normal conclusion.</dd>
+                                <dt>Moot</dt>
+                                <dd>No longer relevant or subject to debate.</dd>
+                                <dt>Nihil Dicit</dt>
+                                <dd>Latin for "he says nothing"; judgment when defendant fails to plead.</dd>
+                                <dt>Nihil Est</dt>
+                                <dd>Latin for "there is nothing"; a failed service of process.</dd>
+                                <dt>No Contest</dt>
+                                <dd>A plea neither admitting nor denying charges.</dd>
+                                <dt>Noelle Prosequi</dt>
+                                <dd>A formal notice of abandonment of prosecution.</dd>
+                                <dt>Nolo Contendere</dt>
+                                <dd>Latin for "I do not wish to contend"; similar to no contest.</dd>
+                                <dt>Nullity</dt>
+                                <dd>Something void or having no legal effect.</dd>
+                                <dt>Omission</dt>
+                                <dd>Failure to perform a required act.</dd>
+                                <dt>Overbreadth</dt>
+                                <dd>When a law restricts more conduct than legally permissible.</dd>
+                                <dt>Overrule</dt>
+                                <dd>To reject or set aside a previous ruling.</dd>
+                                <dt>Pardon</dt>
+                                <dd>Official forgiveness of a crime.</dd>
+                                <dt>Passim</dt>
+                                <dd>Latin for "throughout"; found in many places in a text.</dd>
+                                <dt>Per Curiam</dt>
+                                <dd>Latin for "by the court"; a unanimous court opinion.</dd>
+                                <dt>Per Diem</dt>
+                                <dd>Latin for "by the day"; daily allowance or payment.</dd>
+                                <dt>Per Se</dt>
+                                <dd>Latin for "by itself"; inherently.</dd>
+                                <dt>Peremptory</dt>
+                                <dd>Final and absolute; not requiring justification.</dd>
+                                <dt>Pinkerton Liability</dt>
+                                <dd>Liability for crimes committed by co-conspirators.</dd>
+                                <dt>Plea</dt>
+                                <dd>Formal response to criminal charges.</dd>
+                                <dt>Pleading</dt>
+                                <dd>Formal written statements in a legal action.</dd>
+                                <dt>Posse Comitatus</dt>
+                                <dd>Limiting military involvement in civilian law enforcement.</dd>
+                                <dt>Post Mortem</dt>
+                                <dd>Latin for "after death"; examination after death.</dd>
+                                <dt>Pro Bono</dt>
+                                <dd>Legal work done without charge for public good.</dd>
+                                <dt>Pro Forma</dt>
+                                <dd>As a matter of form; for form's sake.</dd>
+                                <dt>Pro Hac Vice</dt>
+                                <dd>Permission for an out-of-state lawyer to try a case.</dd>
+                                <dt>Pro Se</dt>
+                                <dd>Representing oneself in court without a lawyer.</dd>
+                                <dt>Probable Cause</dt>
+                                <dd>Reasonable grounds for legal action.</dd>
+                                <dt>Procedendo</dt>
+                                <dd>An order from a higher court to proceed with action.</dd>
+                                <dt>Promulgate</dt>
+                                <dd>To formally announce or declare a new law.</dd>
+                                <dt>Proxy</dt>
+                                <dd>Authority to act for another.</dd>
+                                <dt>Purposivism</dt>
+                                <dd>Interpreting law based on its purpose.</dd>
+                                <dt>Putative</dt>
+                                <dd>Commonly believed or supposed.</dd>
+                                <dt>Quash</dt>
+                                <dd>To nullify or void, especially a summons or subpoena.</dd>
+                                <dt>Quid Pro Quo</dt>
+                                <dd>Latin for "something for something"; an exchange.</dd>
+                                <dt>Quo Warranto</dt>
+                                <dd>A proceeding questioning authority to act.</dd>
+                                <dt>Quorum</dt>
+                                <dd>Minimum number required to conduct business.</dd>
+                                <dt>Ratify</dt>
+                                <dd>To approve or confirm formally.</dd>
+                                <dt>Rational Basis Test</dt>
+                                <dd>Test for constitutionality of laws.</dd>
+                                <dt>Rebuttal</dt>
+                                <dd>Evidence disproving other evidence.</dd>
+                                <dt>Recusal</dt>
+                                <dd>When a judge withdraws from a case.</dd>
+                                <dt>Redaction</dt>
+                                <dd>Removal of sensitive information from documents.</dd>
+                                <dt>Rejoinder</dt>
+                                <dd>A defendant's answer to a plaintiff's reply.</dd>
+                                <dt>Repeal</dt>
+                                <dd>To revoke or cancel a law.</dd>
+                                <dt>Res Ipsa Loquitur</dt>
+                                <dd>Latin for "the thing speaks for itself"; obvious negligence.</dd>
+                                <dt>Res Judicata</dt>
+                                <dd>A matter already decided by a court.</dd>
+                                <dt>Res Nova</dt>
+                                <dd>A new point of law not previously decided.</dd>
+                                <dt>Rhadamanthine</dt>
+                                <dd>Rigorously just or severe judgment.</dd>
+                                <dt>Sanction</dt>
+                                <dd>A penalty for disobeying a law or rule.</dd>
+                                <dt>Scienter</dt>
+                                <dd>Knowledge of wrongdoing; intent to deceive.</dd>
+                                <dt>Sedition</dt>
+                                <dd>Conduct or speech inciting rebellion against authority.</dd>
+                                <dt>Sequester</dt>
+                                <dd>To isolate or separate, especially a jury during trial.</dd>
+                                <dt>Settle</dt>
+                                <dd>To resolve a dispute without a court decision.</dd>
+                                <dt>Supersedeas</dt>
+                                <dd>A writ to stay enforcement of a judgment pending appeal.</dd>
+                                <dt>Supplemental</dt>
+                                <dd>Something added to complete or make up for a deficiency.</dd>
+                                <dt>Tampering</dt>
+                                <dd>Interfering with evidence, witnesses, or jury.</dd>
+                                <dt>Termination</dt>
+                                <dd>The end or conclusion of something.</dd>
+                                <dt>Transcript</dt>
+                                <dd>Written record of court proceedings.</dd>
+                                <dt>Trial De Novo</dt>
+                                <dd>A new trial of a matter previously decided.</dd>
+                                <dt>Twinkie Defense</dt>
+                                <dd>A defense claiming diminished capacity due to external factors.</dd>
+                                <dt>Ultra Vires</dt>
+                                <dd>Acts beyond one's legal power or authority.</dd>
+                                <dt>Vacate</dt>
+                                <dd>To cancel or withdraw; to void or annul.</dd>
+                                <dt>Venire Facias De Novo</dt>
+                                <dd>Order for a new trial with a new jury panel.</dd>
+                                <dt>Veto</dt>
+                                <dd>The power to reject a decision or proposal.</dd>
+                                <dt>Voir Dire</dt>
+                                <dd>Preliminary examination of prospective jurors.</dd>
+                                <dt>Waiver</dt>
+                                <dd>Voluntary surrender of a right or privilege.</dd>
+                                <dt>Writ of Certiorari</dt>
+                                <dd>Order by a higher court to review a lower court's decision.</dd>
+                                <dt>Writ of Coram Nobis</dt>
+                                <dd>Writ to correct errors of fact in a prior judgment.</dd>
+                                <dt>Writ of Error</dt>
+                                <dd>Order to review legal errors in a lower court's judgment.</dd>
+                                <dt>Writ of Mandamus</dt>
+                                <dd>Order compelling a court or official to perform a duty.</dd>
+                                <dt>Yield</dt>
+                                <dd>To give up or surrender a legal right.</dd>
+                                <dt>Zealous Witness</dt>
+                                <dd>A witness who shows strong enthusiasm or bias in testimony.</dd>
+                            </dl>
+                        </section>
+                    </div>
+                </div>
+                <div id="file-content" class="section-container" style="display: none;">
+                    <section>
+                        <h3>Notice of Appearance - NOT SET UP</h3>
+                        <p><a href="https://your-pdf-url.com/pdf1.pdf" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion for Discovery</h3>
+                        <p><a href="https://docs.google.com/document/d/144z7yKiGsoj5UozSzVnf9DwaXaXd7dlHzCqno3uRK8g/edit?usp=sharing" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion to Dismiss - NOT SET UP</h3>
+                        <p><a href="https://your-pdf-url.com/pdf2.pdf" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion for Summary Judgement - NOT SET UP</h3>
+                        <p><a href="https://your-pdf-url.com/pdf2.pdf" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion for Recusal - NOT SET UP</h3>
+                        <p><a href="https://your-pdf-url.com/pdf2.pdf" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion to Quash</h3>
+                        <p><a href="https://docs.google.com/document/d/1LUyB4OgJUQiO2JGJXzQONGP2FjhUHcR0-za6hubEjzU/edit?usp=sharing" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion for Sanctions</h3>
+                        <p><a href="https://docs.google.com/document/d/1qqDhhsjrVH8tLsgSmHr7-8JVlixP6QS3W_mZuqm0_Ec/edit?usp=sharing" target="_blank">Open Document</a></p>
+                    </section>
+                    <section>
+                        <h3>Motion for Default Judgment - NOT SET UP</h3>
+                        <p><a href="https://your-pdf-url.com/pdf2.pdf" target="_blank">Open Document</a></p>
+                    </section>
+                </div>
+                <div id="courtprocedure-content" class="section-container" style="display: none;">
+                    <p>Prosecution files the case with CI and Affidavit</p>
+                    <p>Court procures and delivers summons</p>
+                    <p>Arraignment (doesn't happen if held in absentia)</p>
+                    <p>Pre-trial motions</p>
+                    <p>Scheduling for trial</p>
+                    <p>Opening statements (Prosecution), Opening Statements (Defense)</p>
+                    <p>Witness 1 (Prosecution), Cross-Examination (Defense)</p>
+                    <p>Witness 2 (Prosecution), Cross-Examination (Defense)</p>
+                    <p>Witness 3 (Prosecution), Cross-Examination (Defense)</p>
+                    <p>Witness 1 (Defense), Cross-Examination (Prosecution)</p>
+                    <p>Witness 2 (Defense), Cross-Examination (Prosecution)</p>
+                    <p>Witness 3 (Defense), Cross-Examination (Prosecution)</p>
+                    <p>Closing Statements (Prosecution), Closing Statements (Defense)</p>
+                </div>
+                <div id="opd-content" class="section-container" style="display: none;">
+                    <section>
+                        <h3>Defenses</h3>
+                        <dl>
+                            <dt>Innocence</dt>
+                            <dt>Self Defense</dt>
+                            <dt>Alibi</dt>
+                            <dt>Entrapment</dt>
+                            <dt>Duress</dt>
+                            <dt>Necessity</dt>
+                            <dt>Diminished Capacity</dt>
+                            <dt>Intoxication</dt>
+                            <dt>Statute of Limitations</dt>
+                            <dt>Double Jeopardy</dt>
+                            <dt>Legal Duty</dt>
+                            <dt>Immunity</dt>
+                            <dt>Accident</dt>
+                            <dt>Coercion</dt>
+                            <dt>Selective Prosecution</dt>
+                            <dt>Constitutional Violations</dt>
+                            <dt>Outrageous Government Conduct</dt>
+                            <dt>Honest Mistake</dt>
+                            <dt>Public Duty</dt>
+                            <dt>Mistake of Identity</dt>
+                            <dt>Good Samaritan Defense</dt>
+                            <dt>Impeachment of Witness Credibility</dt>
+                            <dt>Procedural Defenses</dt>
+                            <dt>Diplomatic Immunity</dt>
+                            <dt>Expunged Record</dt>
+                            <dt>Jury Nullification</dt>
+                            <dt>Supervening Act</dt>
+                            <dt>Paternalistic Justification</dt>
+                            <dt>Provocation</dt>
+                            <dt>Good Faith</dt>
+                            <dt>Defense of Others</dt>
+                            <dt>Entrapment by Estoppel</dt>
+                            <dt>Selective Enforcement</dt>
+                            <dt>Lack of Intent</dt>
+                            <dt>Culpable Mental State</dt>
+                            <dt>Lack of Possession</dt>
+                            <dt>Alleged Fact Versus Legal Fact</dt>
+                            <dt>Consent and Reasonableness</dt>
+                            <dt>No Harm, No Foul</dt>
+                            <dt>De Minimis Defense</dt>
+                            <dt>Color of Law</dt>
+                            <dt>Public Trial</dt>
+                            <dt>Witness Tampering</dt>
+                            <dt>Intervening Cause</dt>
+                            <dt>Statutory Defense</dt>
+                            <dt>Ex Post Facto</dt>
+                            <dt>Chain of Custody Issues</dt>
+                            <dt>Partial Defense</dt>
+                            <dt>Sympathy Defense</dt>
+                            <dt>Factual Impossibility</dt>
+                            <dt>Self-Defense of Property</dt>
+                            <dt>Speedy Trial Violation</dt>
+                            <dt>Use of Force by Law Enforcement</dt>
+                            <dt>Military Orders</dt>
+                            <dt>Entrapment by Jury Instruction</dt>
+                            <dt>Psychological Compulsion</dt>
+                            <dt>Lack of Corpus Delicti</dt>
+                            <dt>Failure to Prove Element of Crime</dt>
+                            <dt>Whistleblower Defense</dt>
+                            <dt>Collateral Estoppel</dt>
+                            <dt>Fear of Imminent Harm</dt>
+                            <dt>Official Action</dt>
+                            <dt>Extreme Emotional Disturbance</dt>
+                            <dt>Public Policy Defense</dt>
+                            <dt>De Minimis Non Curat Lex</dt>
+                            <dt>Home and Family Defense</dt>
+                            <dt>Conditional Threats</dt>
+                            <dt>Misfeasance</dt>
+                            <dt>Prosecutorial Misconduct</dt>
+                            <dt>Selective Use of Force</dt>
+                            <dt>Civil Rights Defense</dt>
+                            <dt>Doctrine of Chances</dt>
+                            <dt>Absence of Malice</dt>
+                            <dt>Police Conduct Defense</dt>
+                            <dt>Humanitarian Defense</dt>
+                            <dt>Exigent Circumstances</dt>
+                            <dt>False Confession</dt>
+                            <dt>Newly Discovered Evidence</dt>
+                            <dt>Communication Disability Defense</dt>
+                            <dt>Emergency Defense</dt>
+                            <dt>Professional Privilege</dt>
+                            <dt>Government Contractor Defense</dt>
+                            <dt>Climate of Fear</dt>
+                            <dt>Delayed Prosecution</dt>
+                            <dt>Altruistic Intent</dt>
+                            <dt>Void for Vagueness</dt>
+                            <dt>Official Misconduct</dt>
+                            <dt>Lack of Opportunity</dt>
+                            <dt>Operational Necessity</dt>
+                            <dt>Statutory Compliance</dt>
+                            <dt>Fear of Reprisal</dt>
+                            <dt>Imminent Threat</dt>
+                            <dt>Excessive Force</dt>
+                            <dt>Retaliatory Prosecution</dt>
+                            <dt>Independent Act of Another</dt>
+                            <dt>Non-Compliance Defense</dt>
+                            <dt>Lack of Notice</dt>
+                            <dt>Negligence of Another</dt>
+                            <dt>Unlawful Command Influence</dt>
+                            <dt>Apparent Authority</dt>
+                            <dt>Non-Disclosure Agreement</dt>
+                            <dt>Triviality Defense</dt>
+                            <dt>Affirmative Action Defense</dt>
+                            <dt>Voluntary Disclosure</dt>
+                            <dt>Surveillance-Induced Stress</dt>
+                            <dt>Neurodiversity Defense</dt>
+                            <dt>Artistic Expression</dt>
+                            <dt>Political Necessity</dt>
+                            <dt>Human Rights Defense</dt>
+                            <dt>Ethical Obligation</dt>
+                            <dt>Coercive Persuasion</dt>
+                            <dt>Perceived Consent</dt>
+                            <dt>Existential Crisis Defense</dt>
+                            <dt>Emotional Distress</dt>
+                            <dt>Placebo Effect</dt>
+                            <dt>Chronic Fatigue Syndrome</dt>
+                            <dt>Pseudologia Fantastica</dt>
+                            <dt>Undue Influence</dt>
+                            <dt>False Light</dt>
+                            <dt>Statutory Interpretation</dt>
+                            <dt>Civil Disobedience</dt>
+                            <dt>Empathic Distress</dt>
+                            <dt>Environmental Influence</dt>
+                        </dl>
+                    </section>
+                    <section>
+                        <h3>Cross Examination</h3>
+                        <dl>
+                            <dt>Leading Questions</dt>
+                            <dd>Questions that suggest the desired answer; generally allowed during cross examination.</dd>
+                            <dt>Impeachment</dt>
+                            <dd>Process of challenging a witness's credibility through prior inconsistent statements or contradictions.</dd>
+                            <dt>Control</dt>
+                            <dd>Maintaining control over the witness by asking specific, closed-ended questions.</dd>
+                            <dt>One Fact Per Question</dt>
+                            <dd>Breaking down complex topics into simple, single-fact questions for clarity and control.</dd>
+                            <dt>Listen to Answers</dt>
+                            <dd>Paying careful attention to witness responses to identify evasion or new areas for questioning.</dd>
+                            <dt>Save for Summation</dt>
+                            <dd>Securing favorable points during cross examination to use in closing arguments.</dd>
+                            <dt>Know When to Stop</dt>
+                            <dd>Ending cross examination when objectives are achieved to avoid harmful testimony.</dd>
+                            <dt>Primacy and Recency</dt>
+                            <dd>Starting and ending with strong points for maximum impact on the jury.</dd>
+                            <dt>Looping</dt>
+                            <dd>Technique of incorporating favorable answers into subsequent questions to emphasize key points.</dd>
+                            <dt>Safe Harbor Rule</dt>
+                            <dd>Always having documentation to support challenging a witness's testimony.</dd>
+                        </dl>
+                    </section>
+                </div>
+                <div id="people-content" class="section-container" style="display: none;">
+                    <section>
+                        <div class="vip-container" id="vip-container">
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 nUSA Legal</p>
+        <p>THIS IS NOT REAL LIFE!</p>
+    </footer>
+    <script type="module" src="./dist/chat.js"></script>
+</body>
+</html>
