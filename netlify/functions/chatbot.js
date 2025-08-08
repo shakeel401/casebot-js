@@ -1,6 +1,6 @@
 import { OpenAI } from "openai";
-import TavilyClient from "tavily"; // Adjust if different package name
-import isQuestionValid from "./filter.js"; // Your custom JS filter function
+import { tavily } from "@tavily/core";
+import isQuestionValid from "./filter.js"; // Your local filter function
 
 export async function handler(event, context) {
   if (event.httpMethod !== "POST") {
@@ -41,17 +41,16 @@ export async function handler(event, context) {
       };
     }
 
+    // Initialize clients
     const client = new OpenAI({ apiKey: OPENAI_API_KEY });
-    const tavilyClient = new TavilyClient({ apiKey: TAVILY_API_KEY });
+    const tavilyClient = tavily({ apiKey: TAVILY_API_KEY });
 
+    // Search function using Tavily client
     async function tavilySearch(q) {
       try {
-        const response = await tavilyClient.search({
-          query: q,
-          search_depth: "advanced",
-          max_results: 3,
-        });
+        const response = await tavilyClient.search(q);
 
+        // The actual response format depends on @tavily/core; adjust as needed:
         if (response.answer) return response.answer;
 
         const results = response.results || [];
