@@ -181,7 +181,7 @@
         if (result.response) {
           appendMessage(result.response, "bot", true);
         } else if (result.error) {
-          appendMessage("⚠️ " + result.error, "bot");
+          appendMessage("⚠️ " + result.error + result.response + thread_id, "bot");
         }
 
         const newId = extractThreadId(result.thread_id);
@@ -205,3 +205,4 @@
   </script>
 </body>
 </html>
+
