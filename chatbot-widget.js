@@ -1,5 +1,5 @@
-(async function() {
-  // Inject CSS styles
+(function() {
+  // CSS styles as a string, including styles for the chat icon and hidden chat container
   const styles = `
     #chat-toggle-btn {
       position: fixed;
@@ -19,19 +19,16 @@
       font-size: 28px;
       user-select: none;
     }
-    #chat-toggle-btn:hover {
-      background: #0055aa;
-    }
     #chat-container {
       position: fixed;
-      bottom: 90px;
+      bottom: 90px; /* leave space above toggle button */
       right: 20px;
       width: 320px;
-      height: 480px;
+      height: 480px; /* fixed height to avoid collapse */
       background: #ffffff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      display: none;
+      display: none; /* initially hidden */
       flex-direction: column;
       font-family: Arial, sans-serif;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -53,16 +50,13 @@
       overflow-y: auto;
       font-size: 14px;
       background: #fafafa;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-height: 100px;
-      height: 100%; /* Ensure it fills space */
     }
     .message {
+      margin: 6px 0;
       padding: 8px 12px;
       border-radius: 16px;
       max-width: 80%;
+      clear: both;
       word-wrap: break-word;
     }
     .user {
@@ -133,77 +127,68 @@
     }
   `;
 
-  // Append styles to head
+  // Inject styles into <head>
   const styleTag = document.createElement('style');
   styleTag.textContent = styles;
   document.head.appendChild(styleTag);
 
-  // Inject chatbot HTML
-  const chatbotHTML = `
-    <button id="chat-toggle-btn" aria-label="Open chat">💬</button>
-    <div id="chat-container" aria-hidden="true" role="region" aria-label="Chatbot window">
-      <div id="chat-header">CaseBot</div>
-      <div id="chat-messages"></div>
+  // Create chat toggle button (chat icon)
+  const toggleBtn = document.createElement('div');
+  toggleBtn.id = 'chat-toggle-btn';
+  toggleBtn.title = 'Open chat';
+  toggleBtn.innerHTML = '💬';  // You can replace with any emoji or icon
+  document.body.appendChild(toggleBtn);
+
+  // Inject chatbot HTML container into body (initially hidden)
+  const chatHTML = `
+    <div id="chat-container" role="region" aria-label="Chatbot window" aria-hidden="true">
+      <div id="chat-header">🧑‍⚖️ CaseBot</div>
+      <div id="chat-messages" aria-live="polite"></div>
       <div id="chat-input">
-        <input id="query-input" type="text" placeholder="Type your message..." autocomplete="off" />
-        <button id="send-btn">Send</button>
+        <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" aria-label="Chat input" />
+        <button id="send-btn" aria-label="Send message">Send</button>
       </div>
     </div>
   `;
-  document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+  document.body.insertAdjacentHTML('beforeend', chatHTML);
 
-  const toggleBtn = document.getElementById('chat-toggle-btn');
+  // Grab references
   const chatContainer = document.getElementById('chat-container');
   const messagesEl = document.getElementById("chat-messages");
   const inputEl = document.getElementById("query-input");
   const sendBtn = document.getElementById("send-btn");
 
-  // Append message helper
+  // Function to append messages
   function appendMessage(text, className, isMarkdown = false) {
     const msg = document.createElement("div");
     msg.className = `message ${className}`;
-    try {
-      if (isMarkdown && window.marked) {
-        msg.innerHTML = marked.parse(text);
-      } else {
-        msg.textContent = text;
-      }
-    } catch {
-      msg.textContent = text;
-    }
+    msg.innerHTML = isMarkdown ? marked.parse(text) : text;
     messagesEl.appendChild(msg);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  // Load markdown parser
+  // Load marked library dynamically
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
       document.head.appendChild(script);
     });
   }
 
   async function initChatbot() {
-    try {
-      await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
-      console.log("Marked.js loaded");
-    } catch {
-      console.warn("Marked.js not loaded; plain text only");
-    }
+    await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
 
     let thread_id = null;
 
     function showSpinner() {
-      if (!document.getElementById("loading-spinner")) {
-        const spinner = document.createElement("div");
-        spinner.className = "spinner";
-        spinner.id = "loading-spinner";
-        messagesEl.appendChild(spinner);
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-      }
+      const spinner = document.createElement("div");
+      spinner.className = "spinner";
+      spinner.id = "loading-spinner";
+      messagesEl.appendChild(spinner);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
     function hideSpinner() {
@@ -215,8 +200,8 @@
       if (!raw) return null;
       if (typeof raw === "string" && raw.startsWith("thread_")) return raw.trim();
       if (typeof raw === "object") {
-        if (raw.id?.startsWith("thread_")) return raw.id.trim();
-        if (raw.thread_id?.startsWith("thread_")) return raw.thread_id.trim();
+        if (raw.id && typeof raw.id === "string" && raw.id.startsWith("thread_")) return raw.id.trim();
+        if (raw.thread_id && typeof raw.thread_id === "string" && raw.thread_id.startsWith("thread_")) return raw.thread_id.trim();
       }
       return null;
     }
@@ -231,7 +216,10 @@
       showSpinner();
 
       try {
-        const payload = { query, thread_id: thread_id ? String(thread_id).trim() : null };
+        const payload = {
+          query,
+          thread_id: thread_id ? String(thread_id).trim() : null
+        };
 
         const response = await fetch("/.netlify/functions/chatbot", {
           method: "POST",
@@ -239,7 +227,9 @@
           body: JSON.stringify(payload)
         });
 
-        if (!response.ok) throw new Error(`Server responded with ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
 
         const result = await response.json();
         hideSpinner();
@@ -248,50 +238,53 @@
           appendMessage(result.response, "bot", true);
         } else if (result.error) {
           appendMessage("⚠️ " + result.error, "bot");
+          console.error("Backend error:", result.error);
         }
 
         const newId = extractThreadId(result.thread_id);
-        if (newId) thread_id = newId;
+        if (newId) {
+          thread_id = newId;
+          console.log("✅ Stored thread_id:", thread_id);
+        }
 
       } catch (err) {
         hideSpinner();
         appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
-        console.error(err);
+        console.error("Fetch error:", err);
       } finally {
         sendBtn.disabled = false;
       }
     }
 
+    // Add event listeners
     sendBtn.addEventListener("click", sendMessage);
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
     });
 
-    // Append welcome message here once at init, hidden container doesn't matter
+    // Show a welcome message once on first init
     appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
   }
 
-  let welcomed = false;
+  // Toggle chat visibility on button click and focus input if opened
   toggleBtn.addEventListener('click', () => {
     const isVisible = getComputedStyle(chatContainer).display !== 'none';
     if (isVisible) {
       chatContainer.style.display = 'none';
       chatContainer.setAttribute('aria-hidden', 'true');
       toggleBtn.title = 'Open chat';
-      console.log("Chat closed");
     } else {
       chatContainer.style.display = 'flex';
       chatContainer.setAttribute('aria-hidden', 'false');
       toggleBtn.title = 'Close chat';
       inputEl.focus();
-      console.log("Chat opened");
     }
   });
 
+  // Initialize chatbot
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initChatbot);
   } else {
     initChatbot();
   }
-
 })();
