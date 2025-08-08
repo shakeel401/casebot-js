@@ -53,13 +53,15 @@
       overflow-y: auto;
       font-size: 14px;
       background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 100px;
     }
     .message {
-      margin: 6px 0;
       padding: 8px 12px;
       border-radius: 16px;
       max-width: 80%;
-      clear: both;
       word-wrap: break-word;
     }
     .user {
@@ -130,11 +132,12 @@
     }
   `;
 
+  // Append styles to head
   const styleTag = document.createElement('style');
   styleTag.textContent = styles;
   document.head.appendChild(styleTag);
 
-  // Inject HTML
+  // Inject chatbot HTML
   const chatbotHTML = `
     <button id="chat-toggle-btn" aria-label="Open chat">💬</button>
     <div id="chat-container" aria-hidden="true" role="region" aria-label="Chatbot window">
@@ -154,6 +157,7 @@
   const inputEl = document.getElementById("query-input");
   const sendBtn = document.getElementById("send-btn");
 
+  // Append message helper
   function appendMessage(text, className, isMarkdown = false) {
     const msg = document.createElement("div");
     msg.className = `message ${className}`;
@@ -163,13 +167,14 @@
       } else {
         msg.textContent = text;
       }
-    } catch (err) {
+    } catch {
       msg.textContent = text;
     }
     messagesEl.appendChild(msg);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  // Load markdown parser
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
@@ -183,18 +188,21 @@
   async function initChatbot() {
     try {
       await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
+      console.log("Marked.js loaded");
     } catch {
-      console.warn("Marked.js not loaded; using plain text.");
+      console.warn("Marked.js not loaded; plain text only");
     }
 
     let thread_id = null;
 
     function showSpinner() {
-      const spinner = document.createElement("div");
-      spinner.className = "spinner";
-      spinner.id = "loading-spinner";
-      messagesEl.appendChild(spinner);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (!document.getElementById("loading-spinner")) {
+        const spinner = document.createElement("div");
+        spinner.className = "spinner";
+        spinner.id = "loading-spinner";
+        messagesEl.appendChild(spinner);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
     }
 
     function hideSpinner() {
@@ -222,10 +230,7 @@
       showSpinner();
 
       try {
-        const payload = {
-          query,
-          thread_id: thread_id ? String(thread_id).trim() : null
-        };
+        const payload = { query, thread_id: thread_id ? String(thread_id).trim() : null };
 
         const response = await fetch("/.netlify/functions/chatbot", {
           method: "POST",
