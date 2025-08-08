@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CaseBot - Legal Assistant</title>
-  <style>
-    /* Your existing styles kept intact */
+(function() {
+  // CSS styles as a string
+  const styles = `
     #chat-container {
       position: fixed;
       bottom: 20px;
@@ -101,21 +96,41 @@
         font-size: 13px;
       }
     }
-  </style>
-</head>
-<body>
-  <div id="chat-container">
-    <div id="chat-header">🧑‍⚖️ CaseBot</div>
-    <div id="chat-messages"></div>
-    <div id="chat-input">
-      <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" />
-      <button id="send-btn">Send</button>
+  `;
+
+  // Inject styles into <head>
+  const styleTag = document.createElement('style');
+  styleTag.textContent = styles;
+  document.head.appendChild(styleTag);
+
+  // Inject chatbot HTML container into body
+  const chatHTML = `
+    <div id="chat-container">
+      <div id="chat-header">🧑‍⚖️ CaseBot</div>
+      <div id="chat-messages"></div>
+      <div id="chat-input">
+        <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" />
+        <button id="send-btn">Send</button>
+      </div>
     </div>
-  </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', chatHTML);
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  // Load marked library dynamically
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+      document.head.appendChild(script);
+    });
+  }
 
-  <script>
+  // Your chatbot logic here
+  async function initChatbot() {
+    await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
+
     const messagesEl = document.getElementById("chat-messages");
     const inputEl = document.getElementById("query-input");
     const sendBtn = document.getElementById("send-btn");
@@ -143,7 +158,6 @@
       if (spinner) spinner.remove();
     }
 
-    // Normalize thread_id coming from backend
     function extractThreadId(raw) {
       if (!raw) return null;
       if (typeof raw === "string" && raw.startsWith("thread_")) return raw.trim();
@@ -208,6 +222,12 @@
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
     });
-  </script>
-</body>
-</html>
+  }
+
+  // Initialize chatbot when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChatbot);
+  } else {
+    initChatbot();
+  }
+})();
