@@ -37,6 +37,20 @@ async function tavilySearch(query) {
   }
 }
 
+// 🛠 Utility to clean up thread_id
+function normalizeThreadId(rawId) {
+  if (!rawId) return null;
+  if (typeof rawId === "string") return rawId.trim();
+  if (typeof rawId === "object") {
+    // Try common patterns
+    if (rawId.id && typeof rawId.id === "string") return rawId.id.trim();
+    if (Array.isArray(rawId)) return String(rawId[0] || "").trim();
+    const firstValue = Object.values(rawId)[0];
+    if (typeof firstValue === "string") return firstValue.trim();
+  }
+  return String(rawId).trim();
+}
+
 export async function handler(event) {
   console.log("📩 Function triggered:", event.httpMethod);
 
@@ -55,24 +69,20 @@ export async function handler(event) {
       bodyData = Object.fromEntries(params);
     }
 
-    const query = bodyData.query?.trim();
+    console.log("📥 Raw request body:", bodyData);
 
-    // 🧵 Normalize thread_id to always be a clean string or null
-    let thread_id = bodyData.thread_id;
-    if (typeof thread_id === "object" && thread_id !== null) {
-      thread_id = thread_id.id || "";
-    }
-    thread_id = thread_id ? String(thread_id).trim() : null;
+    const query = bodyData.query?.trim() || "";
+    let thread_id = normalizeThreadId(bodyData.thread_id);
 
     console.log("🔥 Received query:", query);
-    console.log("🧵 Normalized thread_id before use:", thread_id, typeof thread_id);
+    console.log("🧵 Normalized thread_id:", thread_id, "Type:", typeof thread_id);
 
     // ❌ Block bad queries
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          thread_id: thread_id ? String(thread_id) : null,
+          thread_id,
           response: "This question is not appropriate or relevant. Please ask something based on your role or documents."
         })
       };
@@ -91,7 +101,7 @@ export async function handler(event) {
     }
 
     // 💬 Send user message
-    console.log("📌 Sending to OpenAI thread_id =", thread_id, typeof thread_id);
+    console.log("📌 Sending to OpenAI thread_id =", thread_id, "Type:", typeof thread_id);
     await openai.beta.threads.messages.create({
       thread_id,
       role: "user",
@@ -140,7 +150,7 @@ export async function handler(event) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        thread_id: String(thread_id), // ✅ Always return string
+        thread_id,
         response: finalResponse || "⚠️ Assistant did not return a message."
       })
     };
@@ -149,4 +159,4 @@ export async function handler(event) {
     console.error("💥 Error in chatbot function:", error);
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
-        }
+}
