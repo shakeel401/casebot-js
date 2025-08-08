@@ -21,14 +21,15 @@
     }
     #chat-container {
       position: fixed;
-      bottom: 80px; /* leave space above toggle button */
+      bottom: 80px;
       right: 20px;
       width: 320px;
       max-height: 500px;
+      min-height: 400px; /* added */
       background: #ffffff;
       border: 1px solid #ccc;
       border-radius: 10px;
-      display: none; /* initially hidden */
+      display: none;
       flex-direction: column;
       font-family: Arial, sans-serif;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -44,11 +45,13 @@
       text-align: center;
     }
     #chat-messages {
-      flex: 1;
+      flex: 1 1 auto; /* changed */
       padding: 10px;
       overflow-y: auto;
       font-size: 14px;
+      min-height: 150px; /* optional */
     }
+
     .message {
       margin: 6px 0;
       padding: 8px 12px;
@@ -70,6 +73,8 @@
     #chat-input {
       display: flex;
       border-top: 1px solid #ccc;
+      padding: 8px; /* added */
+      flex-shrink: 0; /* added */
     }
     #query-input {
       flex: 1;
