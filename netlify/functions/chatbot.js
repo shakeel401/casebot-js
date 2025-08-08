@@ -1,60 +1,53 @@
-const { OpenAI } = require("openai");
-const axios = require("axios");
+// netlify/functions/chatbot.js
+import OpenAI from "openai";
+import fetch from "node-fetch";
 
-require("dotenv").config();
-
+// ✅ Load environment variables
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
-const VECTOR_STORE_ID = process.env.VECTOR_STORE_ID;
 const ASSISTANT_ID = process.env.ASSISTANT_ID;
+const VECTOR_STORE_ID = process.env.VECTOR_STORE_ID;
 
-// ✅ Custom content filter (mocked — replace with real logic)
-const isQuestionValid = (query) => {
-  const bannedPatterns = [
-    /\bjoke\b/i,
-    /\bfunny\b/i,
-    /\blove\b/i,
-    /marry me/i,
-    /do you love me/i,
-    /are you single/i,
-    /sex/i
-  ];
-  return !bannedPatterns.some(pattern => pattern.test(query));
-};
+/**
+ * Validate if question is allowed
+ * You can customize this logic as needed
+ */
+function isQuestionValid(query) {
+  const blockedWords = ["hack", "illegal", "kill"]; // example blocklist
+  return !blockedWords.some(word => query.toLowerCase().includes(word));
+}
 
-
-// ✅ Tavily Search tool
+/**
+ * Tavily search function
+ */
 async function tavilySearch(query) {
   try {
-    const response = await axios.post(
-      "https://api.tavily.com/search",
-      {
-        query,
-        search_depth: "advanced",
-        max_results: 3
+    const response = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${TAVILY_API_KEY}`
       },
-      {
-        headers: {
-          Authorization: `Bearer ${TAVILY_API_KEY}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
+      body: JSON.stringify({
+        query,
+        search_depth: "basic",
+        include_answer: true,
+        include_raw_content: false
+      })
+    });
 
-    const data = response.data;
-    if (data.answer) return data.answer;
-
-    if (data.results?.length) {
-      return data.results.map(res => `${res.title}: ${res.url}`).join("\n");
-    }
-
-    return "No relevant results found on the web.";
-  } catch (err) {
-    return `Error performing Tavily search: ${err.message}`;
+    const data = await response.json();
+    return data?.answer || "No relevant results found.";
+  } catch (error) {
+    console.error("Tavily search error:", error);
+    return "Error fetching search results.";
   }
 }
 
-exports.handler = async function (event) {
+/**
+ * Netlify serverless function
+ */
+export async function handler(event) {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -63,23 +56,26 @@ exports.handler = async function (event) {
   }
 
   try {
-    const body = new URLSearchParams(event.body);
-    const query = body.get("query");
-    let thread_id = body.get("thread_id");
+    const params = new URLSearchParams(event.body);
+    const query = params.get("query");
+    let thread_id = params.get("thread_id")?.trim() || null;
 
     console.log("🔥 Received query:", query);
-    console.log("✅ isQuestionValid:", isQuestionValid(query));
+    console.log("🧵 Received thread_id:", thread_id);
 
+    // ❌ Invalid question
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
         body: JSON.stringify({
           thread_id,
-          response: "This question is not appropriate or relevant. Please ask something based on your role or documents."
+          response:
+            "This question is not appropriate or relevant. Please ask something based on your role or documents."
         })
       };
     }
 
+    // ❌ Missing setup
     if (!ASSISTANT_ID || !VECTOR_STORE_ID) {
       return {
         statusCode: 500,
@@ -87,13 +83,14 @@ exports.handler = async function (event) {
       };
     }
 
-    // 🧵 Create thread if not given
+    // 🧵 Create new thread if none provided
     if (!thread_id) {
       const thread = await openai.beta.threads.create();
       thread_id = thread.id;
+      console.log("✨ Created new thread:", thread_id);
     }
 
-    // 💬 Post user message
+    // 💬 Send user message to thread
     await openai.beta.threads.messages.create({
       thread_id,
       role: "user",
@@ -106,7 +103,7 @@ exports.handler = async function (event) {
       assistant_id: ASSISTANT_ID
     });
 
-    // ⚙️ Handle tool call if needed
+    // ⚙️ Handle tool calls
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
 
@@ -125,7 +122,6 @@ exports.handler = async function (event) {
         });
       }
 
-      // Submit tool results
       run = await openai.beta.threads.runs.submitToolOutputsAndPoll({
         thread_id,
         run_id: run.id,
@@ -133,7 +129,7 @@ exports.handler = async function (event) {
       });
     }
 
-    // 🧾 Get assistant reply
+    // 📝 Get assistant's reply
     const messages = await openai.beta.threads.messages.list({ thread_id });
     const assistantMessages = messages.data.filter(msg => msg.role === "assistant");
 
@@ -158,4 +154,4 @@ exports.handler = async function (event) {
       body: JSON.stringify({ error: error.message })
     };
   }
-};
+}
