@@ -60,7 +60,7 @@ export async function handler(event) {
   }
 
   try {
-    // 📦 Parse incoming request safely
+    // 📦 Parse incoming request
     let bodyData = {};
     const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
 
@@ -77,25 +77,25 @@ export async function handler(event) {
 
     console.log("📥 Raw body:", bodyData);
 
-    // Extract and sanitize inputs
+    // Extract and sanitize
     const query = (bodyData.query || "").trim();
     let thread_id = normalizeThreadId(bodyData.thread_id);
 
     console.log("🔥 Query:", query);
     console.log("🧵 thread_id after normalize:", thread_id, "type:", typeof thread_id);
 
-    // ❌ Validate question
+    // ❌ Validation
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
         body: JSON.stringify({
-          thread_id: thread_id ? String(thread_id).trim() : null,
+          thread_id: thread_id || null,
           response: "This question is not appropriate or relevant. Please ask something based on your role or documents."
         })
       };
     }
 
-    // 🛑 Check required env
+    // 🛑 Env checks
     if (!ASSISTANT_ID || !VECTOR_STORE_ID) {
       return { statusCode: 500, body: JSON.stringify({ error: "Missing VECTOR_STORE_ID or ASSISTANT_ID" }) };
     }
@@ -105,6 +105,12 @@ export async function handler(event) {
       const thread = await openai.beta.threads.create();
       thread_id = String(thread.id).trim();
       console.log("✨ New thread created:", thread_id);
+    }
+
+    // ✅ Final thread_id safety check
+    if (typeof thread_id !== "string") {
+      console.error("🚨 thread_id is NOT a string before sending to OpenAI:", thread_id);
+      throw new Error("thread_id must be a string before calling OpenAI API");
     }
 
     // 💬 Send user message
@@ -121,7 +127,7 @@ export async function handler(event) {
       assistant_id: ASSISTANT_ID
     });
 
-    // 🛠 Handle tool calls
+    // 🛠 Tool calls
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
 
@@ -144,7 +150,7 @@ export async function handler(event) {
       });
     }
 
-    // 📩 Get assistant reply
+    // 📩 Get reply
     const messages = await openai.beta.threads.messages.list({ thread_id });
     const assistantMessages = messages.data.filter(m => m.role === "assistant");
 
@@ -154,11 +160,11 @@ export async function handler(event) {
       .join("\n")
       .trim();
 
-    // ✅ Final safety: make sure thread_id is always string before returning
+    // ✅ Always return string thread_id
     return {
       statusCode: 200,
       body: JSON.stringify({
-        thread_id: String(thread_id).trim(),
+        thread_id,
         response: finalResponse || "⚠️ Assistant did not return a message."
       })
     };
