@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="./dist/config.js"></script>
     <script>
         if (config.isShutdown && window.location.pathname !== config.shutdownPage) {
@@ -11,45 +11,38 @@
     </script>
     <title>nUSA Legal</title>
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link rel="stylesheet" href="styles.css">
-    <meta name="description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
-    <meta property="og:title" content="nUSA Legal">
-    <meta property="og:description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY.">
-    <meta property="og:url" content="https://nusalegal.com">
-    <meta property="og:image" content="https://nusalegal.com/og-image.jpg">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#e0f7fa" media="(prefers-color-scheme: light)">
-    <meta name="keywords" content="legal, nUSA, resources">
-    <meta name="color-scheme" content="light dark">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="./dist/chat.css">
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY." />
+    <meta property="og:title" content="nUSA Legal" />
+    <meta property="og:description" content="Your go-to source for legal information and resources in nUSA P.S ROBLOX ROLEPLAY." />
+    <meta property="og:url" content="https://nusalegal.com" />
+    <meta property="og:image" content="https://nusalegal.com/og-image.jpg" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#e0f7fa" media="(prefers-color-scheme: light)" />
+    <meta name="keywords" content="legal, nUSA, resources" />
+    <meta name="color-scheme" content="light dark" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="./dist/chat.css" />
     <script src="script.js" defer></script>
 </head>
 <body>
     <a href="#main-content" class="visually-hidden">Skip to main content</a>
     <header class="center-header" role="banner">
-        <h1><a href="/" aria-label="nUSA Legal Home">nUSA Legal</a><a href="gAMe.html" style="font-size: 10px; text-decoration: none; margin-left: 5px; opacity: 0.7;" title="Play Game">🎮</a></h1>
+        <h1>
+            <a href="/" aria-label="nUSA Legal Home">nUSA Legal</a>
+            <a href="gAMe.html" style="font-size: 10px; text-decoration: none; margin-left: 5px; opacity: 0.7;" title="Play Game">🎮</a>
+        </h1>
     </header>
     <main id="main-content" role="main">
         <div class="section-container">
             <nav class="link-container" role="navigation" aria-label="Main navigation">
-                <div class="link-box">
-                    <a href="courts.html" aria-label="Go to Courts section">Courts</a>
-                </div>
-                <div class="link-box">
-                    <a href="congress.html" aria-label="Go to Congress section">Congress</a>
-                </div>
-                <div class="link-box">
-                    <a href="frcp-frcmp.html" aria-label="Go to FRCP/FRCMP section">FRCP/FRCMP</a>
-                </div>
-                <div class="link-box">
-                    <a href="laws.html" aria-label="Go to Laws section">Laws</a>
-                </div>
-                <div class="link-box link-box-last">
-                    <a href="constitution.html" aria-label="Go to Constitution section">Constitution</a>
-                </div>
+                <div class="link-box"><a href="courts.html" aria-label="Go to Courts section">Courts</a></div>
+                <div class="link-box"><a href="congress.html" aria-label="Go to Congress section">Congress</a></div>
+                <div class="link-box"><a href="frcp-frcmp.html" aria-label="Go to FRCP/FRCMP section">FRCP/FRCMP</a></div>
+                <div class="link-box"><a href="laws.html" aria-label="Go to Laws section">Laws</a></div>
+                <div class="link-box link-box-last"><a href="constitution.html" aria-label="Go to Constitution section">Constitution</a></div>
             </nav>
         </div>
         <div class="separate-box">
@@ -60,7 +53,14 @@
         <p>&copy; 2024 nUSA Legal</p>
         <p>THIS IS NOT REAL LIFE!</p>
     </footer>
+
+    <!-- Chat container (optional placeholder if your widget creates its own) -->
     <div id="chat-container"></div>
+
+    <!-- Your other scripts -->
     <script type="module" src="./dist/chat.js"></script>
+
+    <!-- Chatbot widget script inclusion -->
+    <script src="chatbot-widget.js" defer></script>
 </body>
 </html>
