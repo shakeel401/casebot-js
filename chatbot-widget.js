@@ -1,5 +1,5 @@
-(function() {
-  // CSS styles as a string, including styles for the chat icon and hidden chat container
+(async function() {
+  // ... [Keep your existing CSS & DOM injection code unchanged here]
   const styles = `
     #chat-toggle-btn {
       position: fixed;
@@ -127,42 +127,26 @@
     }
   `;
 
-  // Inject styles into <head>
-  const styleTag = document.createElement('style');
-  styleTag.textContent = styles;
-  document.head.appendChild(styleTag);
-
-  // Create chat toggle button (chat icon)
-  const toggleBtn = document.createElement('div');
-  toggleBtn.id = 'chat-toggle-btn';
-  toggleBtn.title = 'Open chat';
-  toggleBtn.innerHTML = '💬';  // You can replace with any emoji or icon
-  document.body.appendChild(toggleBtn);
-
-  // Inject chatbot HTML container into body (initially hidden)
-  const chatHTML = `
-    <div id="chat-container" role="region" aria-label="Chatbot window" aria-hidden="true">
-      <div id="chat-header">🧑‍⚖️ CaseBot</div>
-      <div id="chat-messages" aria-live="polite"></div>
-      <div id="chat-input">
-        <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" aria-label="Chat input" />
-        <button id="send-btn" aria-label="Send message">Send</button>
-      </div>
-    </div>
-  `;
-  document.body.insertAdjacentHTML('beforeend', chatHTML);
-
-  // Grab references
+  // Grab references after DOM insert
   const chatContainer = document.getElementById('chat-container');
   const messagesEl = document.getElementById("chat-messages");
   const inputEl = document.getElementById("query-input");
   const sendBtn = document.getElementById("send-btn");
 
-  // Function to append messages
+  // Function to append messages, fallback if marked not loaded
   function appendMessage(text, className, isMarkdown = false) {
     const msg = document.createElement("div");
     msg.className = `message ${className}`;
-    msg.innerHTML = isMarkdown ? marked.parse(text) : text;
+    try {
+      if (isMarkdown && window.marked) {
+        msg.innerHTML = marked.parse(text);
+      } else {
+        msg.textContent = text;
+      }
+    } catch (err) {
+      console.error("Error rendering markdown:", err);
+      msg.textContent = text;
+    }
     messagesEl.appendChild(msg);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
@@ -172,14 +156,24 @@
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = src;
-      script.onload = () => resolve();
-      script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+      script.onload = () => {
+        console.log("Marked.js loaded");
+        resolve();
+      };
+      script.onerror = () => {
+        console.error(`Failed to load script: ${src}`);
+        reject(new Error(`Failed to load script: ${src}`));
+      };
       document.head.appendChild(script);
     });
   }
 
   async function initChatbot() {
-    await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
+    try {
+      await loadScript('https://cdn.jsdelivr.net/npm/marked/marked.min.js');
+    } catch(e) {
+      console.warn("Marked.js not loaded, fallback to plain text messages.");
+    }
 
     let thread_id = null;
 
@@ -236,6 +230,7 @@
 
         if (result.response) {
           appendMessage(result.response, "bot", true);
+          console.log("Bot response appended");
         } else if (result.error) {
           appendMessage("⚠️ " + result.error, "bot");
           console.error("Backend error:", result.error);
@@ -264,9 +259,12 @@
 
     // Show a welcome message once on first init
     appendMessage("Hello! I am CaseBot 🤖. Ask me your legal questions.", "bot");
+
+    console.log("Chatbot initialized with welcome message");
   }
 
   // Toggle chat visibility on button click and focus input if opened
+  const toggleBtn = document.getElementById('chat-toggle-btn');
   toggleBtn.addEventListener('click', () => {
     const isVisible = getComputedStyle(chatContainer).display !== 'none';
     if (isVisible) {
@@ -281,7 +279,7 @@
     }
   });
 
-  // Initialize chatbot
+  // Initialize chatbot on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initChatbot);
   } else {
