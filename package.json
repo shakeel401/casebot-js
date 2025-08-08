@@ -33,6 +33,6 @@
     "openai": "^4.27.0",
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
-    "@tavily/core": "^0.5.10",
+    "@tavily/core": "^0.5.10"
   }
 }
