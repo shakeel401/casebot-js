@@ -108,8 +108,11 @@ export async function handler(event) {
     // Use robust extraction
     thread_id = extractThreadId(thread_id);
 
+    // === TEST OVERRIDE THREAD_ID ===
+    thread_id = "thread_AZ31H79kgBoip1BSG1cuHhMt";
+
     console.log("🔥 Query:", query);
-    console.log("🧵 thread_id after extraction:", thread_id, "type:", typeof thread_id);
+    console.log("🧵 thread_id after extraction & override:", thread_id, "type:", typeof thread_id);
 
     // Validation
     if (!query || !isQuestionValid(query)) {
@@ -127,7 +130,7 @@ export async function handler(event) {
       return { statusCode: 500, body: JSON.stringify({ error: "Missing VECTOR_STORE_ID or ASSISTANT_ID" }) };
     }
 
-    // Create thread if missing
+    // Skip thread creation since we have fixed thread_id
     if (!thread_id) {
       const thread = await openai.beta.threads.create();
       thread_id = String(thread.id).trim();
