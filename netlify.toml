@@ -1,5 +1,4 @@
-[build]
-functions = "netlify/functions"
-
 [functions]
-  node_bundler = "esbuild"
+  directory = "netlify/functions"
+  # set python runtime for your function
+  python = "python3.11"
