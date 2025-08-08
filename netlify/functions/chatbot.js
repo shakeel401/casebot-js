@@ -1,6 +1,14 @@
 import { OpenAI } from "openai";
 import { tavily } from "@tavily/core";
-import isQuestionValid from "./filter.js"; // Your local filter function
+import isQuestionValid from "./filter.js";
+
+function getThreadId(threadResponse) {
+  if (typeof threadResponse === "string") return threadResponse;
+  if (threadResponse == null) return null;
+  if (typeof threadResponse.id === "string") return threadResponse.id;
+  if (threadResponse.data && typeof threadResponse.data.id === "string") return threadResponse.data.id;
+  throw new Error("Cannot find thread ID in threadResponse");
+}
 
 export async function handler(event, context) {
   console.log("Handler invoked");
@@ -82,9 +90,8 @@ export async function handler(event, context) {
     if (!thread_id) {
       console.log("Creating new thread");
       const threadResponse = await client.beta.threads.create();
-      console.log("New thread response:", threadResponse);
-      // Try extracting id safely:
-      thread_id = threadResponse.data?.id || threadResponse.id;
+      console.log("New thread response:", JSON.stringify(threadResponse, null, 2));
+      thread_id = getThreadId(threadResponse);
       console.log("Extracted thread_id:", thread_id);
     }
 
