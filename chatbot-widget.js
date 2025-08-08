@@ -1,5 +1,5 @@
 (async function() {
-  // ... [Keep your existing CSS & DOM injection code unchanged here]
+  // Inject CSS styles
   const styles = `
     #chat-toggle-btn {
       position: fixed;
@@ -18,6 +18,9 @@
       color: white;
       font-size: 28px;
       user-select: none;
+    }
+    #chat-toggle-btn:hover {
+      background: #0055aa;
     }
     #chat-container {
       position: fixed;
@@ -127,13 +130,35 @@
     }
   `;
 
-  // Grab references after DOM insert
+  // Append styles to document head
+  const styleTag = document.createElement('style');
+  styleTag.textContent = styles;
+  document.head.appendChild(styleTag);
+
+  // Inject HTML elements for chatbot toggle button and container
+  const chatbotHTML = `
+    <button id="chat-toggle-btn" aria-label="Open chat">💬</button>
+    <div id="chat-container" aria-hidden="true" role="region" aria-label="Chatbot window">
+      <div id="chat-header">CaseBot</div>
+      <div id="chat-messages"></div>
+      <div id="chat-input">
+        <input id="query-input" type="text" placeholder="Type your message..." autocomplete="off" />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  `;
+
+  // Append chatbot HTML to body
+  document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+
+  // Now grab references to the injected elements
+  const toggleBtn = document.getElementById('chat-toggle-btn');
   const chatContainer = document.getElementById('chat-container');
   const messagesEl = document.getElementById("chat-messages");
   const inputEl = document.getElementById("query-input");
   const sendBtn = document.getElementById("send-btn");
 
-  // Function to append messages, fallback if marked not loaded
+  // Function to append messages (with markdown support fallback)
   function appendMessage(text, className, isMarkdown = false) {
     const msg = document.createElement("div");
     msg.className = `message ${className}`;
@@ -264,7 +289,6 @@
   }
 
   // Toggle chat visibility on button click and focus input if opened
-  const toggleBtn = document.getElementById('chat-toggle-btn');
   toggleBtn.addEventListener('click', () => {
     const isVisible = getComputedStyle(chatContainer).display !== 'none';
     if (isVisible) {
@@ -285,4 +309,5 @@
   } else {
     initChatbot();
   }
+
 })();
