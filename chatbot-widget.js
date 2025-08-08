@@ -146,7 +146,8 @@
 
   // Toggle chat visibility on button click
   toggleBtn.addEventListener('click', () => {
-    if (chatContainer.style.display === 'flex') {
+    const isVisible = getComputedStyle(chatContainer).display !== 'none';
+    if (isVisible) {
       chatContainer.style.display = 'none';
       chatContainer.setAttribute('aria-hidden', 'true');
       toggleBtn.title = 'Open chat';
