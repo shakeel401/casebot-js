@@ -2,11 +2,33 @@ import { OpenAI } from "openai";
 import { tavily } from "@tavily/core";
 import isQuestionValid from "./filter.js";
 
+function extractThreadId(threadIdCandidate) {
+  // Defensive check: if it's an object, try to find string inside it
+  if (typeof threadIdCandidate === "string") return threadIdCandidate;
+
+  if (typeof threadIdCandidate === "object" && threadIdCandidate !== null) {
+    // If it has an 'id' property which is string, return that
+    if (typeof threadIdCandidate.id === "string") return threadIdCandidate.id;
+
+    // Or if it's nested
+    if (
+      threadIdCandidate.data &&
+      typeof threadIdCandidate.data.id === "string"
+    )
+      return threadIdCandidate.data.id;
+
+    // If it looks like a nested object but no id, stringify as last resort (not recommended)
+    return JSON.stringify(threadIdCandidate);
+  }
+
+  // Otherwise return as is (could be null or undefined)
+  return threadIdCandidate;
+}
+
 export async function handler(event, context) {
   console.log("Handler invoked");
 
   if (event.httpMethod !== "POST") {
-    console.log("Invalid HTTP method:", event.httpMethod);
     return {
       statusCode: 405,
       body: JSON.stringify({ error: "Method Not Allowed" }),
@@ -20,8 +42,12 @@ export async function handler(event, context) {
     let thread_id = body.thread_id;
 
     console.log("Received query:", query);
-    console.log("Received thread_id:", thread_id);
-    console.log("Type of thread_id before creation:", typeof thread_id);
+    console.log("Received thread_id (raw):", thread_id, typeof thread_id);
+
+    // Normalize thread_id to string if possible
+    thread_id = extractThreadId(thread_id);
+
+    console.log("Normalized thread_id:", thread_id, typeof thread_id);
 
     if (!query || !isQuestionValid(query)) {
       return {
@@ -68,21 +94,14 @@ export async function handler(event, context) {
     if (!thread_id) {
       console.log("Creating new thread");
       const threadResponse = await client.beta.threads.create();
-      console.log("New thread response full:", JSON.stringify(threadResponse, null, 2));
-      if (typeof threadResponse === "string") {
-        thread_id = threadResponse;
-      } else if (threadResponse && typeof threadResponse.id === "string") {
-        thread_id = threadResponse.id;
-      } else if (threadResponse && threadResponse.data && typeof threadResponse.data.id === "string") {
-        thread_id = threadResponse.data.id;
-      } else {
-        throw new Error("Cannot find valid thread_id");
-      }
+      console.log("New thread response:", JSON.stringify(threadResponse, null, 2));
+      thread_id = extractThreadId(threadResponse);
       console.log("Extracted thread_id:", thread_id);
     }
 
-    console.log("Type of thread_id before adding message:", typeof thread_id);
-    console.log("Value of thread_id:", thread_id);
+    if (typeof thread_id !== "string") {
+      throw new Error("thread_id is not a string after extraction");
+    }
 
     await client.beta.threads.messages.create({
       thread_id,
@@ -111,7 +130,6 @@ export async function handler(event, context) {
           output: result,
         });
       }
-
       run = await client.beta.threads.runs.submit_tool_outputs_and_poll({
         thread_id,
         run_id: run.id,
