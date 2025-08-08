@@ -108,7 +108,7 @@
     <div id="chat-header">🧑‍⚖️ CaseBot</div>
     <div id="chat-messages"></div>
     <div id="chat-input">
-      <input type="text" id="query-input" placeholder="Ask your legal question..." />
+      <input type="text" id="query-input" placeholder="Ask your legal question..." autocomplete="off" />
       <button id="send-btn">Send</button>
     </div>
   </div>
@@ -143,12 +143,13 @@
       if (spinner) spinner.remove();
     }
 
+    // Normalize thread_id coming from backend
     function extractThreadId(raw) {
       if (!raw) return null;
       if (typeof raw === "string" && raw.startsWith("thread_")) return raw.trim();
       if (typeof raw === "object") {
-        if (raw.id && typeof raw.id === "string") return raw.id.trim();
-        if (raw.thread_id && typeof raw.thread_id === "string") return raw.thread_id.trim();
+        if (raw.id && typeof raw.id === "string" && raw.id.startsWith("thread_")) return raw.id.trim();
+        if (raw.thread_id && typeof raw.thread_id === "string" && raw.thread_id.startsWith("thread_")) return raw.thread_id.trim();
       }
       return null;
     }
@@ -163,7 +164,6 @@
       showSpinner();
 
       try {
-        // Send JSON to match backend's application/json parser
         const payload = {
           query,
           thread_id: thread_id ? String(thread_id).trim() : null
@@ -175,6 +175,10 @@
           body: JSON.stringify(payload)
         });
 
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+
         const result = await response.json();
         hideSpinner();
 
@@ -182,6 +186,7 @@
           appendMessage(result.response, "bot", true);
         } else if (result.error) {
           appendMessage("⚠️ " + result.error, "bot");
+          console.error("Backend error:", result.error);
         }
 
         const newId = extractThreadId(result.thread_id);
@@ -193,6 +198,7 @@
       } catch (err) {
         hideSpinner();
         appendMessage("⚠️ Failed to connect to CaseBot server.", "bot");
+        console.error("Fetch error:", err);
       } finally {
         sendBtn.disabled = false;
       }
