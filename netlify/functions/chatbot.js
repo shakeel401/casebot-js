@@ -37,18 +37,16 @@ async function tavilySearch(query) {
   }
 }
 
-// 🛠 Utility to clean up thread_id
-function normalizeThreadId(rawId) {
-  if (!rawId) return null;
-  if (typeof rawId === "string") return rawId.trim();
-  if (typeof rawId === "object") {
-    // Try common patterns
-    if (rawId.id && typeof rawId.id === "string") return rawId.id.trim();
-    if (Array.isArray(rawId)) return String(rawId[0] || "").trim();
-    const firstValue = Object.values(rawId)[0];
-    if (typeof firstValue === "string") return firstValue.trim();
+// 🛠 Normalize thread_id so it's always a string
+function normalizeThreadId(raw) {
+  if (!raw) return null;
+  if (typeof raw === "string") return raw.trim();
+  if (typeof raw === "object") {
+    if (raw.id && typeof raw.id === "string") return raw.id.trim();
+    const firstVal = Object.values(raw)[0];
+    if (typeof firstVal === "string") return firstVal.trim();
   }
-  return String(rawId).trim();
+  return String(raw).trim();
 }
 
 export async function handler(event) {
@@ -59,7 +57,7 @@ export async function handler(event) {
   }
 
   try {
-    // 📦 Parse request body
+    // 📦 Parse request
     let bodyData;
     const contentType = event.headers["content-type"] || event.headers["Content-Type"] || "";
     if (contentType.includes("application/json")) {
@@ -69,15 +67,15 @@ export async function handler(event) {
       bodyData = Object.fromEntries(params);
     }
 
-    console.log("📥 Raw request body:", bodyData);
+    console.log("📥 Raw body:", bodyData);
 
-    const query = bodyData.query?.trim() || "";
+    const query = (bodyData.query || "").trim();
     let thread_id = normalizeThreadId(bodyData.thread_id);
 
-    console.log("🔥 Received query:", query);
-    console.log("🧵 Normalized thread_id:", thread_id, "Type:", typeof thread_id);
+    console.log("🔥 Query:", query);
+    console.log("🧵 thread_id after normalize:", thread_id, "type:", typeof thread_id);
 
-    // ❌ Block bad queries
+    // ❌ Block invalid
     if (!query || !isQuestionValid(query)) {
       return {
         statusCode: 200,
@@ -88,7 +86,7 @@ export async function handler(event) {
       };
     }
 
-    // 🛑 Required vars check
+    // 🛑 Check required env
     if (!ASSISTANT_ID || !VECTOR_STORE_ID) {
       return { statusCode: 500, body: JSON.stringify({ error: "Missing VECTOR_STORE_ID or ASSISTANT_ID" }) };
     }
@@ -97,11 +95,11 @@ export async function handler(event) {
     if (!thread_id) {
       const thread = await openai.beta.threads.create();
       thread_id = String(thread.id).trim();
-      console.log("✨ Created new thread:", thread_id);
+      console.log("✨ New thread created:", thread_id);
     }
 
     // 💬 Send user message
-    console.log("📌 Sending to OpenAI thread_id =", thread_id, "Type:", typeof thread_id);
+    console.log("📌 Sending to OpenAI with thread_id =", thread_id);
     await openai.beta.threads.messages.create({
       thread_id,
       role: "user",
@@ -114,20 +112,21 @@ export async function handler(event) {
       assistant_id: ASSISTANT_ID
     });
 
-    // 🛠 Handle tool calls
+    // 🛠 Handle tools
     if (run.required_action?.type === "submit_tool_outputs") {
       const tool_outputs = [];
       for (const action of run.required_action.submit_tool_outputs.tool_calls) {
-        const { name: function_name, arguments: argsStr } = action.function;
+        const { name: fnName, arguments: argsStr } = action.function;
         const args = JSON.parse(argsStr);
         let output = "Unknown tool";
 
-        if (function_name === "tavily_search") {
+        if (fnName === "tavily_search") {
           output = await tavilySearch(args.query || "");
         }
 
         tool_outputs.push({ tool_call_id: action.id, output });
       }
+
       run = await openai.beta.threads.runs.submitToolOutputsAndPoll({
         thread_id,
         run_id: run.id,
@@ -135,11 +134,9 @@ export async function handler(event) {
       });
     }
 
-    // 📩 Get assistant response
+    // 📩 Get assistant reply
     const messages = await openai.beta.threads.messages.list({ thread_id });
     const assistantMessages = messages.data.filter(m => m.role === "assistant");
-
-    console.log("📨 Assistant messages:", JSON.stringify(assistantMessages, null, 2));
 
     const finalResponse = assistantMessages
       .flatMap(m => m.content)
