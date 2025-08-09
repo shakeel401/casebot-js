@@ -2,6 +2,7 @@
   "name": "nusa-legal",
   "version": "1.0.0",
   "description": "nUSA Legal Website with AI Chat Support",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
