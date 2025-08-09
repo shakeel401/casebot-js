@@ -1,6 +1,25 @@
 import { OpenAI } from "openai";
 import { tavily } from "@tavily/core";
-const isQuestionValid = require("./filter.js"); // Your local filter function
+
+// Inline filter function
+function isQuestionValid(userInput) {
+  const bannedKeywords = [
+    "joke", "funny", "lol", "haha", "laugh",
+    "crush", "kiss", "hug", "flirt",
+    "dating", "sex",
+    "boyfriend", "girlfriend",
+    "do you love me", "tell me a joke", "marry me", "i love you",
+    "chat with me", "best friend", "are you single", "romantic", "cute"
+  ];
+
+  const userInputLower = userInput.toLowerCase();
+  for (const word of bannedKeywords) {
+    if (userInputLower.includes(word)) {
+      return false;
+    }
+  }
+  return true;
+}
 
 export async function handler(event, context) {
   console.log("[Handler] Invoked");
@@ -36,7 +55,6 @@ export async function handler(event, context) {
       };
     }
 
-    // Environment variables
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
     const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
     const VECTOR_STORE_ID = process.env.VECTOR_STORE_ID;
@@ -62,7 +80,6 @@ export async function handler(event, context) {
       };
     }
 
-    // Initialize clients
     const client = new OpenAI({ apiKey: OPENAI_API_KEY });
     const tavilyClient = tavily({ apiKey: TAVILY_API_KEY });
 
@@ -86,7 +103,6 @@ export async function handler(event, context) {
       }
     }
 
-    // Create thread if missing
     if (!thread_id) {
       console.log("[Handler] Creating new thread");
       const thread = await client.beta.threads.create();
@@ -94,21 +110,18 @@ export async function handler(event, context) {
       console.log("[Handler] New thread created with id:", thread_id);
     }
 
-    // Add user message to thread
     console.log("[Handler] Adding user message to thread");
     await client.beta.threads.messages.create(thread_id, {
       role: "user",
       content: query,
     });
 
-    // Create and poll run
     console.log("[Handler] Creating and polling run");
     let run = await client.beta.threads.runs.createAndPoll(thread_id, {
       assistant_id: ASSISTANT_ID,
     });
     console.log("[Handler] Run result:", run);
 
-    // Handle tool calls if needed
     if (run.required_action?.type === "submit_tool_outputs") {
       console.log("[Handler] Run requires tool outputs submission");
 
@@ -134,7 +147,6 @@ export async function handler(event, context) {
 
       console.log("[Handler] Submitting tool outputs:", tool_outputs);
 
-      // **Important: Correct method and argument order here**
       run = await client.beta.threads.runs.submitToolOutputsAndPoll(
         thread_id,
         run.id,
@@ -144,7 +156,6 @@ export async function handler(event, context) {
       console.log("[Handler] Run after submitting tool outputs:", run);
     }
 
-    // Fetch assistant messages from thread
     console.log("[Handler] Fetching messages from thread");
     const messagesResponse = await client.beta.threads.messages.list(thread_id);
     console.log("[Handler] Messages fetched:", messagesResponse.data.length);
@@ -164,7 +175,6 @@ export async function handler(event, context) {
       };
     }
 
-    // Extract assistant response text
     const assistantResponse = assistantMessages[0].content[0].text.value;
     console.log("[Handler] Assistant response:", assistantResponse);
 
