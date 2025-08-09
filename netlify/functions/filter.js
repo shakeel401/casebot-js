@@ -1,4 +1,5 @@
-export default function isQuestionValid(userInput) {
+// filter.js
+function isQuestionValid(userInput) {
   const bannedKeywords = [
     "joke", "funny", "lol", "haha", "laugh",
     "crush", "kiss", "hug", "flirt",
@@ -16,3 +17,5 @@ export default function isQuestionValid(userInput) {
   }
   return true;
 }
+
+module.exports = isQuestionValid;
