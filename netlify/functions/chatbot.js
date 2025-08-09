@@ -1,6 +1,6 @@
 import { OpenAI } from "openai";
 import { tavily } from "@tavily/core";
-import isQuestionValid from "./filter.js"; // Your local filter function
+const isQuestionValid = require("./filter.js"); // Your local filter function
 
 export async function handler(event, context) {
   console.log("[Handler] Invoked");
