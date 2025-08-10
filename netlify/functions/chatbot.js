@@ -21,6 +21,11 @@ function isQuestionValid(userInput) {
   return true;
 }
 
+// Remove citations like   or [4:0†source]
+function removeCitations(text) {
+  return text.replace(/【\d+:\d+†source】/g, "").replace(/\[\d+:\d+†source\]/g, "");
+}
+
 export async function handler(event, context) {
   if (event.httpMethod !== "POST") {
     return {
@@ -135,7 +140,10 @@ export async function handler(event, context) {
       };
     }
 
-    const assistantResponse = assistantMessages[0].content[0].text.value;
+    let assistantResponse = assistantMessages[0].content[0].text.value;
+
+    // Remove citation markers
+    assistantResponse = removeCitations(assistantResponse);
 
     return {
       statusCode: 200,
