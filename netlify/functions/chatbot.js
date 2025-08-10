@@ -23,7 +23,9 @@ function isQuestionValid(userInput) {
 
 // Remove citations like   or [4:0†source]
 function removeCitations(text) {
-  return text.replace(/【\d+:\d+†source】/g, "").replace(/\[\d+:\d+†source\]/g, "");
+  return text
+    .replace(/【\d+:\d+†[^】]+】/g, "") // match any characters until the closing 】
+    .replace(/\[\d+:\d+†[^\]]+\]/g, ""); // match any characters until the closing ]
 }
 
 export async function handler(event, context) {
